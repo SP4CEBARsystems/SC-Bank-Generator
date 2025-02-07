@@ -18,7 +18,7 @@ export default class MemoryBankGenerator {
 
     /**
      * 
-     * @param {(bankIndex, previousOutput, bankPosition) => number} callback 
+     * @param {(bankIndex, bankPosition) => number} callback 
      */
     generate(callback){
         const bankArrayData = [];
@@ -30,7 +30,7 @@ export default class MemoryBankGenerator {
 
     /**
      * 
-     * @param {(bankIndex, previousOutput, bankPosition) => number} callback 
+     * @param {(bankIndex, bankPosition) => number} callback 
      * @param {number} bankPosition 
      * @returns {string[]}
      */
