@@ -3,16 +3,22 @@ import ExtendedMath from "./extended_math.js";
 export default class MemoryBankGenerator {
     numberOfLocations;
 
+    /**
+     * @type {string[][]}
+     */
     generatedData = [];
     
+    /**
+     * 
+     * @param {number} numberOfLocations 
+     */
     constructor(numberOfLocations) {
         this.numberOfLocations = numberOfLocations;
     }
 
     /**
      * 
-     * @param {(bankIndex, bankPosition) => number} callback 
-     * @returns
+     * @param {(bankIndex, previousOutput, bankPosition) => number} callback 
      */
     generate(callback){
         const bankArrayData = [];
@@ -22,9 +28,17 @@ export default class MemoryBankGenerator {
         this.generatedData = bankArrayData;
     }
 
+    /**
+     * 
+     * @param {(bankIndex, previousOutput, bankPosition) => number} callback 
+     * @param {number} bankPosition 
+     * @returns {string[]}
+     */
     generateOne(callback, bankPosition) {
         const bankData = ExtendedMath.sample(256, callback, bankPosition);
-        const bankDataStrings = new Array(this.countMemoryBanksRequired(bankData)).fill("");
+        const arrayLength = this.countMemoryBanksRequired(bankData);
+        // console.log(arrayLength, bankData);
+        const bankDataStrings = new Array(arrayLength).fill("");
         for (const bankValue of bankData) {
             for (const digitIndex in bankDataStrings) {
                 bankDataStrings[digitIndex] += ExtendedMath.getHexDigit(bankValue, digitIndex);
@@ -33,11 +47,20 @@ export default class MemoryBankGenerator {
         return bankDataStrings
     }
 
+    /**
+     * 
+     * @param {number[]} bankData 
+     * @returns 
+     */
     countMemoryBanksRequired(bankData) {
         const biggestValue = Math.max(...bankData);
         return Math.ceil(ExtendedMath.getBaseLog(16, biggestValue + 1));
     }
 
+    /**
+     * 
+     * @returns {string[][]}
+     */
     getFormattedData(){
         return this.generatedData
             .map(element => element
@@ -63,7 +86,6 @@ export default class MemoryBankGenerator {
             (previous, element) => previous.concat(element.replace(/\n/g, '<br>')),
             ''
         );
-        console.log(element.innerHTML);
         // element.textContent
     }
 }

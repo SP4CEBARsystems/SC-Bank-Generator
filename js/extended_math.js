@@ -2,7 +2,8 @@ export default class ExtendedMath {
     static sample(loopCount, callback, ...callbackParameters) {
         const data = [];
         for (let index = 0; index < loopCount; index++) {
-            data.push(callback(index, ...callbackParameters));
+            const previousOutput = index != 0 ? data[index-1] : 0
+            data.push(callback(index, previousOutput, ...callbackParameters));
         }
         return data;
     }
