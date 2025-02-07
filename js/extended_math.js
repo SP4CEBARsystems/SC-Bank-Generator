@@ -13,8 +13,12 @@ export default class ExtendedMath {
 
     static getDigit(value, index, base) {
         const digitBase = base ** index;
-        const digit = Math.floor(value / digitBase) % base;
+        const digit = ExtendedMath.intDivMod(value, digitBase, base);
         return digit.toString(base);
+    }
+
+    static intDivMod(value, digitBase, base) {
+        return Math.floor(value / digitBase) % base;
     }
 
     static getBaseLog(base, value) {

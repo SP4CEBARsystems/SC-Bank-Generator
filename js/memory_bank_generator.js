@@ -7,6 +7,11 @@ export default class MemoryBankGenerator {
         this.numberOfLocations = numberOfLocations;
     }
 
+    /**
+     * 
+     * @param {(bankIndex, bankPosition) => number} callback 
+     * @returns
+     */
     generate(callback){
         const bankArrayData = [];
         for (let bankPosition = 0; bankPosition < this.numberOfLocations; bankPosition++) {
