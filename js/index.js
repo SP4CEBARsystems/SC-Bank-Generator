@@ -3,9 +3,15 @@ import MemoryBankGenerator from "./memory_bank_generator.js";
 
 const generator = new MemoryBankGenerator(1);
 
+// generator.generate((bankIndex, bankPosition) => {
+//     const sizes = [4, 4]
+//     const [x, y] = ExtendedMath.wordSplit(bankIndex, sizes);
+//     return x + y;
+// });
+
 generator.generate((bankIndex, bankPosition) => {
-    const x = ExtendedMath.intDivMod(bankIndex, 1, 16);
-    const y = ExtendedMath.intDivMod(bankIndex, 16, 16);
+    const sizes = [4, 4]
+    const [x, y] = ExtendedMath.wordSplit(bankIndex, sizes);
     return x + y;
 });
 

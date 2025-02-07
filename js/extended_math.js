@@ -21,6 +21,41 @@ export default class ExtendedMath {
         return Math.floor(value / digitBase) % base;
     }
 
+    /**
+     * 
+     * @param {number} value 
+     * @param {number} offset in bits
+     * @param {number} length in bits
+     * @returns 
+     */
+    static bitSelect(value, offset, length) {
+        return Math.floor(value >> offset) & ExtendedMath.createBitmask(length);
+    }
+
+    /**
+     * a bitmask of the specified length
+     * @param {number} length in bits
+     * @returns {number} a bitmask
+     */
+    static createBitmask(length) {
+        return (1 << length) - 1;
+    }
+
+    /**
+     * 
+     * @param {number} input 
+     * @param  {number[]} subWordSizes 
+     * @returns {number[]} 
+     */
+    static wordSplit(input, subWordSizes){
+        let bitOffset = 0;
+        return subWordSizes.map(subWordSize => {
+            const value = ExtendedMath.bitSelect(input, bitOffset, subWordSize);
+            bitOffset += subWordSize;
+            return value;
+        });
+    }
+
     static getBaseLog(base, value) {
         return Math.log(value) / Math.log(base);
     }

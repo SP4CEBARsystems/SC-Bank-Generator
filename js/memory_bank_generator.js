@@ -37,7 +37,10 @@ export default class MemoryBankGenerator {
     generateOne(callback, bankPosition) {
         const bankData = ExtendedMath.sample(256, callback, bankPosition);
         const arrayLength = this.countMemoryBanksRequired(bankData);
-        // console.log(arrayLength, bankData);
+        if (!arrayLength) {
+            console.error('invalid parameter(s) found, these are the values that your code produced:', bankData);
+            return [];
+        }
         const bankDataStrings = new Array(arrayLength).fill("");
         for (const bankValue of bankData) {
             for (const digitIndex in bankDataStrings) {
