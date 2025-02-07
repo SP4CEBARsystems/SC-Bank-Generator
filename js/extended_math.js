@@ -1,3 +1,5 @@
+import Word from "./word.js";
+
 export default class ExtendedMath {
     static sample(loopCount, callback, ...callbackParameters) {
         const data = [];
@@ -54,6 +56,20 @@ export default class ExtendedMath {
             bitOffset += subWordSize;
             return value;
         });
+    }
+
+    /**
+     * 
+     * @param {Word[]} words 
+     * @returns 
+     */
+    static combineOutput(words) {
+        let bitOffset = 0;
+        return words.reduce((previous, word) => {
+            const value = previous | (word.value & ExtendedMath.createBitmask(word.bitSize)) << bitOffset;
+            bitOffset += word.bitSize;
+            return value;
+        }, 0);
     }
 
     static getBaseLog(base, value) {
