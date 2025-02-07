@@ -86,7 +86,7 @@ export default class MemoryBankGenerator {
      */
     write(element) {
         element.innerHTML = this.getFormattedData()[0].reduce(
-            (previous, element) => previous.concat(element.replace(/\n/g, '<br>')),
+            (previous, element, index) => previous.concat(`<br>Bank ${index}:<br>`, element.replace(/\n/g, '<br>')),
             ''
         );
         // element.textContent
