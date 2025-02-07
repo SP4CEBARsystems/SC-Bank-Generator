@@ -1,4 +1,5 @@
 import ExtendedMath from "./extended_math.js";
+import Word from "./word.js";
 
 export default class MemoryBankGenerator {
     numberOfLocations;
@@ -18,7 +19,7 @@ export default class MemoryBankGenerator {
 
     /**
      * 
-     * @param {(bankIndex, bankPosition) => number} callback 
+     * @param {(bankIndex, bankPosition) => Word[]} callback 
      */
     generate(callback){
         const bankArrayData = [];
@@ -30,12 +31,12 @@ export default class MemoryBankGenerator {
 
     /**
      * 
-     * @param {(bankIndex, bankPosition) => number} callback 
+     * @param {(bankIndex, bankPosition) => Word[]} callback 
      * @param {number} bankPosition 
      * @returns {string[]}
      */
     generateOne(callback, bankPosition) {
-        const bankData = ExtendedMath.sample(256, callback, bankPosition);
+        const bankData = ExtendedMath.sample(256, this.callbackHost, bankPosition, callback);
         const arrayLength = this.countMemoryBanksRequired(bankData);
         if (!arrayLength) {
             console.error('invalid parameter(s) found, these are the values that your code produced:', bankData);
@@ -48,6 +49,20 @@ export default class MemoryBankGenerator {
             }
         }
         return bankDataStrings
+    }
+
+    /**
+     * 
+     * @param {*} bankIndex 
+     * @param {*} bankPosition 
+     * @param {(bankIndex, bankPosition) => Word[]} callback 
+     * @returns 
+     */
+    callbackHost(bankIndex, bankPosition, callback){
+        const output = callback(bankIndex, bankPosition);
+        const out = ExtendedMath.combineOutput(output);
+        // console.log(Math.abs(value), out.toString(16));
+        return out;
     }
 
     /**
