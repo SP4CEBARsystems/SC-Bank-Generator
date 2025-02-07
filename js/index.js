@@ -4,9 +4,10 @@ import Word from "./word.js";
 
 const generator = new MemoryBankGenerator(1);
 
-generator.generate(addition);
+// generator.generate(addition);
 // generator.generate(subtraction);
 // generator.generate(FSM);
+generator.generate(display, 16);
 
 const paragraphElement = document.querySelector('p');
 if (paragraphElement) {
@@ -53,5 +54,14 @@ function FSM(bankIndex) {
         new Word(inputSizes[0], position),
         new Word(inputSizes[1], (direction != 0) ? 1 : 0),
         new Word(inputSizes[2], 0),
+    ];
+}
+
+function display(bankIndex, bankPosition) {
+    const inputSizes = [8];
+    const [x] = ExtendedMath.wordSplit(bankIndex, inputSizes);
+    const value = x == bankPosition ? 0xf : 0x0;
+    return [
+        new Word(4, value),
     ];
 }

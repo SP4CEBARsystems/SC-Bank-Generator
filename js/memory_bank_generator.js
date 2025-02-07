@@ -21,9 +21,9 @@ export default class MemoryBankGenerator {
      * 
      * @param {(bankIndex, bankPosition) => Word[]} callback 
      */
-    generate(callback){
+    generate(callback, numberOfLocations = 1){
         const bankArrayData = [];
-        for (let bankPosition = 0; bankPosition < this.numberOfLocations; bankPosition++) {
+        for (let bankPosition = 0; bankPosition < numberOfLocations; bankPosition++) {
             bankArrayData.push(this.generateOne(callback, bankPosition));
         }
         this.generatedData = bankArrayData;
