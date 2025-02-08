@@ -1,3 +1,4 @@
+import { copyTextToClipboard } from "./copying.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
 import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
 
@@ -11,4 +12,8 @@ document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
     const generatorUI = new MemoryBankGeneratorUI();
+    const codeBlock = document.getElementById('code-block')?.innerText;
+    if (codeBlock !== undefined) {
+        document.querySelector('.copy-btn')?.addEventListener('click', () => copyTextToClipboard(codeBlock));
+    }
 }
