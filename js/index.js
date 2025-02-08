@@ -1,48 +1,17 @@
 import MemoryBankGenerator from "./memory_bank_generator.js";
+import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
 
 // const generator = new MemoryBankGenerator(1, [4, 4], addition, [5]);
 // const generator = new MemoryBankGenerator(1, [4, 4], subtraction, [4, 1]);
 // const generator = new MemoryBankGenerator(1, [6, 1, 1], FSM, [6, 1, 1]);
 // const generator = new MemoryBankGenerator(16, [4], display, [4]);
 // const generator = new MemoryBankGenerator(16, [4], highResDisplay, [4]);
-const codeInputElement = document.querySelector('textarea');
-if (codeInputElement) {codeInputElement.textContent = 
-`([x, y]) => {
-	return [x + y];
-}`
+
+document.addEventListener( "DOMContentLoaded", runOnStart);
+
+function runOnStart() {
+    const generatorUI = new MemoryBankGeneratorUI();
 }
-
-const generateButton = document.querySelector('button');
-if (generateButton) {
-    generateButton.onclick = () => {
-        const codeInputElement = document.querySelector('textarea');
-        const amountInputElement = document.getElementById('amount');
-        const inputSizesInputElement = document.getElementById('inputSizes');
-        const outputSizesInputElement = document.getElementById('outputSizes');
-        if (
-            codeInputElement?.value !== undefined &&
-            amountInputElement?.value !== undefined &&
-            inputSizesInputElement?.value !== undefined &&
-            outputSizesInputElement?.value !== undefined
-        ) {
-            const generator = new MemoryBankGenerator(
-                amountInputElement.value, 
-                eval(inputSizesInputElement.value), 
-                eval(codeInputElement.value), 
-                eval(outputSizesInputElement.value)
-            );
-            generator.generate();
-            
-            const paragraphElement = document.querySelector('p');
-            if (paragraphElement) {
-                generator.write(paragraphElement);
-            }
-        }
-    };
-}
-
-
-
 
 /**
  * 
