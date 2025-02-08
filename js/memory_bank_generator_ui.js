@@ -1,13 +1,34 @@
 import MemoryBankGenerator from "./memory_bank_generator.js";
 
 export default class MemoryBankGeneratorUI {
+    /**
+     * @type {HTMLParagraphElement | null}
+     */
     paragraphElement = document.querySelector('p');
 
+    /**
+     * @type {HTMLTextAreaElement | null}
+     */
     codeInputElement = document.querySelector('textarea');
+    
+    /**
+     * @type {HTMLInputElement | null}
+     */
     amountInputElement = document.getElementById('amount');
+    
+    /**
+     * @type {HTMLInputElement | null}
+     */
     inputSizesInputElement = document.getElementById('inputSizes');
+    
+    /**
+     * @type {HTMLInputElement | null}
+     */
     outputSizesInputElement = document.getElementById('outputSizes');
 
+    /**
+     * @type {HTMLButtonElement | null}
+     */
     generateButton = document.querySelector('button');
 
     constructor() {
@@ -29,7 +50,7 @@ export default class MemoryBankGeneratorUI {
         }
 
         const generator = new MemoryBankGenerator(
-            this.amountInputElement.value,
+            parseInt(this.amountInputElement.value),
             eval(this.inputSizesInputElement.value),
             eval(this.codeInputElement.value),
             eval(this.outputSizesInputElement.value)
