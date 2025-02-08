@@ -100,9 +100,10 @@ export default class MemoryBankGenerator {
      * @param {HTMLParagraphElement} element 
      */
     write(element) {
-        element.innerHTML = this.getFormattedData()[0].reduce(
-            (previous, element, index) => previous.concat(`<br>Bank ${index}:<br>`, element.replace(/\n/g, '<br>')),
-            ''
+        element.innerHTML = ExtendedMath.reduce2D(
+            this.getFormattedData(),
+            (previous, element, index, indexY) => previous.concat(`<br>Bank ${indexY}, digit ${index}:<br>`, element.replace(/\n/g, '<br>')),
+            '',
         );
         // element.textContent
     }

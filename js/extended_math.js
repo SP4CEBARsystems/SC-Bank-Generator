@@ -75,4 +75,38 @@ export default class ExtendedMath {
     static getBaseLog(base, value) {
         return Math.log(value) / Math.log(base);
     }
+
+    /**
+     *
+     * @param {number[][]} array
+     * @param {(item: number, x: number, y: number, array: number[][]) => void} callback
+     */
+    static forEach2D(array, callback) {
+        for (const y in array) {
+            const row = array[y];
+            for (const x in row) {
+                const element = row[x];
+                callback(element, parseInt(x), parseInt(y), array);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param {any[][]} array
+     * @param {(accumulator: any, currentValue: any, x: number, y: number, array: any[][]) => any} callback
+     * @param {any} initialValue
+     * @returns {any}
+     */
+    static reduce2D(array, callback, initialValue = 0) {
+        let accumulator = initialValue;
+        for (const y in array) {
+            const row = array[y];
+            for (const x in row) {
+                const element = row[x];
+                accumulator = callback(accumulator, element, parseInt(x), parseInt(y), array);
+            }
+        }
+        return accumulator;
+    }
 }
