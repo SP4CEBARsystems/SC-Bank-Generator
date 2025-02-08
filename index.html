@@ -9,6 +9,17 @@
 	</style>
 </head>
 <body>
+	<div>
+		<label for="amountInput">amount</label>
+		<input id="amount" name="amountInput" value="1" placeholder="1"></input>
+		<label for="inputSizesInput">inputSizes</label>
+		<input id="inputSizes" name="inputSizesInput" value="[4, 4]" placeholder="[4, 4]"></input>
+		<label for="outputSizesInput">outputSizes</label>
+		<input id="outputSizes" name="outputSizesInput" value="[5]" placeholder="[5]"></input>
+	</div>
+	<label for="codeInput">code input</label>
+	<textarea name="codeInput" cols="40" rows="5" placeholder="([x, y]) => {return [x + y];}"></textarea>
+	<button>Generate</button>
 	<p></p>
 	<script type="module" src="./js/index.js"></script>
 </body>
