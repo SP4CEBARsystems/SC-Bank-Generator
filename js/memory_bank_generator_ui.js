@@ -12,20 +12,11 @@ export default class MemoryBankGeneratorUI {
      */
     codeInputElement = document.querySelector('textarea');
     
-    /**
-     * @type {HTMLInputElement | null}
-     */
-    amountInputElement = document.getElementById('amount');
+    amountInputElement = /** @type {HTMLInputElement | null} */ (document.getElementById('amount'));
     
-    /**
-     * @type {HTMLInputElement | null}
-     */
-    inputSizesInputElement = document.getElementById('inputSizes');
+    inputSizesInputElement = /** @type {HTMLInputElement | null} */ (document.getElementById('inputSizes'));
     
-    /**
-     * @type {HTMLInputElement | null}
-     */
-    outputSizesInputElement = document.getElementById('outputSizes');
+    outputSizesInputElement = /** @type {HTMLInputElement | null} */ (document.getElementById('outputSizes'));
 
     /**
      * @type {HTMLButtonElement | null}
