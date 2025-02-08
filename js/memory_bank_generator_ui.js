@@ -1,3 +1,4 @@
+import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
 
 export default class MemoryBankGeneratorUI {
@@ -49,11 +50,13 @@ export default class MemoryBankGeneratorUI {
             return;
         }
 
+        const inputSizesArray = ExtendedMath.stringToArray(this.inputSizesInputElement.value);
+        const outputsSizesArray = ExtendedMath.stringToArray(this.outputSizesInputElement.value);
         const generator = new MemoryBankGenerator(
             parseInt(this.amountInputElement.value),
-            eval(this.inputSizesInputElement.value),
+            inputSizesArray,
             eval(this.codeInputElement.value),
-            eval(this.outputSizesInputElement.value)
+            outputsSizesArray
         );
         generator.generate();
 

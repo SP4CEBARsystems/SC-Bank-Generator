@@ -109,4 +109,14 @@ export default class ExtendedMath {
         }
         return accumulator;
     }
+ 
+    /**
+     * 
+     * @param {string} string 
+     * @returns {number[]}
+     */
+    static stringToArray(string) {
+        return string.replace(/ |\[|\]/g, '').split(',')
+            .map(element => parseInt(element));
+    }
 }
