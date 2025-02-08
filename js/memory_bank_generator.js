@@ -76,6 +76,10 @@ export default class MemoryBankGenerator {
     callbackHost(bankIndex, bankPosition, inputSizes, outputSizes, callback){
         const parameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
         const output = callback(parameters, bankPosition);
+        if (output.length != outputSizes.length) {
+            console.error('output count mismatch, you have', output.length, 'outputs but you have defined', outputSizes.length, 'output lengths');
+            return 0;
+        }
         const out = ExtendedMath.combineOutput(output.map((value, index) => new Word(outputSizes[index], value)));
         return out;
     }
