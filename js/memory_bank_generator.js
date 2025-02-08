@@ -6,6 +6,8 @@ export default class MemoryBankGenerator {
 
     inputSizes;
 
+    outputSizes;
+
     generatorCallback;
 
     /**
@@ -17,11 +19,13 @@ export default class MemoryBankGenerator {
      * 
      * @param {number} numberOfLocations 
      * @param {number[]} inputSizes
-     * @param {(bankIndex:number[], bankPosition?:number) => Word[]} generatorCallback 
+     * @param {(bankIndex:number[], bankPosition?:number) => number[]} generatorCallback 
+     * @param {number[]} outputSizes
      */
-    constructor(numberOfLocations = 1, inputSizes, generatorCallback) {
+    constructor(numberOfLocations = 1, inputSizes, generatorCallback, outputSizes) {
         this.numberOfLocations = numberOfLocations;
         this.inputSizes = inputSizes;
+        this.outputSizes = outputSizes;
         this.generatorCallback = generatorCallback;
     }
 
@@ -39,7 +43,9 @@ export default class MemoryBankGenerator {
      * @returns {string[]}
      */
     generateOne(bankPosition) {
-        const bankData = ExtendedMath.sample(256, this.callbackHost, bankPosition, this.inputSizes, this.generatorCallback);
+        const bankData = ExtendedMath.sample(
+            256, this.callbackHost, bankPosition, this.inputSizes, this.outputSizes, this.generatorCallback
+        );
         const arrayLength = this.countMemoryBanksRequired(bankData);
         if (isNaN(arrayLength)) {
             const faultyIndex = bankData.findIndex((element) => isNaN(element));
@@ -64,13 +70,13 @@ export default class MemoryBankGenerator {
      * @param {number} bankIndex 
      * @param {number} bankPosition 
      * @param {number[]} inputSizes 
-     * @param {(bankIndex:number[], bankPosition:number) => Word[]} callback 
+     * @param {(bankIndex:number[], bankPosition:number) => number[]} callback 
      * @returns 
      */
-    callbackHost(bankIndex, bankPosition, inputSizes, callback){
+    callbackHost(bankIndex, bankPosition, inputSizes, outputSizes, callback){
         const parameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
         const output = callback(parameters, bankPosition);
-        const out = ExtendedMath.combineOutput(output);
+        const out = ExtendedMath.combineOutput(output.map((value, index) => new Word(outputSizes[index], value)));
         return out;
     }
 

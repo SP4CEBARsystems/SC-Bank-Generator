@@ -3,7 +3,7 @@ import MemoryBankGenerator from "./memory_bank_generator.js";
 import Word from "./word.js";
 
 // const generator = new MemoryBankGenerator(1, [4, 4], addition, [5]);
-const generator = new MemoryBankGenerator(1, [4, 4], subtraction);//, [4, 1]);
+const generator = new MemoryBankGenerator(1, [4, 4], subtraction, [4, 1]);
 // const generator = new MemoryBankGenerator(1, [6, 1, 1], FSM, [6, 1, 1]);
 // const generator = new MemoryBankGenerator(16, [4], display, [4]);
 // const generator = new MemoryBankGenerator(16, [4], highResDisplay, [4]);
@@ -22,9 +22,7 @@ if (paragraphElement) {
  */
 function addition([x, y]) {
     const value = x + y;
-    return [
-        new Word(5, value),
-    ];
+    return [value];
 }
 
 /**
@@ -34,10 +32,7 @@ function addition([x, y]) {
  */
 function subtraction([x, y]) {
     const value = x - y;
-    return [
-        new Word(4, Math.abs(value)),
-        new Word(1, (value < 0) ? 1 : 0),
-    ];
+    return [Math.abs(value), (value < 0) ? 1:0];
 }
 
 function FSM([position, direction, reset]) {
@@ -55,24 +50,16 @@ function FSM([position, direction, reset]) {
             position += (direction != 0 ? -1 : 1);
         }
     }
-    return [
-        new Word(6, position),
-        new Word(1, (direction != 0) ? 1 : 0),
-        new Word(1, 0),
-    ];
+    return [position, direction, 0];
 }
 
 function display([x], bankPosition) {
     const value = x == bankPosition ? 0xf : 0x0;
-    return [
-        new Word(4, value),
-    ];
+    return [value];
 }
 
 function highResDisplay([x], bankPosition) {
     const value = Math.floor(x/2) != bankPosition ? 0x0 :
         ((x % 2 == 0) ? 0x3 : 0xc);
-    return [
-        new Word(4, value),
-    ];
+    return [value];
 }
