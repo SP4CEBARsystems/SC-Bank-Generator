@@ -6,8 +6,9 @@ const generator = new MemoryBankGenerator(1);
 
 // generator.generate(addition);
 // generator.generate(subtraction);
-// generator.generate(FSM);
-generator.generate(display, 16);
+generator.generate(FSM);
+// generator.generate(display, 16);
+// generator.generate(highResDisplay, 16);
 
 const paragraphElement = document.querySelector('p');
 if (paragraphElement) {
@@ -58,9 +59,19 @@ function FSM(bankIndex) {
 }
 
 function display(bankIndex, bankPosition) {
-    const inputSizes = [8];
+    const inputSizes = [4];
     const [x] = ExtendedMath.wordSplit(bankIndex, inputSizes);
     const value = x == bankPosition ? 0xf : 0x0;
+    return [
+        new Word(4, value),
+    ];
+}
+
+function highResDisplay(bankIndex, bankPosition) {
+    const inputSizes = [4];
+    const [x] = ExtendedMath.wordSplit(bankIndex, inputSizes);
+    const value = Math.floor(x/2) != bankPosition ? 0x0 :
+        ((x % 2 == 0) ? 0x3 : 0xc);
     return [
         new Word(4, value),
     ];

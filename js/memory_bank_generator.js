@@ -38,16 +38,23 @@ export default class MemoryBankGenerator {
     generateOne(callback, bankPosition) {
         const bankData = ExtendedMath.sample(256, this.callbackHost, bankPosition, callback);
         const arrayLength = this.countMemoryBanksRequired(bankData);
-        if (!arrayLength) {
-            console.error('invalid parameter(s) found, these are the values that your code produced:', bankData);
+        if (isNaN(arrayLength)) {
+            const faultyIndex = bankData.findIndex((element) => isNaN(element));
+            if (faultyIndex != -1) {
+                console.error('invalid parameter(s) found, these are the values that your code produced:', bankData[faultyIndex], 'on index', faultyIndex, 'in', bankData);
+            } else {
+                console.error('invalid parameter(s) found, none of your values are NaN:', bankData);
+            }
             return [];
         }
+        console.log(arrayLength);
         const bankDataStrings = new Array(arrayLength).fill("");
         for (const bankValue of bankData) {
             for (const digitIndex in bankDataStrings) {
                 bankDataStrings[digitIndex] += ExtendedMath.getHexDigit(bankValue, digitIndex);
             }
         }
+        console.log(bankDataStrings);
         return bankDataStrings
     }
 
@@ -100,11 +107,20 @@ export default class MemoryBankGenerator {
      * @param {HTMLParagraphElement} element 
      */
     write(element) {
-        element.innerHTML = ExtendedMath.reduce2D(
-            this.getFormattedData(),
-            (previous, element, index, indexY) => previous.concat(`<br>Bank ${indexY}, digit ${index}:<br>`, element.replace(/\n/g, '<br>')),
-            '',
-        );
-        // element.textContent
+        element.innerHTML = this.getFormattedData()
+            .reduce((previousY, elementY, indexY) => {
+                console.log('elementY', elementY.length == 0, elementY)
+                if (elementY.length == 0) {
+                    return previousY.concat(`<br>Bank ${indexY}, obsolete<br>`);
+                } else {
+                    return previousY.concat(elementY
+                        .reduce((previous, element, index) => 
+                            previous.concat(`<br>Bank ${indexY}, digit ${index}:<br>`, element.replace(/\n/g, '<br>'))
+                            ,''
+                        )
+                    )
+                }
+            },'')
+        
     }
 }
