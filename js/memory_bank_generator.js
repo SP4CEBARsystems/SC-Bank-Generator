@@ -1,3 +1,4 @@
+import { newCodeBlock } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import Word from "./word.js";
 
@@ -110,7 +111,7 @@ export default class MemoryBankGenerator {
          * @returns 
          */
         function insertNewlines(str, interval = 16) {
-            return str.replace(new RegExp(`(.{${interval}})`, 'g'), '$1\n');//
+            return str.replace(new RegExp(`(.{${interval}})(?=.)`, 'g'), '$1\n');
         }
     }
 
@@ -119,19 +120,15 @@ export default class MemoryBankGenerator {
      * @param {HTMLParagraphElement} element 
      */
     write(element) {
-        element.innerHTML = this.getFormattedData()
-            .reduce((previousY, elementY, indexY) => {
-                if (elementY.length == 0) {
-                    return previousY.concat(`<br>Bank ${indexY}, obsolete<br>`);
-                } else {
-                    return previousY.concat(elementY
-                        .reduce((previous, element, index) => 
-                            previous.concat(`<br>Bank ${indexY}, digit ${index}:<br>`, element.replace(/\n/g, '<br>'))
-                            ,''
-                        )
-                    )
-                }
-            },'')
+        this.getFormattedData().forEach((elementY, indexY) => {
+            if (elementY.length == 0) {
+                newCodeBlock(`Bank ${indexY}, obsolete`, '');
+            } else {
+                elementY.forEach((element, index) => 
+                    newCodeBlock(`Bank ${indexY}, digit ${index}:`, element)
+                )
+            }
+        })
         
     }
 }

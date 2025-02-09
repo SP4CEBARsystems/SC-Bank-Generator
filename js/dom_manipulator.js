@@ -5,12 +5,15 @@ import { copyTextToClipboard } from "./copying.js";
  * @param {string} contents 
  * @returns 
  */
-export function newCodeBlock(contents) {
+export function newCodeBlock(title, contents) {
     const parent = document.getElementById('bank-data-output');
     if (parent === null) {
         return
     }
-    const preElement = newContainer('pre', 'code-block-root', parent);
+    const divElement = newContainer('div', 'code-block-root', parent);
+    if (divElement === null) return;
+    const titleElement = newElement('h3', title, 'code-block', divElement);
+    const preElement = newContainer('pre', 'code-block-root', divElement);
     if (preElement === null) return;
     const buttonElement = newButton('Copy', 'copy-btn', preElement, copyTextToClipboard, [contents]);
     const codeElement = newElement('code', contents, 'code-block', preElement);

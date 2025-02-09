@@ -1,4 +1,3 @@
-import { assignCodeBlockCopyButtons, newCodeBlock } from "./dom_manipulator.js";
 import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
 
 // const generator = new MemoryBankGenerator(1, [4, 4], addition, [5]);
@@ -11,5 +10,4 @@ document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
     const generatorUI = new MemoryBankGeneratorUI();
-    newCodeBlock('message11');
 }
