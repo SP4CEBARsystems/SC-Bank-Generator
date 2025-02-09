@@ -33,3 +33,7 @@ button.copy-btn {
     cursor: pointer;
     border-radius: 3px;
 }
+
+.white {
+    background-color: white;
+}
