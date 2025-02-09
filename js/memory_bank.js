@@ -1,5 +1,4 @@
-import { copyTextToClipboard } from "./copying.js";
-import MemoryBankGenerator from "./memory_bank_generator.js";
+import { assignCodeBlockCopyButtons, newCodeBlock } from "./dom_manipulator.js";
 import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
 
 // const generator = new MemoryBankGenerator(1, [4, 4], addition, [5]);
@@ -12,19 +11,5 @@ document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
     const generatorUI = new MemoryBankGeneratorUI();
-    assignCodeBlockCopyButtons();
+    newCodeBlock('message11');
 }
-
-function assignCodeBlockCopyButtons() {
-    const codeBlockElements = document.querySelectorAll('.code-block-root');
-    for (const codeBlockElement of codeBlockElements) {
-        console.log(codeBlockElement);
-        if (codeBlockElement === null) continue;
-        const codeContainer = codeBlockElement.querySelector('.code-block');
-        if (codeContainer === null) continue;
-        codeBlockElement.querySelector('.copy-btn')?.addEventListener('click', 
-            () => copyTextToClipboard(codeContainer.textContent)
-        );
-    }
-}
-
