@@ -12,8 +12,19 @@ document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
     const generatorUI = new MemoryBankGeneratorUI();
-    const codeBlock = document.getElementById('code-block')?.innerText;
-    if (codeBlock !== undefined) {
-        document.querySelector('.copy-btn')?.addEventListener('click', () => copyTextToClipboard(codeBlock));
+    assignCodeBlockCopyButtons();
+}
+
+function assignCodeBlockCopyButtons() {
+    const codeBlockElements = document.querySelectorAll('.code-block-root');
+    for (const codeBlockElement of codeBlockElements) {
+        console.log(codeBlockElement);
+        if (codeBlockElement === null) continue;
+        const codeContainer = codeBlockElement.querySelector('.code-block');
+        if (codeContainer === null) continue;
+        codeBlockElement.querySelector('.copy-btn')?.addEventListener('click', 
+            () => copyTextToClipboard(codeContainer.textContent)
+        );
     }
 }
+
