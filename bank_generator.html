@@ -39,29 +39,24 @@
 		<svg style="display: none" version="2.0">
 			<defs>
 				<symbol id="circle-arrow-left" viewbox="0 -10 100 110">
-					<path d="m 20 80 A 40 40 0 1 0 20 20"
-					fill="none" stroke="#000" stroke-width="10" />
+					<path d="m 20 0 v100 v-50 h100"
+						fill="none" stroke="#000" stroke-width="10" 
+					/>
+					<!-- <path d="m 20 80 A 40 40 0 1 0 20 20"
+						fill="none" stroke="#000" stroke-width="10" 
+					/>
 					<path d="M 10 0 v 40 h 40"
-					fill="#000" />
-					<image href="assets\memory_bank_asset.png" height="50" width="50" />
+						fill="#000" 
+					/> -->
+					<!-- <image href="assets\memory_bank_asset.png" width="50" height="50"/> -->
 				</symbol>
 			</defs>
-			<!-- to make the circle-arrow-left.svg file
-				also usable as image: -->
-			<use href="#circle-arrow-left"/>
 		</svg>
 		
-		<!-- use symbol of external svg document -->
 		<div class="white">
 			<svg width="50" height="50" version="2.0">
-				<use href="#circle-arrow-left" />
-			</svg>
-		</div>
-		
-		<!-- transform symbol with horizontal flip -->
-		<div class="white">
-			<svg style="transform: scale(-1, 1)" width="50" height="50" version="2.0">
-				<use href="#circle-arrow-left" />
+				<use href="#circle-arrow-left" x="0"/>
+				<!-- <use href="#circle-arrow-left" x="10"/> -->
 			</svg>
 		</div>
 	</main>
