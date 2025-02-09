@@ -35,30 +35,37 @@
 			<hr />
 			<div id="bank-data-output"></div>
 		</section>
+
+		<svg width="500" height="500" version="2.0">
+			<image y="0" href="assets/bank_generator_circuit_tiles/bank_digit.jpg" width="212" height="127"/>
+			<image y="127" href="assets/bank_generator_circuit_tiles/bank_digit.jpg" width="212" height="127"/>
+			<image y="127" x="212" href="assets/bank_generator_circuit_tiles/bank_selector_8-bit.jpg" width="212" height="127"/>
+		</svg>
+
 		<!-- define symbol in hidden svg document -->
-		<svg style="display: none" version="2.0">
+		<!-- <svg style="display: none" version="2.0">
 			<defs>
 				<symbol id="circle-arrow-left" viewbox="0 -10 100 110">
 					<path d="m 20 0 v100 v-50 h100"
 						fill="none" stroke="#000" stroke-width="10" 
 					/>
-					<!-- <path d="m 20 80 A 40 40 0 1 0 20 20"
+					<path d="m 20 80 A 40 40 0 1 0 20 20"
 						fill="none" stroke="#000" stroke-width="10" 
 					/>
 					<path d="M 10 0 v 40 h 40"
 						fill="#000" 
-					/> -->
-					<!-- <image href="assets\memory_bank_asset.png" width="50" height="50"/> -->
+					/>
+					<image href="assets/memory_bank_asset.png" width="50" height="50"/>
 				</symbol>
 			</defs>
-		</svg>
+		</svg> -->
 		
-		<div class="white">
+		<!-- <div class="white">
 			<svg width="50" height="50" version="2.0">
 				<use href="#circle-arrow-left" x="0"/>
-				<!-- <use href="#circle-arrow-left" x="10"/> -->
+				<use href="#circle-arrow-left" x="10"/>
 			</svg>
-		</div>
+		</div> -->
 	</main>
 	<footer></footer>
 	<script type="module" src="./js/memory_bank.js"></script>
