@@ -3,11 +3,6 @@ import MemoryBankGenerator from "./memory_bank_generator.js";
 
 export default class MemoryBankGeneratorUI {
     /**
-     * @type {HTMLParagraphElement | null}
-     */
-    paragraphElement = document.querySelector('p');
-
-    /**
      * @type {HTMLTextAreaElement | null}
      */
     codeInputElement = document.querySelector('textarea');
@@ -51,8 +46,6 @@ export default class MemoryBankGeneratorUI {
         );
         generator.generate();
 
-        if (this.paragraphElement) {
-            generator.write(this.paragraphElement);
-        }
+        generator.write();
     }
 }

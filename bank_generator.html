@@ -10,11 +10,16 @@
 </head>
 <body>
 	<header>
-		<a href="./index.html">Home</a>
+		<nav>
+			<a href="./index.html">Home</a>
+		</nav>
+		<h1>Data Generator</h1>
+		<h2>For Survicalcraft Memory Banks</h2>
 	</header>
 	<main>
+		<hr />
 		<section>
-			<div>
+			<div class="space-Below">
 				<label for="amountInput">amount</label>
 				<input id="amount" name="amountInput" value="1" placeholder="1"></input>
 				<label for="inputSizesInput">inputSizes</label>
@@ -23,10 +28,12 @@
 				<input id="outputSizes" name="outputSizesInput" value="5" placeholder="8"></input>
 			</div>
 			<label for="codeInput">code input</label>
-			<textarea name="codeInput" cols="40" rows="5" placeholder="([x, y]) => {return [x + y];}"></textarea>
+			<div>
+				<textarea name="codeInput" cols="40" rows="5" placeholder="([x, y]) => {return [x + y];}"></textarea>
+			</div>
 			<button>Generate</button>
+			<hr />
 			<div id="bank-data-output"></div>
-			<p></p>
 		</section>
 	</main>
 	<footer></footer>

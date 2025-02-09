@@ -115,11 +115,7 @@ export default class MemoryBankGenerator {
         }
     }
 
-    /**
-     * 
-     * @param {HTMLParagraphElement} element 
-     */
-    write(element) {
+    write() {
         this.getFormattedData().forEach((elementY, indexY) => {
             if (elementY.length == 0) {
                 newCodeBlock(`Bank ${indexY}, obsolete`, '');
