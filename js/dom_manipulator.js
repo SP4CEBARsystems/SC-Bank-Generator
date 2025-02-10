@@ -41,6 +41,27 @@ export function newContainer(type, className, parentName) {
 }
 
 /**
+ * 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {number} width 
+ * @param {number} height 
+ * @param {string} fileName 
+ * @param {HTMLElement} parent 
+ */
+export function newSVGImage(x=212, y=127, width=212, height=127, fileName='bank_selector_8-bit.jpg', parent) {
+	// const p = /** @type {HTMLElement} */document.createElement('image');
+	// p.x = x;
+	// p.y = y;
+	// p.href = `assets/bank_generator_circuit_tiles/${fileName}`;
+	// p.width = width;
+	// p.height = height;
+	// parentName.appendChild(p);
+    parent.innerHTML += `<image x="${x}" y="${y}" width="${width}" height="${height}" href="assets/bank_generator_circuit_tiles/${fileName}"/>`
+	// return p;
+}
+
+/**
  * Creates a new container element, assigns a class, and gives it a parent element
  * @param {string} type the type of element to be created. Will be rejected if type === script.
  * @param {*} elementText the element's soon-to-be textContent

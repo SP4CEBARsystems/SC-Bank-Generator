@@ -1,4 +1,4 @@
-import { newCodeBlock } from "./dom_manipulator.js";
+import { newCodeBlock, newContainer, newSVGImage } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import Word from "./word.js";
 
@@ -125,6 +125,14 @@ export default class MemoryBankGenerator {
                 )
             }
         })
-        
+        this.generateCircuit();
+    }
+
+    generateCircuit(){
+        const parent = document.getElementById('reference-circuit');
+        if (parent === null) return;
+        newSVGImage(0, 0, 212, 127, 'bank_digit.jpg', parent);
+        newSVGImage(0, 127, 212, 127, 'bank_digit.jpg', parent);
+        newSVGImage(212, 127, 212, 127, 'bank_selector_8-bit.jpg', parent);
     }
 }
