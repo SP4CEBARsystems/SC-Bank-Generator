@@ -113,10 +113,10 @@ export default class ExtendedMath {
     /**
      * 
      * @param {string} string 
-     * @returns {number[]}
+     * @returns {string[]}
      */
     static stringToArray(string) {
         return string.replace(/ |\[|\]/g, '').split(',')
-            .map(element => parseInt(element));
+            .map(element => element.toString());
     }
 }
