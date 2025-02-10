@@ -142,6 +142,12 @@ export default class MemoryBankGenerator {
     }
 
     generateCircuit(){
+        const drawCircuitCell = (element, currentX, digitYOffset, height, parent) => {
+            const width = this.getWidth(element);
+            newSVGImage(currentX, digitYOffset, width, height, element, parent);
+            currentX += width;
+            return currentX;
+        }
         const parent = document.getElementById('reference-circuit');
         if (parent === null) return;
         const sum = (accumulator, value) => accumulator + value;
@@ -170,10 +176,15 @@ export default class MemoryBankGenerator {
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
                     process.forEach((element, index) => {
-                        const width = this.getWidth(element);
-                        newSVGImage(currentX, digitYOffset, width, height, element, parent);
-                        currentX += width;
+                        currentX = drawCircuitCell(element, currentX, digitYOffset, height, parent);
                     });
+                    let hasConnected = false;
+                    for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
+                        const isConnecting = digit === digitOut;
+                        if (isConnecting) hasConnected = true;
+                        const element = isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg';
+                        currentX = drawCircuitCell(element, currentX, digitYOffset, height, parent);
+                    }
                 }
             }
         }
