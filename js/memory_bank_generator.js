@@ -145,11 +145,14 @@ export default class MemoryBankGenerator {
         const parent = document.getElementById('reference-circuit');
         if (parent === null) return;
         const sum = (accumulator, value) => accumulator + value;
-        const inputWireCount = Math.ceil(this.inputSizes.reduce(sum) / 4);
+        const totalInputSize = this.inputSizes.reduce(sum);
+        const inputWireCount = Math.ceil(totalInputSize / 4);
         const outputWireCount = Math.ceil(this.outputSizes.reduce(sum) / 4);
         let process;
         if (inputWireCount <= 0) {
             process = [];
+        } else if (inputWireCount <= 1) {
+            process = ['bank_digit.jpg'];
         } else if (inputWireCount <= 2) {
             process = ['bank_digit.jpg'];
         } else if (inputWireCount <= 3) {
@@ -158,16 +161,20 @@ export default class MemoryBankGenerator {
             const amountOfSelectors = Math.ceil((inputWireCount - 2) / 2);
             process = ['bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg')];
         }
+        const SingleBankInputSize = 8;
+        const inputLayerCount = 2 ** (totalInputSize - SingleBankInputSize);
         for (let location = 0; location < this.numberOfLocations; location++) {
-            for (let digit = 0; digit < outputWireCount; digit++) {
-                const height = 127;
-                const digitYOffset = (location * outputWireCount + digit) * height;
-                let currentX = 0;
-                process.forEach((element, index) => {
-                    const width = this.getWidth(element);
-                    newSVGImage(currentX, digitYOffset, width, height, element, parent);
-                    currentX += width;
-                });
+            for (let input = 0; input < inputLayerCount; input++) {
+                for (let digit = 0; digit < outputWireCount; digit++) {
+                    const height = 127;
+                    const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
+                    let currentX = 0;
+                    process.forEach((element, index) => {
+                        const width = this.getWidth(element);
+                        newSVGImage(currentX, digitYOffset, width, height, element, parent);
+                        currentX += width;
+                    });
+                }
             }
         }
     }
