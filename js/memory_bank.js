@@ -1,4 +1,5 @@
 import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
+import TypeValue from "./type_value.js";
 
 // const generator = new MemoryBankGenerator(1, [4, 4], addition, [5]);
 // const generator = new MemoryBankGenerator(1, [4, 4], subtraction, [4, 1]);
@@ -9,5 +10,17 @@ import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
 document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
+    functionTesting();
     const generatorUI = new MemoryBankGeneratorUI();
+}
+
+function functionTesting() {
+    for (let index = -256; index < 256; index++) {
+        console.log(index, dec2bin(TypeValue.encode('int', index)), TypeValue.encode('int', index));
+        // console.log(new TypeValue('u_int', index).outputValue());
+    }
+
+    function dec2bin(dec) {
+        return (dec >>> 0).toString(2).padStart(8, '0');
+      }
 }

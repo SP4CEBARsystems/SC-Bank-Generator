@@ -31,7 +31,28 @@ export default class ExtendedMath {
      * @returns 
      */
     static bitSelect(value, offset, length) {
-        return Math.floor(value >> offset) & ExtendedMath.createBitmask(length);
+        return ExtendedMath.toWord(value >> offset, length);
+    }
+
+    /**
+     * 
+     * @param {number} value 
+     * @param {number} offset in bits
+     * @param {number} length in bits
+     * @returns 
+     */
+    static bitSelectKeepOffset(value, offset, length) {
+        return ExtendedMath.bitSelect(value, offset, length) << offset;
+    }
+
+    /**
+     * 
+     * @param {number} value 
+     * @param {number} length in bits
+     * @returns 
+     */
+    static toWord(value, length) {
+        return Math.floor(value) & ExtendedMath.createBitmask(length);
     }
 
     /**

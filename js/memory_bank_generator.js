@@ -1,5 +1,6 @@
 import { newCodeBlock, newContainer, newSVGImage } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
+import TypeValue from "./type_value.js";
 import Word from "./word.js";
 
 export default class MemoryBankGenerator {
@@ -45,7 +46,7 @@ export default class MemoryBankGenerator {
      */
     generateOne(bankPosition) {
         const bankData = ExtendedMath.sample(
-            256, this.callbackHost, bankPosition, this.inputTypes.map(this.sizeOf), this.outputTypes.map(this.sizeOf), this.generatorCallback
+            256, this.callbackHost, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback
         );
         const arrayLength = this.countMemoryBanksRequired(bankData);
         if (isNaN(arrayLength)) {
@@ -70,18 +71,23 @@ export default class MemoryBankGenerator {
      * 
      * @param {number} bankIndex 
      * @param {number} bankPosition 
-     * @param {number[]} inputSizes 
+     * @param {string[]} inputTypes 
+     * @param {string[]} outputTypes 
      * @param {(bankIndex:number[], bankPosition:number) => number[]} callback 
-     * @returns 
+     * @returns {number}
      */
-    callbackHost(bankIndex, bankPosition, inputSizes, outputSizes, callback){
+    callbackHost(bankIndex, bankPosition, inputTypes, outputTypes, callback){
+        const inputSizes = inputTypes.map(TypeValue.sizeOf);
+        const outputSizes = outputTypes.map(TypeValue.sizeOf);
         const parameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
+        TypeValue.arrayFromPreFormatted(inputTypes, parameters).forEach(element => element.outputValue()); 
         const output = callback(parameters, bankPosition);
         if (output.length != outputSizes.length) {
             console.error('outputSizes count mismatch, you have', output.length, 'outputs but you have defined', outputSizes.length, 'output lengths');
             return 0;
         }
-        const out = ExtendedMath.combineOutput(output.map((value, index) => new Word(outputSizes[index], value)));
+        const encodedOutput = TypeValue.arrayFromValues(outputTypes, output).map(element => element.value);
+        const out = ExtendedMath.combineOutput(encodedOutput.map((value, index) => new Word(outputSizes[index], value)));
         return out;
     }
 
@@ -151,9 +157,9 @@ export default class MemoryBankGenerator {
         const parent = document.getElementById('reference-circuit');
         if (parent === null) return;
         const sum = (accumulator, value) => accumulator + value;
-        const totalInputSize = this.inputTypes.map(this.sizeOf).reduce(sum);
+        const totalInputSize = this.inputTypes.map(TypeValue.sizeOf).reduce(sum);
         const inputWireCount = Math.ceil(totalInputSize / 4);
-        const outputWireCount = Math.ceil(this.outputTypes.map(this.sizeOf).reduce(sum) / 4);
+        const outputWireCount = Math.ceil(this.outputTypes.map(TypeValue.sizeOf).reduce(sum) / 4);
         let process;
         if (inputWireCount <= 0) {
             process = [];
@@ -187,48 +193,6 @@ export default class MemoryBankGenerator {
                     }
                 }
             }
-        }
-    }
-
-
-    /**
-     * 
-     * @param {string} type 
-     * @returns {number}
-     */
-    sizeOf(type) {
-        switch (type) {
-            case '':
-            case undefined:
-            case null:
-                return 0;
-        }
-        const parts = type.toString().toLowerCase().split(/(\d+)$/);
-        if (parts.length < 1) {
-            return 0;
-        } else if (parts.length >= 2) {
-            return parseInt(parts[1]);
-        }
-        switch (parts[0]) {
-            case 'bit':
-            case 'flag':
-            case 'bool':
-            case 'boolean':
-                return 1;
-            case 'nibble':
-                return 4;
-            case 'byte':
-                return 8;
-            case 'int':
-                return 16;
-            case 'u_int':
-                return 16;
-            case 'float':
-                return 32;
-            case 'double':
-                return 64;
-            default:
-                return 0;
         }
     }
 }
