@@ -128,11 +128,47 @@ export default class MemoryBankGenerator {
         this.generateCircuit();
     }
 
+    getWidth(imageName){
+        switch (imageName) {
+            case 'bank_empty.jpg':
+            case 'bank_wires.jpg':
+            case 'bank_wires_crossing.jpg':
+            case 'bank_digit.jpg':
+            case 'bank_selector_8-bit.jpg':
+                return 212;
+            default:
+                return 127;
+        }
+    }
+
     generateCircuit(){
         const parent = document.getElementById('reference-circuit');
         if (parent === null) return;
-        newSVGImage(0, 0, 212, 127, 'bank_digit.jpg', parent);
-        newSVGImage(0, 127, 212, 127, 'bank_digit.jpg', parent);
-        newSVGImage(212, 127, 212, 127, 'bank_selector_8-bit.jpg', parent);
+        const sum = (accumulator, value) => accumulator + value;
+        const inputWireCount = Math.ceil(this.inputSizes.reduce(sum) / 4);
+        const outputWireCount = Math.ceil(this.outputSizes.reduce(sum) / 4);
+        let process;
+        if (inputWireCount <= 0) {
+            process = [];
+        } else if (inputWireCount <= 2) {
+            process = ['bank_digit.jpg'];
+        } else if (inputWireCount <= 3) {
+            process = ['bank_digit.jpg', 'bank_selector_4-bit.jpg'];
+        } else {
+            const amountOfSelectors = Math.ceil((inputWireCount - 2) / 2);
+            process = ['bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg')];
+        }
+        for (let location = 0; location < this.numberOfLocations; location++) {
+            for (let digit = 0; digit < outputWireCount; digit++) {
+                const height = 127;
+                const digitYOffset = (location * outputWireCount + digit) * height;
+                let currentX = 0;
+                process.forEach((element, index) => {
+                    const width = this.getWidth(element);
+                    newSVGImage(currentX, digitYOffset, width, height, element, parent);
+                    currentX += width;
+                });
+            }
+        }
     }
 }
