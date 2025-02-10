@@ -7,3 +7,8 @@ idea: make the circuit interactive so you can hover over a bank to copy it
 5. clear before regenerate to remove residue
 V. copy buttons
 V. SP4CEBAR home page
+
+
+note:
+- the sfm will still have inputs and output wires shown above the loop connection
+- an sfm may have unlooped outputs: side-ROMs
