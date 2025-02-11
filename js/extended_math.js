@@ -140,4 +140,38 @@ export default class ExtendedMath {
         return string.replace(/ |\[|\]/g, '').split(',')
             .map(element => element.toString());
     }
+
+    /**
+     * 
+     * @param {string} string 
+     * @param {RegExp} regex 
+     * @returns {string | null}
+     */
+    static matchFirst(string, regex){
+        const match = string.match(regex);
+        if(match === null) return null;
+        return match[0];
+    }
+
+    /**
+     * 
+     * @param {string} string 
+     * @param {RegExp} regex 
+     * @returns {number|null}
+     */
+    static matchFirstAsInt(string, regex){
+        const match = ExtendedMath.matchFirst(string, regex);
+        if(match === null) return null;
+        return parseInt(match);
+    }
+
+    /**
+     * 
+     * @param {string} string 
+     * @param {RegExp} regex 
+     * @returns {boolean}
+     */
+    static hasMatch(string, regex){
+        return ExtendedMath.matchFirst(string, regex) !== null;
+    }
 }
