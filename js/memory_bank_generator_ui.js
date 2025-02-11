@@ -18,6 +18,8 @@ export default class MemoryBankGeneratorUI {
      */
     generateButton = document.querySelector('button');
 
+    statisticsParagraph = document.getElementById('bank-statistics');
+
     constructor() {
         if (this.codeInputElement) {
             this.codeInputElement.textContent = '([x, y]) => {\n    return [x + y];\n}'
@@ -47,5 +49,9 @@ export default class MemoryBankGeneratorUI {
         generator.generate();
 
         generator.write();
+
+        if (this.statisticsParagraph) {
+            this.statisticsParagraph.textContent = generator.getStats();
+        }
     }
 }

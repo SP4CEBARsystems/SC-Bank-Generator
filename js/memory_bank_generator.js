@@ -195,5 +195,10 @@ export default class MemoryBankGenerator {
                 }
             }
         }
+        console.log(this.numberOfLocations, inputLayerCount, outputWireCount);
+    }
+
+    getStats() {
+        // return `${this.numberOfLocations} * ${inputLayerCount} * ${outputWireCount}`
     }
 }
