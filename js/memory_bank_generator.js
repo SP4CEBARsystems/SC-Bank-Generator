@@ -140,6 +140,7 @@ export default class MemoryBankGenerator {
             case 'bank_wires.jpg':
             case 'bank_wires_crossing.jpg':
             case 'bank_digit.jpg':
+            case 'bank_digit_single.jpg':
             case 'bank_selector_8-bit.jpg':
                 return 212;
             default:
@@ -164,7 +165,7 @@ export default class MemoryBankGenerator {
         if (inputWireCount <= 0) {
             process = [];
         } else if (inputWireCount <= 1) {
-            process = ['bank_digit.jpg'];
+            process = ['bank_digit_single.jpg'];
         } else if (inputWireCount <= 2) {
             process = ['bank_digit.jpg'];
         } else if (inputWireCount <= 3) {
