@@ -9,11 +9,15 @@ export default class TypeValue {
     /**
      * 
      * @param {string} type 
-     * @param {number} value 
+     * @param {number} [value]
      */
     constructor(type, value) {
-        this.type = type;
-        this.value = value;
+        this.type = new DataType(type);
+        if (value !== undefined) {
+            this.value = this.type.encode(value);
+        } else {
+            this.value = 0;
+        }
     }
 
     /**
@@ -22,7 +26,9 @@ export default class TypeValue {
      * @param {number} inputvalue 
      */
     static inputValue(type, inputvalue) {
-        return new TypeValue(type, TypeValue.encode(type, inputvalue));
+        const dataType = new TypeValue(type);
+        dataType.value = inputvalue;
+        return dataType;
     }
     
     /**
@@ -61,22 +67,22 @@ export default class TypeValue {
      * @returns {number}
      */
     outputValue() {
-        const size = TypeValue.sizeOf(this.type);
-        switch (this.type) {
-            case 'int':
-                //uses 2s complement
-                const value = ExtendedMath.bitSelect(this.value, 0, size-1);
-                const sign = -ExtendedMath.bitSelectKeepOffset(this.value, size-1, 1);
-                return value + sign;
-            case 'u_int':
-                return ExtendedMath.bitSelect(this.value, 0, size);
-            case 'float':
-                return ExtendedMath.bitSelect(this.value, 0, size);
-            case 'u_float':
-                return ExtendedMath.bitSelect(this.value, 0, size);
-            default:
-                return ExtendedMath.bitSelect(this.value, 0, size);;
-        }
+        return this.type.decode(this.value);
+        // switch (this.type.baseType) {
+        //     case 'int':
+        //         //uses 2s complement
+        //         const value = ExtendedMath.bitSelect(this.value, 0, size-1);
+        //         const sign = -ExtendedMath.bitSelectKeepOffset(this.value, size-1, 1);
+        //         return value + sign;
+        //     case 'u_int':
+        //         return ExtendedMath.bitSelect(this.value, 0, size);
+        //     case 'float':
+        //         return ExtendedMath.bitSelect(this.value, 0, size);
+        //     case 'u_float':
+        //         return ExtendedMath.bitSelect(this.value, 0, size);
+        //     default:
+        //         return ExtendedMath.bitSelect(this.value, 0, size);;
+        // }
     }
 
     /**
@@ -173,7 +179,7 @@ export default class TypeValue {
         if (types.length !== values.length) {
             return [];
         }
-        return types.map((type, index) => new TypeValue(type, values[index]));
+        return types.map((type, index) => TypeValue.inputValue(type, values[index]));
     }
 
     /**
@@ -186,6 +192,6 @@ export default class TypeValue {
         if (types.length !== values.length) {
             return [];
         }
-        return types.map((type, index) => TypeValue.inputValue(type, values[index]));
+        return types.map((type, index) => new TypeValue(type, values[index]));
     }
 }

@@ -1,6 +1,4 @@
-import ExtendedMath from "./extended_math"
-import TypeValue from "./type_value"
-
+import ExtendedMath from "./extended_math.js"
 
 export default class DataType {
     size
