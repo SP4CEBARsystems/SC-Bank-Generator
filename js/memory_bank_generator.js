@@ -80,7 +80,7 @@ export default class MemoryBankGenerator {
         const inputSizes = inputTypes.map(TypeValue.sizeOf);
         const outputSizes = outputTypes.map(TypeValue.sizeOf);
         const parameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
-        TypeValue.arrayFromPreFormatted(inputTypes, parameters).forEach(element => element.outputValue()); 
+        TypeValue.arrayFromValues(inputTypes, parameters).forEach(element => element.outputValue()); 
         const output = callback(parameters, bankPosition);
         if (output.length != outputSizes.length) {
             console.error('outputSizes count mismatch, you have', output.length, 'outputs but you have defined', outputSizes.length, 'output lengths');
@@ -195,10 +195,11 @@ export default class MemoryBankGenerator {
                 }
             }
         }
-        console.log(this.numberOfLocations, inputLayerCount, outputWireCount);
+        console.log(`total banks ${this.numberOfLocations * inputLayerCount * outputWireCount} = count (${this.numberOfLocations}) * input requirement (${inputLayerCount}) * digits (${outputWireCount})`);
     }
 
     getStats() {
-        // return `${this.numberOfLocations} * ${inputLayerCount} * ${outputWireCount}`
+        return '';
+        // `${this.numberOfLocations} * ${inputLayerCount} * ${outputWireCount}`
     }
 }
