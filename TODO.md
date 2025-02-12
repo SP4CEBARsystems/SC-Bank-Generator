@@ -6,6 +6,7 @@ idea: make the circuit interactive so you can hover over a bank to copy it
 4. launch and share
 5. clear before regenerate to remove residue
 6. clear unused space in bank with 0 for clarity
+7. regenerate doesn't work, prevvious result isn't cleared
 
 V. copy buttons
 V. SP4CEBAR home page
