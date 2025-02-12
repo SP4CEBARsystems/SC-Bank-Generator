@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandboxed Function Runner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: black;
+            color: white;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            font-family: monospace;
+            background-color: #222;
+            color: white;
+        }
+        input {
+            width: 80px;
+            margin-right: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: 100px;
+            border: 1px solid black;
+            display: block;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>JavaScript Function Sandbox</h2>
+    <p>Enter an unnamed function (e.g., (x, y) => x + y;), provide inputs, and run.</p>
+
+    <textarea id="codeInput">(x, y) => x + y;</textarea>
+    <br>
+    <label>Argument 1:</label> <input type="text" id="arg1" value="5">
+    <label>Argument 2:</label> <input type="text" id="arg2" value="3">
+    <button id="runUserFunction">Run Function</button>
+
+    <iframe id="sandbox" sandbox="allow-scripts"></iframe>
+
+    <p>Output: <span id="output">N/A</span></p>
+
+	<script type="module" src="./js/code_sandbox.js"></script>
+
+</body>
+</html>
