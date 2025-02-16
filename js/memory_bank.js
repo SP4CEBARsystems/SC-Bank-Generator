@@ -1,3 +1,4 @@
+import init_code_sandbox from "./code_sandbox.js";
 import MemoryBankGeneratorUI from "./memory_bank_generator_ui.js";
 import TypeValue from "./type_value.js";
 
@@ -12,6 +13,7 @@ document.addEventListener( "DOMContentLoaded", runOnStart);
 function runOnStart() {
     // functionTesting();
     const generatorUI = new MemoryBankGeneratorUI();
+    init_code_sandbox();
 }
 
 function functionTesting() {

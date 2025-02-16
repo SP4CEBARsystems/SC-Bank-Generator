@@ -1,6 +1,17 @@
-const generateButtonElement = document.getElementById('runUserFunction');
-if (generateButtonElement) {
-    generateButtonElement.addEventListener('click', runUserFunction);
+export default function init_code_sandbox() {
+    const generateButtonElement = document.getElementById('runUserFunction');
+    if (generateButtonElement) {
+        generateButtonElement.addEventListener('click', runUserFunction);
+    }
+
+    // Listen for messages from the iframe
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'result') {
+            document.getElementById('output').innerText = 'Result: ' + event.data.result;
+        } else if (event.data.type === 'error') {
+            document.getElementById('output').innerText = 'Error: ' + event.data.error;
+        }
+    });
 }
 
 function runUserFunction() {
@@ -47,12 +58,3 @@ function runUserFunction() {
         }, '*');
     }, 500);
 }
-
-// Listen for messages from the iframe
-window.addEventListener('message', (event) => {
-    if (event.data.type === 'result') {
-        document.getElementById('output').innerText = 'Result: ' + event.data.result;
-    } else if (event.data.type === 'error') {
-        document.getElementById('output').innerText = 'Error: ' + event.data.error;
-    }
-});

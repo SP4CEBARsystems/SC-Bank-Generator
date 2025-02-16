@@ -29,11 +29,20 @@
 			</div>
 			<label for="codeInput">code input</label>
 			<div>
-				<textarea name="codeInput" cols="40" rows="5" placeholder="([x, y]) => {return [x + y];}"></textarea>
+				<textarea id="codeInput" name="codeInput" cols="40" rows="5" placeholder="([x, y]) => {return [x + y];}"></textarea>
 			</div>
 			<button>Generate</button>
 			<hr />
 			<p id="bank-statistics"></p>
+
+			
+			<label>Argument 1:</label> <input type="text" id="arg1" value="5">
+			<label>Argument 2:</label> <input type="text" id="arg2" value="3">
+			<button id="runUserFunction">Run Function</button>
+		
+			<iframe id="sandbox" sandbox="allow-scripts"></iframe>
+		
+			<p>Output: <span id="output">N/A</span></p>
 		</section>
 		<section>
 			<div id="bank-data-output"></div>
@@ -71,22 +80,6 @@
 	</main>
 	<footer></footer>
 	<script type="module" src="./js/memory_bank.js"></script>
-
-	
-
-    <h2>JavaScript Function Sandbox</h2>
-    <p>Enter an unnamed function (e.g., (x, y) => x + y;), provide inputs, and run.</p>
-
-    <textarea id="codeInput">(x, y) => x + y;</textarea>
-    <br>
-    <label>Argument 1:</label> <input type="text" id="arg1" value="5">
-    <label>Argument 2:</label> <input type="text" id="arg2" value="3">
-    <button id="runUserFunction">Run Function</button>
-
-    <iframe id="sandbox" sandbox="allow-scripts"></iframe>
-
-    <p>Output: <span id="output">N/A</span></p>
-
-	<script type="module" src="./js/code_sandbox.js"></script>
+	<!-- <script type="module" src="./js/code_sandbox.js"></script> -->
 </body>
 </html>
