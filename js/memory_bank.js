@@ -10,7 +10,7 @@ import TypeValue from "./type_value.js";
 document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
-    functionTesting();
+    // functionTesting();
     const generatorUI = new MemoryBankGeneratorUI();
 }
 

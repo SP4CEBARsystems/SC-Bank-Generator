@@ -148,14 +148,30 @@ export default class MemoryBankGenerator {
         }
     }
 
+    /**
+     * 
+     * @returns 
+     */
     generateCircuit(){
-        const drawCircuitCell = (element, currentX, digitYOffset, height, parent) => {
+        /**
+         * 
+         * @param {*} element 
+         * @param {*} currentX 
+         * @param {*} digitYOffset 
+         * @param {*} height 
+         * @param {*} parent 
+         * @param {*} svgWidth 
+         * @param {*} svgHeight 
+         * @returns 
+         */
+        const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth) => {
             const width = this.getWidth(element);
             newSVGImage(currentX, digitYOffset, width, height, element, parent);
             currentX += width;
-            return currentX;
+            svgWidth += width;
+            return [currentX, svgWidth];
         }
-        const parent = document.getElementById('reference-circuit');
+        const parent = /** @type {SVGElement} */ document.getElementById('reference-circuit');
         if (parent === null) return;
         const sum = (accumulator, value) => accumulator + value;
         const totalInputSize = this.inputTypes.map(TypeValue.sizeOf).reduce(sum);
@@ -174,6 +190,8 @@ export default class MemoryBankGenerator {
             const amountOfSelectors = Math.ceil((inputWireCount - 2) / 2);
             process = ['bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg')];
         }
+        let svgWidth = 0;
+        let svgHeight = 0;
         const SingleBankInputSize = 8;
         const inputLayerCount = 2 ** (totalInputSize - SingleBankInputSize);
         for (let location = 0; location < this.numberOfLocations; location++) {
@@ -182,19 +200,26 @@ export default class MemoryBankGenerator {
                     const height = 127;
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
+                    let svgRowWidth = 0;
                     process.forEach((element, index) => {
-                        currentX = drawCircuitCell(element, currentX, digitYOffset, height, parent);
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
                     });
                     let hasConnected = false;
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
                         const isConnecting = digit === digitOut;
                         if (isConnecting) hasConnected = true;
                         const element = isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg';
-                        currentX = drawCircuitCell(element, currentX, digitYOffset, height, parent);
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
                     }
+                    svgWidth = Math.max(svgWidth, svgRowWidth);
+                    svgHeight += height;
+                    console.log(`add height: ${height} to ${svgHeight}`);
                 }
             }
         }
+        parent.setAttribute("width", `${svgWidth}px`);
+        parent.setAttribute("height", `${svgHeight}px`);
+        // parent.setHeight(5000);
         console.log(`total banks ${this.numberOfLocations * inputLayerCount * outputWireCount} = count (${this.numberOfLocations}) * input requirement (${inputLayerCount}) * digits (${outputWireCount})`);
     }
 
