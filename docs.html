@@ -16,15 +16,64 @@
 		<h1>Documentation</h1>
 	</header>
 	<main>
-		<section>
-			<h2>Data Types</h2>
-			<p></p>
+		<hr>
+		<section id="index">
+			<h2>Index</h2>
+			<ul>
+				<li><a href="#description">Description</a></li>
+				<li><a href="#code">Code</a></li>
+				<li><a href="#types">Data Types</a></li>
+				<li><a href="#data">Data</a></li>
+				<li><a href="#circuit">Generated Circuit</a></li>
+			</ul>
+		</section>
+		<hr>
+		<section id="description">
+			<h2>Description</h2>
+			<p>
+				This tool allows you to easily program the data for memory bank systems. It supports three different use cases: ROM, Selector, and FSM.
+				<ul>
+					<li><b>ROM: <a href="https://en.wikipedia.org/wiki/Read-only_memory">Read only Memory</a></b><br>for any input value coming in, one output value is coming out. This can be used to make calculators or displays. This is the simplest of the three.</li>
+					<li><b>Selector ROM:</b><br>An array of ROMs that all have the same input. Each ROM will respond differently to the input. For example, it may be set to activate only when its input is equal to its location number, thus creating a selector. This has many uses in displays, ROMs and <a href="https://en.wikipedia.org/wiki/Random-access_memory">RAMs</a>. This online tool will even generate some if your ROMs have too many inputs for a single Memory Bank</li>
+					<li><b>FSM: <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State Machine</a></b><br> A memory bank with its output connected to its input will behave like an FSM. An FSM can be used to store, count, </li>
+				</ul>
+				Whenever memory bank data is generated you may need more than one memory bank to contain it, these are structured by three metrics:
+				<ol>
+					<li><b>digit:</b> Whenever you need numbers larger than 15 (aka "F") to be output from your memory bank, you will need more digits.</li>
+					<li><b>input:</b> Whenever you need numbers larger than 255 (aka "FF") to be input into your memory bank, you will need more banks to handle the higher ranges</li>
+					<li><b>location:</b> Whenever you are making a selector ROM system you will need a ROM for each physical location</li>
+					Using this makes your ROM a selector ROM (a therm I made up but will be using throughout this site)
+				</ol>
+			</p>
+		</section>
+		<hr>
+		<section id="code">
 			<h2>Code</h2>
-			<p></p>
+			<p>
+				Within the code field you can write a javascript function. 
+				When you press the run button, the function will be evaluated for every input of your memory bank, the output of the function will be saved as memory bank data.
+			</p>
+		</section>
+		<hr>
+		<section id="types">
+			<h2>Data Types</h2>
+			<p>
+				The 
+			</p>
+		</section>
+		<hr>
+		<section id="data">
 			<h2>Data</h2>
-			<p></p>
+			<p>
+
+			</p>
+		</section>
+		<hr>
+		<section id="circuit">
 			<h2>Generated Circuit</h2>
-			<p></p>
+			<p>
+
+			</p>
 		</section>
 	</main>
 	<footer></footer>
