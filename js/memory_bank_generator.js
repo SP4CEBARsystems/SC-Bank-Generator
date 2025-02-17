@@ -1,3 +1,4 @@
+import { runUserFunction } from "./code_sandbox.js";
 import { newCodeBlock, newContainer, newSVGImage } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import TypeValue from "./type_value.js";
@@ -45,9 +46,11 @@ export default class MemoryBankGenerator {
      * @returns {string[]}
      */
     generateOne(bankPosition) {
-        const bankData = ExtendedMath.sample(
-            256, this.callbackHost, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback
-        );
+        const bankData = this.sampleBank(bankPosition);
+        // const bankData = ExtendedMath.sample(
+        //     256, this.callbackHost, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback
+        // );
+
         const arrayLength = this.countMemoryBanksRequired(bankData);
         if (isNaN(arrayLength)) {
             const faultyIndex = bankData.findIndex((element) => isNaN(element));
@@ -67,6 +70,14 @@ export default class MemoryBankGenerator {
         return bankDataStrings
     }
 
+    sampleBank(bankPosition) {
+        const data = [];
+        for (let index = 0; index < 256; index++) {
+            data.push(this.callbackHost(index, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback));
+        }
+        return data;
+    }
+
     /**
      * 
      * @param {number} bankIndex 
@@ -77,11 +88,20 @@ export default class MemoryBankGenerator {
      * @returns {number}
      */
     callbackHost(bankIndex, bankPosition, inputTypes, outputTypes, callback){
-        const inputSizes = inputTypes.map(TypeValue.sizeOf);
-        const outputSizes = outputTypes.map(TypeValue.sizeOf);
-        const parameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
-        TypeValue.arrayFromValues(inputTypes, parameters).forEach(element => element.outputValue()); 
+        let parameters = this.formatInput(inputTypes, bankIndex);
+        // runUserFunction(inputArray);
         const output = callback(parameters, bankPosition);
+        return this.unformatOutput(outputTypes, output);
+    }
+
+    formatInput(inputTypes, bankIndex) {
+        const inputSizes = inputTypes.map(TypeValue.sizeOf);
+        const rawParameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
+        return TypeValue.arrayFromValues(inputTypes, rawParameters).map(element => element.outputValue());
+    }
+
+    unformatOutput(outputTypes, output) {
+        const outputSizes = outputTypes.map(TypeValue.sizeOf);
         if (output.length != outputSizes.length) {
             console.error('outputSizes count mismatch, you have', output.length, 'outputs but you have defined', outputSizes.length, 'output lengths');
             return 0;
@@ -172,7 +192,6 @@ export default class MemoryBankGenerator {
          * @param {*} height 
          * @param {*} parent 
          * @param {*} svgWidth 
-         * @param {*} svgHeight 
          * @returns 
          */
         const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth) => {

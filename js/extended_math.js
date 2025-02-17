@@ -1,6 +1,13 @@
 import Word from "./word.js";
 
 export default class ExtendedMath {
+    /**
+     * like map but with a fixed count instead of an input array and it allows additional parameters to be passed on to the callback function
+     * @param {*} loopCount 
+     * @param {*} callback 
+     * @param  {...any} callbackParameters 
+     * @returns 
+     */
     static sample(loopCount, callback, ...callbackParameters) {
         const data = [];
         for (let index = 0; index < loopCount; index++) {
