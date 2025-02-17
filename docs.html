@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
 	<style>
 	</style>
 </head>
+
 <body>
 	<header>
 		<nav>
@@ -25,47 +27,196 @@
 				<li><a href="#types">Data Types</a></li>
 				<li><a href="#data">Data</a></li>
 				<li><a href="#circuit">Generated Circuit</a></li>
+				<li><a href="#errors">Common Errors</a></li>
+				<!-- <li><a href="#faq">FAQ</a></li> -->
 			</ul>
 		</section>
 		<hr>
 		<section id="description">
 			<h2>Description</h2>
 			<p>
-				This tool allows you to easily program the data for memory bank systems. It supports three different use cases: ROM, Selector, and FSM.
-				<ul>
-					<li><b>ROM: <a href="https://en.wikipedia.org/wiki/Read-only_memory">Read only Memory</a></b><br>for any input value coming in, one output value is coming out. This can be used to make calculators or displays. This is the simplest of the three.</li>
-					<li><b>Selector ROM:</b><br>An array of ROMs that all have the same input. Each ROM will respond differently to the input. For example, it may be set to activate only when its input is equal to its location number, thus creating a selector. This has many uses in displays, ROMs and <a href="https://en.wikipedia.org/wiki/Random-access_memory">RAMs</a>. This online tool will even generate some if your ROMs have too many inputs for a single Memory Bank</li>
-					<li><b>FSM: <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State Machine</a></b><br> A memory bank with its output connected to its input will behave like an FSM. An FSM can be used to store, count, </li>
-				</ul>
-				Whenever memory bank data is generated you may need more than one memory bank to contain it, these are structured by three metrics:
-				<ol>
-					<li><b>digit:</b> Whenever you need numbers larger than 15 (aka "F") to be output from your memory bank, you will need more digits.</li>
-					<li><b>input:</b> Whenever you need numbers larger than 255 (aka "FF") to be input into your memory bank, you will need more banks to handle the higher ranges</li>
-					<li><b>location:</b> Whenever you are making a selector ROM system you will need a ROM for each physical location</li>
-					Using this makes your ROM a selector ROM (a therm I made up but will be using throughout this site)
-				</ol>
+				This tool allows you to easily program the data for memory bank systems. It supports three different use
+				cases: ROM, Selector, and FSM.
+			<ul>
+				<li><b>ROM: <a href="https://en.wikipedia.org/wiki/Read-only_memory">Read only Memory</a></b><br>for any
+					input value coming in, one output value is coming out. This can be used to make calculators or
+					displays. This is the simplest, and likely most common, of the three.</li>
+				<li><b>Selector ROM:</b><br>An array of ROMs that all have the same input. Each ROM will respond
+					differently to the input. For example, it may be set to activate only when its input is equal to its
+					location number, thus creating a selector. This has many uses in displays, ROMs and <a
+						href="https://en.wikipedia.org/wiki/Random-access_memory">RAMs</a>. This online tool will even
+					generate some if your ROMs have too many inputs for a single Memory Bank</li>
+				<li><b>FSM: <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State
+							Machine</a></b><br> A memory bank with its output connected to its input will behave like an
+					FSM. An FSM has a fixed number of states and can choose to go to any other state depending on its
+					current state and some external inputs. It can be used to store and step through its states. I found
+					it most useful for handling game loops.</li>
+			</ul>
 			</p>
 		</section>
 		<hr>
 		<section id="code">
 			<h2>Code</h2>
 			<p>
-				Within the code field you can write a javascript function. 
-				When you press the run button, the function will be evaluated for every input of your memory bank, the output of the function will be saved as memory bank data.
+				Within the code field you can write a javascript function.
+				When you press the run button, the function will be evaluated for every input of your memory bank, the
+				output of the function will be saved as memory bank data.
 			</p>
 		</section>
 		<hr>
 		<section id="types">
 			<h2>Data Types</h2>
 			<p>
-				The 
+				Each value may be split up into multiple smaller parameters of specific sizes in bits. Allowing you to
+				treat them separately.
+				You can use the "input types" and "output types" fields to set the amount of parameters and their types
+				and sizes. This can be done by typing a numbers (sizes in bits) separated by commas, each number is a
+				parameter
+
+				Instead of a number you may type a datatype, the code supports the following types:
+			<ol>
+				<h3>
+					<li>Unsigned Integer Types</li>
+				</h3>
+				An unsigned integer is a whole number that can <b>not</b> be negative, on this online tool it is
+				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
+				bits)<br>
+				examples:
+				<ul>
+					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
+					<li>"U_INT_4" is an 4-bit whole number ranging from 0 to 15</li>
+					<li>"U_INT_8" is an 8-bit whole number ranging from 0 to 255</li>
+					<li>"U_INT_16" is an 16-bit whole number ranging from 0 to 65,535</li>
+					<li>"U_INT_32" is an 32-bit whole number ranging from 0 to 4,294,967,295</li>
+					<li>"U_INT_64" is an 64-bit whole number ranging from 0 to 18,446,744,073,709,551,615</li>
+				</ul>
+				Other forms
+				<ul>
+					<li>[n]: same as "U_INT_[n]" (where "[n]" is any number), for example: "8" is the same as "U_INT_8"
+					</li>
+					<!-- <li>LONG: same as "U_INT_64"</li>
+						<li>SHORT: same as "U_INT_16"</li> -->
+					<li>BYTE: same as "U_INT_8"</li>
+					<li>NIBBLE: same as "U_INT_4"</li>
+					<li>BIT: same as "U_INT_1"</li>
+					<li>FLAG: same as "U_INT_1"</li>
+					<li>BOOLEAN: same as "U_INT_1"</li>
+					<li>BOOL: same as "U_INT_1"</li>
+				</ul>
+				<h3>
+					<li>(Signed) Integer Types</li>
+				</h3>
+				<ul>
+					<li></li>
+				</ul>
+				<h3>
+					<li>Floating Point Number Types</li>
+				</h3>
+				<ul>
+					<li></li>
+				</ul>
+				<!-- <li><h3>Auto</h3></li>
+					<ul>
+						<li></li>
+					</ul> -->
+			</ol>
+			<h3>Optional Parameters</h3>
+			<h4>Offset</h4>
+			U_INT_o[m]_[n] (where "[n]" is any number representing the size in bits) (where "[m]" is any number
+			representing the offset in bits), so U_INT_o2_4 is an unsigned 4-bit number<br>
 			</p>
 		</section>
 		<hr>
 		<section id="data">
 			<h2>Data</h2>
 			<p>
+				Whenever memory bank data is generated you may need more than one memory bank to contain it, these are
+				structured by three metrics:
+			<ol>
+				<li><b>digit:</b> Whenever you need numbers larger than 15 (aka "F") to be output from your memory bank,
+					you will need more digits.</li>
+				<li><b>input:</b> Whenever you need numbers larger than 255 (aka "FF") to be input into your memory
+					bank, you will need more banks to handle the higher ranges</li>
+				<li><b>location:</b> Whenever you are making a selector ROM system you will need a ROM for each physical
+					location</li>
+				Using this makes your ROM a selector ROM (a therm I made up but will be using throughout this site)
+			</ol>
+			When designing a system using this tool consider how many bits you really need as each <a
+				href="https://survivalcraftgame.fandom.com/wiki/Memory_Bank">SurvivalCraft memory bank</a> has an 8-bit
+			address input and a 4-bit output.
+			The amount of memory banks required is:
+			Amount_Of_Memory_Banks_Required = Amount_Of_Locations x floor( Required_Output_Size / 4 ) x 2^floor(
+			Required_Input_Size - 8 )
+			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+				<mrow>
+					<mi>m</mi>
+					<mo>=</mo>
+					<mi>L</mi>
+					<mo>&#xD7;</mo>
+					<mi>floor</mi>
+					<mo>(</mo>
+					<mfrac>
+						<mi>O</mi>
+						<mn>4</mn>
+					</mfrac>
+					<mo>)</mo>
+					<mo>&#xD7;</mo>
+					<msup>
+						<mn>2</mn>
+						<mrow>
+							<mi>floor</mi>
+							<mo>(</mo>
+							<mi>I</mi>
+							<mo>-</mo>
+							<mn>8</mn>
+							<mo>)</mo>
+						</mrow>
+					</msup>
+				</mrow>
+			</math>
 
+			<p><strong>Legend:</strong></p>
+			<ul>
+				<li><strong>m</strong>: Amount of memory banks required</li>
+				<li><strong>L</strong>: Amount of locations</li>
+				<li><strong>O</strong>: Required output size in bits</li>
+				<li><strong>I</strong>: Required input size in bits</li>
+			</ul>
+
+			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+				<mrow>
+					<mi>banks</mi>
+					<mo>=</mo>
+					<mi>Locations</mi>
+					<mo>&#xD7;</mo>
+					<mrow>
+						<mi>floor</mi>
+						<mo>(</mo>
+						<mfrac>
+							<mi>OutputSize</mi>
+							<mn>4</mn>
+						</mfrac>
+						<mo>)</mo>
+					</mrow>
+					<mo>&#xD7;</mo>
+					<msup>
+						<mn>2</mn>
+						<mrow>
+							<mi>floor</mi>
+							<mo>(</mo>
+							<mrow>
+								<mi>InputSize</mi>
+								<mo>-</mo>
+								<mn>8</mn>
+							</mrow>
+							<mo>)</mo>
+						</mrow>
+					</msup>
+				</mrow>
+			</math>
+
+			(this calculation should be shown automatically each time data is generated)
+			As you can see the input size scales really fast, for one 4-bit output 16-bit input you need
 			</p>
 		</section>
 		<hr>
@@ -75,7 +226,15 @@
 
 			</p>
 		</section>
+		<hr>
+		<section id="errors">
+			<h2>Common Errors</h2>
+			<p>
+
+			</p>
+		</section>
 	</main>
 	<footer></footer>
 </body>
+
 </html>
