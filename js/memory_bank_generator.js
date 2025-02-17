@@ -134,6 +134,17 @@ export default class MemoryBankGenerator {
         this.generateCircuit();
     }
 
+    clear(){
+        const banks = document.getElementById('bank-data-output');
+        if (banks) {
+            banks.innerHTML = "";
+        }
+        const circuit = document.getElementById('reference-circuit');
+        if (circuit) {
+            circuit.innerHTML = "";
+        }
+    }
+
     getWidth(imageName){
         switch (imageName) {
             case 'bank_empty.jpg':

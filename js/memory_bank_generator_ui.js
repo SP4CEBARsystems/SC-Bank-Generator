@@ -48,8 +48,8 @@ export default class MemoryBankGeneratorUI {
             eval(this.codeInputElement.value),
             outputsSizesArray
         );
+        generator.clear();
         generator.generate();
-
         generator.write();
 
         if (this.statisticsParagraph) {
