@@ -1,4 +1,4 @@
-import { runUserFunction } from "./code_sandbox.js";
+import { initConsoleListener, runUserFunction } from "./code_sandbox.js";
 import { newCodeBlock, newContainer, newSVGImage } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import TypeValue from "./type_value.js";
@@ -30,27 +30,37 @@ export default class MemoryBankGenerator {
         this.inputTypes = inputTypes;
         this.outputTypes = outputTypes;
         this.generatorCallback = generatorCallback;
+        initConsoleListener(this.processOutput);
     }
 
     generate(){
-        const bankArrayData = [];
+        const bankInput = [];
         for (let bankPosition = 0; bankPosition < this.numberOfLocations; bankPosition++) {
-            bankArrayData.push(this.generateOne(bankPosition));
+            bankInput.push(this.sampleBankInput(bankPosition));
+            // const bankData = ExtendedMath.sample(
+                //     256, this.callbackHost, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback
+                // );
         }
+        runUserFunction(bankInput);
+    }
+
+    processOutput(data){
+        const bankArrayData = [];
+        data.forEach(element => {
+            element.forEach(subElement => {
+                this.unformatOutput(this.outputTypes, subElement);
+            })
+            bankArrayData.push(this.postProcessOne(element));
+        });
         this.generatedData = bankArrayData;
     }
 
     /**
      * 
-     * @param {number} bankPosition 
+     * @param {any[]} bankData 
      * @returns {string[]}
      */
-    generateOne(bankPosition) {
-        const bankData = this.sampleBank(bankPosition);
-        // const bankData = ExtendedMath.sample(
-        //     256, this.callbackHost, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback
-        // );
-
+    postProcessOne(bankData) {
         const arrayLength = this.countMemoryBanksRequired(bankData);
         if (isNaN(arrayLength)) {
             const faultyIndex = bankData.findIndex((element) => isNaN(element));
@@ -78,6 +88,15 @@ export default class MemoryBankGenerator {
         return data;
     }
 
+    sampleBankInput(bankPosition) {
+        const data = [];
+        for (let index = 0; index < 256; index++) {
+            data.push(this.formatInput(index, this.inputTypes), bankPosition);
+        }
+        // const output = this.generatorCallback(parameters, bankPosition);
+        return data;
+    }
+
     /**
      * 
      * @param {number} bankIndex 
@@ -94,7 +113,7 @@ export default class MemoryBankGenerator {
         return this.unformatOutput(outputTypes, output);
     }
 
-    formatInput(inputTypes, bankIndex) {
+    formatInput(bankIndex, inputTypes) {
         const inputSizes = inputTypes.map(TypeValue.sizeOf);
         const rawParameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
         return TypeValue.arrayFromValues(inputTypes, rawParameters).map(element => element.outputValue());

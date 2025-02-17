@@ -1,14 +1,15 @@
 export function init_code_sandbox() {
     // Listen for messages from the iframe
-    initConsoleListener();
+    // initConsoleListener();
 }
 
-function initConsoleListener() {
+export function initConsoleListener(callback) {
     window.addEventListener('message', (event) => {
         const output = document.getElementById('output');
         if (!output) return;
         if (event.data.type === 'result') {
-            output.innerText = 'Result: ' + event.data.result[0];
+            output.innerText = 'Result: ' + event.data.result;
+            callback(event.data.result);
         } else if (event.data.type === 'error') {
             output.innerText = 'Error: ' + event.data.error;
         }
@@ -48,7 +49,7 @@ export function runUserFunction(inputArray) {
                         const timeout = setTimeout(() => { throw new Error('Execution timed out!'); }, 3000);
                         const userFunction = ${userCode}; // Convert to function
                         if (typeof userFunction !== 'function') throw new Error('Invalid function format');
-                        const result = ${inputArray}.map(userFunction);
+                        const result = ${inputArray}.map((item) => item.map(userFunction));
                         clearTimeout(timeout);
                         window.parent.postMessage({ type: 'result', result: result }, '*');
                     } catch (error) {
