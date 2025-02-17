@@ -57,6 +57,7 @@ export default class MemoryBankGenerator {
         });
         console.log('bankArrayData', bankArrayData);
         this.generatedData = bankArrayData;
+        this.write();
     }
 
     /**

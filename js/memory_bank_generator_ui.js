@@ -50,7 +50,7 @@ export default class MemoryBankGeneratorUI {
         );
         generator.clear();
         generator.generate();
-        generator.write();
+        // generator.write();
 
         if (this.statisticsParagraph) {
             this.statisticsParagraph.textContent = generator.getStats();
