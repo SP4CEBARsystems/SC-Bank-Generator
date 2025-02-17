@@ -1,7 +1,7 @@
 body {
     background-color: black;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: sans-serif;
     max-width: 800px;
     margin-inline: auto;
 }
@@ -36,4 +36,12 @@ button.copy-btn {
 
 .white {
     background-color: white;
+}
+
+p {
+    line-height: 1.5em;
+}
+
+math {
+    margin: 40px 20px;
 }

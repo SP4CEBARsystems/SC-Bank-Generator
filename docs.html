@@ -13,7 +13,8 @@
 <body>
 	<header>
 		<nav>
-			<a href="./index.html">Home</a>
+			<a href="https://sp4cebar.com/">Site Home</a>
+			<a href="./index.html">Generator Home</a>
 		</nav>
 		<h1>Documentation</h1>
 	</header>
@@ -58,9 +59,15 @@
 		<section id="code">
 			<h2>Code</h2>
 			<p>
-				Within the code field you can write a javascript function.
+				Within the code field you can write a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">javascript</a> function.
 				When you press the run button, the function will be evaluated for every input of your memory bank, the
 				output of the function will be saved as memory bank data. It will be encoded in <a href="#types">data types</a> and split over <a href="#data">digits</a>.
+				<h3>Relevant Javascript Documentation</h3>
+				<ul>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">Javascript</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">Basic Calculating</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Math Functions</a></li>
+				</ul>
 			</p>
 		</section>
 		<hr>
@@ -84,7 +91,7 @@
 				On this online tool it is
 				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
 				bits)<br>
-				examples:
+				<h4>Examples</h4>
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -102,9 +109,29 @@
 						<td>0 to 3</td>
 					</tr>
 					<tr>
+						<td>U_INT_3</td>
+						<td>3-bit</td>
+						<td>0 to 7</td>
+					</tr>
+					<tr>
 						<td>U_INT_4</td>
 						<td>4-bit</td>
 						<td>0 to 15</td>
+					</tr>
+					<tr>
+						<td>U_INT_5</td>
+						<td>5-bit</td>
+						<td>0 to 31</td>
+					</tr>
+					<tr>
+						<td>U_INT_6</td>
+						<td>6-bit</td>
+						<td>0 to 63</td>
+					</tr>
+					<tr>
+						<td>U_INT_7</td>
+						<td>7-bit</td>
+						<td>0 to 127</td>
 					</tr>
 					<tr>
 						<td>U_INT_8</td>
@@ -127,6 +154,7 @@
 						<td>0 to 18,446,744,073,709,551,615</td>
 					</tr>
 				</table>
+				
 				
 				<!-- <ul>
 					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
@@ -208,12 +236,12 @@
 				A signed integer (aka integer) is a whole number that can be negative. 
 				
 				<h4>Two's Complement</h4>
-				This tool uses <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> to represent negative numbers in binary, this comes down to the most significant bit having been negated. For example a four bit number's bits in 2s complement would be valued: 1, 2, 4, -8.
+				This tool uses <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> to represent negative numbers in binary, here the most significant bit has been negated. For example a four bit number's bits in 2s complement would be valued: 1, 2, 4, -8 instead of 1, 2, 4, 8.
 				
 				<h4>Format</h4>
 				on this online tool it is formatted as "INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
 				bits)<br>
-				examples:
+				<h4>Examples</h4>
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -290,16 +318,13 @@
 					<li>"INT_32" is an 32-bit whole number ranging from -2,147,483,648 to 2,147,483,647</li>
 					<li>"INT_64" is an 64-bit whole number ranging from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</li>
 				</ul> -->
-				<ul>
-					<li></li>
-				</ul>
 				<h3>
 					<li>Floating Point Number Types</li>
 				</h3>
 				Currently unsupported
-				<ul>
+				<!-- <ul>
 					<li></li>
-				</ul>
+				</ul> -->
 				<!-- <li><h3>Auto</h3></li>
 					<ul>
 						<li></li>
@@ -307,8 +332,9 @@
 			</ol>
 			<h3>Optional Parameters</h3>
 			<h4>Offset</h4>
-			U_INT_o[m]_[n] (where "[n]" is any number representing the size in bits) (where "[m]" is any number
-			representing the offset in bits), so U_INT_o2_4 is an unsigned 4-bit number<br>
+			Currently unsupported
+			<!-- U_INT_o[m]_[n] (where "[n]" is any number representing the size in bits) (where "[m]" is any number
+			representing the offset in bits), so U_INT_o2_4 is an unsigned 4-bit number<br> -->
 			</p>
 		</section>
 		<hr>
@@ -330,43 +356,6 @@
 				href="https://survivalcraftgame.fandom.com/wiki/Memory_Bank">SurvivalCraft memory bank</a> has an 8-bit
 			address input and a 4-bit output.
 			The amount of memory banks required is:
-			Amount_Of_Memory_Banks_Required = Amount_Of_Locations x floor( Required_Output_Size / 4 ) x 2^floor(
-			Required_Input_Size - 8 )
-			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-				<mrow>
-					<mi>m</mi>
-					<mo>=</mo>
-					<mi>L</mi>
-					<mo>&#xD7;</mo>
-					<mi>floor</mi>
-					<mo>(</mo>
-					<mfrac>
-						<mi>O</mi>
-						<mn>4</mn>
-					</mfrac>
-					<mo>)</mo>
-					<mo>&#xD7;</mo>
-					<msup>
-						<mn>2</mn>
-						<mrow>
-							<mi>floor</mi>
-							<mo>(</mo>
-							<mi>I</mi>
-							<mo>-</mo>
-							<mn>8</mn>
-							<mo>)</mo>
-						</mrow>
-					</msup>
-				</mrow>
-			</math>
-
-			<p><strong>Legend:</strong></p>
-			<ul>
-				<li><strong>m</strong>: Amount of memory banks required</li>
-				<li><strong>L</strong>: Amount of locations</li>
-				<li><strong>O</strong>: Required output size in bits</li>
-				<li><strong>I</strong>: Required input size in bits</li>
-			</ul>
 
 			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 				<mrow>
@@ -387,8 +376,10 @@
 					<msup>
 						<mn>2</mn>
 						<mrow>
-							<mi>floor</mi>
+							<mi>max</mi>
 							<mo>(</mo>
+							<mn>0</mn>
+							<mo>,</mo>
 							<mrow>
 								<mi>InputSize</mi>
 								<mo>-</mo>
@@ -399,9 +390,42 @@
 					</msup>
 				</mrow>
 			</math>
+			This calculation should be shown automatically each time data is generated.<br>
+			As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need 256 banks:
 
-			(this calculation should be shown automatically each time data is generated)
-			As you can see the input size scales really fast, for one 4-bit output 16-bit input you need
+			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+				<mrow>
+					<mi>(1)</mi>
+					<mo>&#xD7;</mo>
+					<mrow>
+						<mi>floor</mi>
+						<mo>(</mo>
+						<mfrac>
+							<mi>(4)</mi>
+							<mn>4</mn>
+						</mfrac>
+						<mo>)</mo>
+					</mrow>
+					<mo>&#xD7;</mo>
+					<msup>
+						<mn>2</mn>
+						<mrow>
+							<mi>max</mi>
+							<mo>(</mo>
+							<mn>0</mn>
+							<mo>,</mo>
+							<mrow>
+								<mi>(16)</mi>
+								<mo>-</mo>
+								<mn>8</mn>
+							</mrow>
+							<mo>)</mo>
+						</mrow>
+					</msup>
+				</mrow>
+				<mo>=</mo>
+				<mi>256</mi>
+			</math>
 			</p>
 		</section>
 		<hr>
@@ -409,9 +433,9 @@
 			<h2>Generated Circuit</h2>
 			<p>
 				A circuit is generated alongside the data.
-				The image is made up of multiple screenshots from SurvivalCraft stitched together and may cause some slight artifacts as seen below.
+				The image is made up of multiple screenshots from SurvivalCraft stitched together and may cause some slight graphical artifacts as seen below. The circuit part shown in that image may be treated as a single trench with a wire in it.
 			</p>
-			<img src="./assets/generated_circuit_tile_stitch_artifact.png" alt="artifact of two circuit tile images stitched together">
+			<img src="./assets/generated_circuit_tile_stitch_artifact.png" alt="graphical artifact of two circuit tile images stitched together">
 		</section>
 		<hr>
 		<section id="errors">
