@@ -179,6 +179,7 @@ export default class MemoryBankGenerator {
     }
 
     clear(){
+        this.generatedData = [];
         const banks = document.getElementById('bank-data-output');
         if (banks) {
             banks.innerHTML = "";

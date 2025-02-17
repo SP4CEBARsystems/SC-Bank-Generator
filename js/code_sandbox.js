@@ -11,7 +11,8 @@ export function initConsoleListener(callback) {
         if (!output) return;
         if (event.data.type === 'result') {
             console.log("message valid");
-            output.innerText = 'Result: ' + event.data.result;
+            output.innerText = 'Success!';
+            // output.innerText = 'Result: ' + event.data.result;
             callback(event.data.result);
         } else if (event.data.type === 'error') {
             // console.log("error");
