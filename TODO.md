@@ -1,13 +1,14 @@
-1. single ROM line bank circuits
-2. SVG scaling
+2. ROM array circuits shouldn't be merged into a single output wire
 3. label the shown circuit: input output wires, memory banks with a unique id code each, input segment location, 00-ff, digit
 idea: make the circuit interactive so you can hover over a bank to copy it
-3. safe eval()
-4. launch and share
-5. clear before regenerate to remove residue
-6. clear unused space in bank with 0 for clarity
-7. regenerate doesn't work, prevvious result isn't cleared
+4. clear unused space in bank with 0 for clarity
 
+V. single ROM line bank circuits
+V. launch and share
+V. safe eval()
+V. clear before regenerate to remove residue
+V. regenerate doesn't work, prevvious result isn't cleared
+V. SVG scaling
 V. copy buttons
 V. SP4CEBAR home page
 
