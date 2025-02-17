@@ -4,30 +4,34 @@ export function init_code_sandbox() {
 }
 
 export function initConsoleListener(callback) {
+    // console.log("initConsoleListener");
     window.addEventListener('message', (event) => {
+        // console.log("message");
         const output = document.getElementById('output');
         if (!output) return;
         if (event.data.type === 'result') {
+            console.log("message valid");
             output.innerText = 'Result: ' + event.data.result;
             callback(event.data.result);
         } else if (event.data.type === 'error') {
+            // console.log("error");
             output.innerText = 'Error: ' + event.data.error;
         }
     });
 }
 
-function initDataChainListener() {
-    window.addEventListener('message', (event) => {
-        const output = document.getElementById('output');
-        if (!output) return;
-        if (event.data.type === 'result') {
-            output.innerText = 'Result: ' + event.data.result[0];
-            sendArgumentsToIframe(iframe, arg1, arg2)
-        } else if (event.data.type === 'error') {
-            output.innerText = 'Error: ' + event.data.error;
-        }
-    });
-}
+// function initDataChainListener() {
+//     window.addEventListener('message', (event) => {
+//         const output = document.getElementById('output');
+//         if (!output) return;
+//         if (event.data.type === 'result') {
+//             output.innerText = 'Result: ' + event.data.result[0];
+//             sendArgumentsToIframe(iframe, arg1, arg2)
+//         } else if (event.data.type === 'error') {
+//             output.innerText = 'Error: ' + event.data.error;
+//         }
+//     });
+// }
 
 export function runUserFunction(inputArray) {
     const userCode = document.getElementById('codeInput')?.value.trim();
@@ -39,31 +43,39 @@ export function runUserFunction(inputArray) {
     // Reset output
     outputElement.innerText = 'Running...';
 
+    const arrayString = JSON.stringify(inputArray);
+    // console.log("arrayString", arrayString);
+    // const result = inputArray.map((item) => item.map((item) => {
+    //     console.log('item', item);
+    //     return item;
+    // }));
+    // console.log('result', result);
+
     // Create a unique script that the iframe will execute
     const sandboxScript = `
-        <script>
-            'use strict';
-            window.addEventListener('message', (event) => {
-                if (event.data.type === 'runFunction') {
-                    try {
-                        const timeout = setTimeout(() => { throw new Error('Execution timed out!'); }, 3000);
-                        const userFunction = ${userCode}; // Convert to function
-                        if (typeof userFunction !== 'function') throw new Error('Invalid function format');
-                        const result = ${inputArray}.map((item) => item.map(userFunction));
-                        clearTimeout(timeout);
-                        window.parent.postMessage({ type: 'result', result: result }, '*');
-                    } catch (error) {
-                        window.parent.postMessage({ type: 'error', error: error.message }, '*');
-                    }
+        'use strict';
+        // window.addEventListener('message', (event) => {
+        //     if (event.data.type === 'runFunction') {
+                const timeout = setTimeout(() => { throw new Error('Execution timed out!'); }, 3000);
+                try {
+                    const userFunction = ${userCode}; // Convert to function
+                    if (typeof userFunction !== 'function') throw new Error('Invalid function format');
+                    // console.log('hey');
+                    const result = ${arrayString}.map((item) => item.map(userFunction));
+                    clearTimeout(timeout);
+                    window.parent.postMessage({ type: 'result', result: result }, '*');
+                } catch (error) {
+                    clearTimeout(timeout);
+                    window.parent.postMessage({ type: 'error', error: error.message }, '*');
                 }
-            });
-        </script>
+        //     }
+        // });
     `;
 
     // const result = userFunction(event.data.args[0], event.data.args[1]);
 
     // Load the script into the sandboxed iframe
-    iframe.srcdoc = `<html><body>${sandboxScript}</body></html>`;
+    iframe.srcdoc = `<html><body><script>${sandboxScript}</script></body></html>`;
 
     // Wait for iframe to load before sending data
     // sendArgumentsToIframe(iframe, arg1, arg2);

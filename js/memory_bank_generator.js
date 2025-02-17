@@ -41,10 +41,12 @@ export default class MemoryBankGenerator {
                 //     256, this.callbackHost, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback
                 // );
         }
+        console.log('bankInput', bankInput);
         runUserFunction(bankInput);
     }
 
     processOutput(data){
+        console.log("processOutput");
         const bankArrayData = [];
         data.forEach(element => {
             element.forEach(subElement => {
@@ -91,7 +93,7 @@ export default class MemoryBankGenerator {
     sampleBankInput(bankPosition) {
         const data = [];
         for (let index = 0; index < 256; index++) {
-            data.push(this.formatInput(index, this.inputTypes), bankPosition);
+            data.push([this.formatInput(index, this.inputTypes), bankPosition]);
         }
         // const output = this.generatorCallback(parameters, bankPosition);
         return data;
@@ -262,7 +264,6 @@ export default class MemoryBankGenerator {
                     }
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
-                    console.log(`add height: ${height} to ${svgHeight}`);
                 }
             }
         }
