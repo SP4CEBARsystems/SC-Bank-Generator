@@ -45,3 +45,7 @@ p {
 math {
     margin: 40px 20px;
 }
+
+.hidden {
+    display: none;
+}

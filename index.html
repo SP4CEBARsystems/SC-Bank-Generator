@@ -36,8 +36,6 @@
 			<hr />
 			<p id="bank-statistics"></p>
 			<p>Output: <span id="output">N/A</span></p>
-			<h3>Iframe</h3>
-			<iframe id="sandbox" sandbox="allow-scripts"></iframe>
 		</section>
 		<section>
 			<div id="bank-data-output"></div>
@@ -47,19 +45,19 @@
 			<svg version="2.0" id="reference-circuit"></svg>
 			<p>Feel free to simplify the circuit in your own implementation.</p>
 		</section>
-
+		
 		<!-- define symbol in hidden svg document -->
 		<!-- <svg style="display: none" version="2.0">
 			<defs>
 				<symbol id="circle-arrow-left" viewbox="0 -10 100 110">
 					<path d="m 20 0 v100 v-50 h100"
-						fill="none" stroke="#000" stroke-width="10" 
+					fill="none" stroke="#000" stroke-width="10" 
 					/>
 					<path d="m 20 80 A 40 40 0 1 0 20 20"
-						fill="none" stroke="#000" stroke-width="10" 
+					fill="none" stroke="#000" stroke-width="10" 
 					/>
 					<path d="M 10 0 v 40 h 40"
-						fill="#000" 
+					fill="#000" 
 					/>
 					<image href="assets/memory_bank_asset.png" width="50" height="50"/>
 				</symbol>
@@ -74,6 +72,7 @@
 		</div> -->
 	</main>
 	<footer></footer>
+	<iframe id="sandbox" class="hidden" sandbox="allow-scripts"></iframe>
 	<script type="module" src="./js/index.js"></script>
 </body>
 </html>
