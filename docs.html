@@ -39,7 +39,7 @@
 				cases: ROM, Selector, and FSM.
 			<ul>
 				<li><b>ROM: <a href="https://en.wikipedia.org/wiki/Read-only_memory">Read only Memory</a></b><br>for any
-					input value coming in, one output value is coming out. This can be used to make calculators or
+					input value coming in, one programmed output value is coming out. This can be used to make calculators or
 					displays. This is the simplest, and likely most common, of the three.</li>
 				<li><b>Selector ROM:</b><br>An array of ROMs that all have the same input. Each ROM will respond
 					differently to the input. For example, it may be set to activate only when its input is equal to its
@@ -60,7 +60,7 @@
 			<p>
 				Within the code field you can write a javascript function.
 				When you press the run button, the function will be evaluated for every input of your memory bank, the
-				output of the function will be saved as memory bank data.
+				output of the function will be saved as memory bank data. It will be encoded in <a href="#types">data types</a> and split over <a href="#data">digits</a>.
 			</p>
 		</section>
 		<hr>
@@ -78,40 +78,225 @@
 				<h3>
 					<li>Unsigned Integer Types</li>
 				</h3>
-				An unsigned integer is a whole number that can <b>not</b> be negative, on this online tool it is
+				An unsigned integer is a whole number that can <b>not</b> be negative.
+				
+				<h4>Format</h4>
+				On this online tool it is
 				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
 				bits)<br>
 				examples:
-				<ul>
+				<table border="1">
+					<tr>
+						<th>Type</th>
+						<th>Bits</th>
+						<th>Range</th>
+					</tr>
+					<tr>
+						<td>U_INT_1</td>
+						<td>1-bit</td>
+						<td>0 to 1</td>
+					</tr>
+					<tr>
+						<td>U_INT_2</td>
+						<td>2-bit</td>
+						<td>0 to 3</td>
+					</tr>
+					<tr>
+						<td>U_INT_4</td>
+						<td>4-bit</td>
+						<td>0 to 15</td>
+					</tr>
+					<tr>
+						<td>U_INT_8</td>
+						<td>8-bit</td>
+						<td>0 to 255</td>
+					</tr>
+					<tr>
+						<td>U_INT_16</td>
+						<td>16-bit</td>
+						<td>0 to 65,535</td>
+					</tr>
+					<tr>
+						<td>U_INT_32</td>
+						<td>32-bit</td>
+						<td>0 to 4,294,967,295</td>
+					</tr>
+					<tr>
+						<td>U_INT_64</td>
+						<td>64-bit</td>
+						<td>0 to 18,446,744,073,709,551,615</td>
+					</tr>
+				</table>
+				
+				<!-- <ul>
 					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
+					<li>"U_INT_2" is an 2-bit whole number ranging from 0 to 3</li>
 					<li>"U_INT_4" is an 4-bit whole number ranging from 0 to 15</li>
 					<li>"U_INT_8" is an 8-bit whole number ranging from 0 to 255</li>
 					<li>"U_INT_16" is an 16-bit whole number ranging from 0 to 65,535</li>
 					<li>"U_INT_32" is an 32-bit whole number ranging from 0 to 4,294,967,295</li>
 					<li>"U_INT_64" is an 64-bit whole number ranging from 0 to 18,446,744,073,709,551,615</li>
-				</ul>
-				Other forms
-				<ul>
+				</ul> -->
+
+				<h4>Other forms</h4>
+				<table border="1">
+					<tr>
+						<th>Type</th>
+						<th>Equivalent To</th>
+						<th>Bits</th>
+						<th>Range</th>
+					</tr>
+					<tr>
+						<td>[n]</td>
+						<td>U_INT_[n]</td>
+						<td>n bits</td>
+						<td>0 to (2ⁿ - 1)</td>
+					</tr>
+					<tr>
+						<td>BYTE</td>
+						<td>U_INT_8</td>
+						<td>8-bit</td>
+						<td>0 to 255</td>
+					</tr>
+					<tr>
+						<td>NIBBLE</td>
+						<td>U_INT_4</td>
+						<td>4-bit</td>
+						<td>0 to 15</td>
+					</tr>
+					<tr>
+						<td>BIT</td>
+						<td>U_INT_1</td>
+						<td>1-bit</td>
+						<td>0 to 1</td>
+					</tr>
+					<tr>
+						<td>FLAG</td>
+						<td>U_INT_1</td>
+						<td>1-bit</td>
+						<td>0 to 1</td>
+					</tr>
+					<tr>
+						<td>BOOLEAN</td>
+						<td>U_INT_1</td>
+						<td>1-bit</td>
+						<td>0 to 1</td>
+					</tr>
+					<tr>
+						<td>BOOL</td>
+						<td>U_INT_1</td>
+						<td>1-bit</td>
+						<td>0 to 1</td>
+					</tr>
+				</table>
+				
+				<!-- <ul>
 					<li>[n]: same as "U_INT_[n]" (where "[n]" is any number), for example: "8" is the same as "U_INT_8"
 					</li>
-					<!-- <li>LONG: same as "U_INT_64"</li>
-						<li>SHORT: same as "U_INT_16"</li> -->
+					<li>LONG: same as "U_INT_64"</li>
+						<li>SHORT: same as "U_INT_16"</li>
 					<li>BYTE: same as "U_INT_8"</li>
 					<li>NIBBLE: same as "U_INT_4"</li>
 					<li>BIT: same as "U_INT_1"</li>
 					<li>FLAG: same as "U_INT_1"</li>
 					<li>BOOLEAN: same as "U_INT_1"</li>
 					<li>BOOL: same as "U_INT_1"</li>
-				</ul>
+				</ul> -->
 				<h3>
 					<li>(Signed) Integer Types</li>
 				</h3>
+				A signed integer (aka integer) is a whole number that can be negative. 
+				
+				<h4>Two's Complement</h4>
+				This tool uses <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> to represent negative numbers in binary, this comes down to the most significant bit having been negated. For example a four bit number's bits in 2s complement would be valued: 1, 2, 4, -8.
+				
+				<h4>Format</h4>
+				on this online tool it is formatted as "INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
+				bits)<br>
+				examples:
+				<table border="1">
+					<tr>
+						<th>Type</th>
+						<th>Bits</th>
+						<th>Range</th>
+					</tr>
+					<tr>
+						<td>INT_1</td>
+						<td>1-bit</td>
+						<td>-1 to 0</td>
+					</tr>
+					<tr>
+						<td>INT_2</td>
+						<td>2-bit</td>
+						<td>-2 to 1</td>
+					</tr>
+					<tr>
+						<td>INT_3</td>
+						<td>3-bit</td>
+						<td>-4 to 3</td>
+					</tr>
+					<tr>
+						<td>INT_4</td>
+						<td>4-bit</td>
+						<td>-8 to 7</td>
+					</tr>
+					<tr>
+						<td>INT_5</td>
+						<td>5-bit</td>
+						<td>-16 to 15</td>
+					</tr>
+					<tr>
+						<td>INT_6</td>
+						<td>6-bit</td>
+						<td>-32 to 31</td>
+					</tr>
+					<tr>
+						<td>INT_7</td>
+						<td>7-bit</td>
+						<td>-64 to 63</td>
+					</tr>
+					<tr>
+						<td>INT_8</td>
+						<td>8-bit</td>
+						<td>-128 to 127</td>
+					</tr>
+					<tr>
+						<td>INT_16</td>
+						<td>16-bit</td>
+						<td>-32,768 to 32,767</td>
+					</tr>
+					<tr>
+						<td>INT_32</td>
+						<td>32-bit</td>
+						<td>-2,147,483,648 to 2,147,483,647</td>
+					</tr>
+					<tr>
+						<td>INT_64</td>
+						<td>64-bit</td>
+						<td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+					</tr>
+				</table>
+				
+				<!-- <ul>
+					<li>"INT_1" is an 1-bit whole number ranging from -1 to 0 (why would you need a signed 1-bit integer?)</li>
+					<li>"INT_2" is an 2-bit whole number ranging from -2 to 1</li>
+					<li>"INT_3" is an 3-bit whole number ranging from -4 to 3</li>
+					<li>"INT_4" is an 4-bit whole number ranging from -8 to 7</li>
+					<li>"INT_5" is an 5-bit whole number ranging from -16 to 15</li>
+					<li>"INT_6" is an 6-bit whole number ranging from -32 to 31</li>
+					<li>"INT_7" is an 7-bit whole number ranging from -64 to 63</li>
+					<li>"INT_8" is an 8-bit whole number ranging from -128 to 127</li>
+					<li>"INT_16" is an 16-bit whole number ranging from -32,768 to 32,767</li>
+					<li>"INT_32" is an 32-bit whole number ranging from -2,147,483,648 to 2,147,483,647</li>
+					<li>"INT_64" is an 64-bit whole number ranging from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</li>
+				</ul> -->
 				<ul>
 					<li></li>
 				</ul>
 				<h3>
 					<li>Floating Point Number Types</li>
 				</h3>
+				Currently unsupported
 				<ul>
 					<li></li>
 				</ul>
