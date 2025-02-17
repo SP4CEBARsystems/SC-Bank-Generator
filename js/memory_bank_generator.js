@@ -11,26 +11,33 @@ export default class MemoryBankGenerator {
 
     outputTypes;
 
-    generatorCallback;
+    // generatorCallback;
 
     /**
      * @type {string[][]}
      */
     generatedData = [];
     
+    // * @param {(bankIndex:number[], bankPosition?:number) => number[]} generatorCallback 
     /**
      * 
      * @param {number} numberOfLocations 
      * @param {string[]} inputTypes
-     * @param {(bankIndex:number[], bankPosition?:number) => number[]} generatorCallback 
      * @param {string[]} outputTypes
      */
-    constructor(numberOfLocations = 1, inputTypes, generatorCallback, outputTypes) {
+    constructor(numberOfLocations = 1, inputTypes = [], outputTypes = []) {
         this.numberOfLocations = numberOfLocations;
         this.inputTypes = inputTypes;
         this.outputTypes = outputTypes;
-        this.generatorCallback = generatorCallback;
+        // this.generatorCallback = generatorCallback;
         initConsoleListener(this.processOutput.bind(this));
+    }
+
+    init(numberOfLocations = 1, inputTypes, outputTypes){
+        this.numberOfLocations = numberOfLocations;
+        this.inputTypes = inputTypes;
+        this.outputTypes = outputTypes;
+        // this.generatorCallback = generatorCallback;
     }
 
     generate(){
@@ -85,13 +92,13 @@ export default class MemoryBankGenerator {
         return bankDataStrings
     }
 
-    sampleBank(bankPosition) {
-        const data = [];
-        for (let index = 0; index < 256; index++) {
-            data.push(this.callbackHost(index, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback));
-        }
-        return data;
-    }
+    // sampleBank(bankPosition) {
+    //     const data = [];
+    //     for (let index = 0; index < 256; index++) {
+    //         data.push(this.callbackHost(index, bankPosition, this.inputTypes, this.outputTypes, this.generatorCallback));
+    //     }
+    //     return data;
+    // }
 
     sampleBankInput(bankPosition) {
         const data = [];

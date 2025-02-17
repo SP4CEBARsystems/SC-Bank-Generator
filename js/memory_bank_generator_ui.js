@@ -21,7 +21,10 @@ export default class MemoryBankGeneratorUI {
 
     statisticsParagraph = document.getElementById('bank-statistics');
 
-    constructor() {
+    generator
+
+    constructor(generator) {
+        this.generator = generator;
         if (this.codeInputElement) {
             this.codeInputElement.textContent = '([x, y]) => {\n    return [x + y];\n}'
         }
@@ -32,6 +35,7 @@ export default class MemoryBankGeneratorUI {
 
     generate() {
         // runUserFunction()
+        const generator = this.generator;
         if (this.codeInputElement?.value === undefined ||
             this.amountInputElement?.value === undefined ||
             this.inputSizesInputElement?.value === undefined ||
@@ -42,10 +46,10 @@ export default class MemoryBankGeneratorUI {
 
         const inputSizesArray = ExtendedMath.stringToArray(this.inputSizesInputElement.value);
         const outputsSizesArray = ExtendedMath.stringToArray(this.outputSizesInputElement.value);
-        const generator = new MemoryBankGenerator(
+        generator.init(
             parseInt(this.amountInputElement.value),
             inputSizesArray,
-            eval(this.codeInputElement.value),
+            // eval(this.codeInputElement.value),
             outputsSizesArray
         );
         generator.clear();

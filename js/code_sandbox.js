@@ -5,8 +5,9 @@ export function init_code_sandbox() {
 
 export function initConsoleListener(callback) {
     // console.log("initConsoleListener");
-    window.addEventListener('message', (event) => {
-        // console.log("message");
+    let consoleListener = null;
+    consoleListener = window.addEventListener('message', (event) => {
+        console.log("message");
         const output = document.getElementById('output');
         if (!output) return;
         if (event.data.type === 'result') {
@@ -18,6 +19,9 @@ export function initConsoleListener(callback) {
             // console.log("error");
             output.innerText = 'Error: ' + event.data.error;
         }
+        // if (consoleListener) {
+        //     window.removeEventListener('message', consoleListener);
+        // }
     });
 }
 
