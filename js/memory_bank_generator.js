@@ -248,7 +248,7 @@ export default class MemoryBankGenerator {
         let svgWidth = 0;
         let svgHeight = 0;
         const SingleBankInputSize = 8;
-        const inputLayerCount = 2 ** (totalInputSize - SingleBankInputSize);
+        const inputLayerCount = 2 ** Math.ceil(Math.max(0, totalInputSize - SingleBankInputSize));
         for (let location = 0; location < this.numberOfLocations; location++) {
             for (let input = 0; input < inputLayerCount; input++) {
                 for (let digit = 0; digit < outputWireCount; digit++) {
