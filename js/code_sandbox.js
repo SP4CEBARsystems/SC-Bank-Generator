@@ -1,20 +1,15 @@
-export default function init_code_sandbox() {
-    const generateButtonElement = document.getElementById('runUserFunction');
-    if (generateButtonElement) {
-        generateButtonElement.addEventListener('click', runUserFunction);
-    }
-
+export function init_code_sandbox() {
     // Listen for messages from the iframe
     window.addEventListener('message', (event) => {
         if (event.data.type === 'result') {
-            document.getElementById('output').innerText = 'Result: ' + event.data.result;
+            document.getElementById('output').innerText = 'Result: ' + event.data.result[0];
         } else if (event.data.type === 'error') {
             document.getElementById('output').innerText = 'Error: ' + event.data.error;
         }
     });
 }
 
-function runUserFunction() {
+export function runUserFunction() {
     const userCode = document.getElementById('codeInput')?.value.trim();
     const arg1 = parseFloat(document.getElementById('arg1')?.value);
     const arg2 = parseFloat(document.getElementById('arg2')?.value);
@@ -54,7 +49,7 @@ function runUserFunction() {
     setTimeout(() => {
         iframe.contentWindow.postMessage({
             type: 'runFunction',
-            args: [arg1, arg2]
+            args: [[arg1, arg2]]
         }, '*');
     }, 500);
 }

@@ -1,5 +1,6 @@
 import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
+import {runUserFunction} from "./code_sandbox.js";
 
 export default class MemoryBankGeneratorUI {
     /**
@@ -30,6 +31,7 @@ export default class MemoryBankGeneratorUI {
     }
 
     generate() {
+        runUserFunction()
         if (this.codeInputElement?.value === undefined ||
             this.amountInputElement?.value === undefined ||
             this.inputSizesInputElement?.value === undefined ||
