@@ -30,7 +30,7 @@ export default class MemoryBankGenerator {
         this.inputTypes = inputTypes;
         this.outputTypes = outputTypes;
         this.generatorCallback = generatorCallback;
-        initConsoleListener(this.processOutput);
+        initConsoleListener(this.processOutput.bind(this));
     }
 
     generate(){
@@ -46,14 +46,16 @@ export default class MemoryBankGenerator {
     }
 
     processOutput(data){
-        console.log("processOutput");
+        console.log("processOutput", data);
         const bankArrayData = [];
         data.forEach(element => {
-            element.forEach(subElement => {
-                this.unformatOutput(this.outputTypes, subElement);
+            const processed = element.map(subElement => {
+                return this.unformatOutput(this.outputTypes, subElement);
             })
-            bankArrayData.push(this.postProcessOne(element));
+            console.log('processed', processed);
+            bankArrayData.push(this.postProcessOne(processed));
         });
+        console.log('bankArrayData', bankArrayData);
         this.generatedData = bankArrayData;
     }
 

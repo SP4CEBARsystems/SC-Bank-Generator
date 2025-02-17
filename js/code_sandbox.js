@@ -43,7 +43,8 @@ export function runUserFunction(inputArray) {
     // Reset output
     outputElement.innerText = 'Running...';
 
-    const arrayString = JSON.stringify(inputArray);
+    let arrayString = JSON.stringify(inputArray).replace('"', '');
+    // console.log('arrayString', arrayString);
     // console.log("arrayString", arrayString);
     // const result = inputArray.map((item) => item.map((item) => {
     //     console.log('item', item);
@@ -54,22 +55,22 @@ export function runUserFunction(inputArray) {
     // Create a unique script that the iframe will execute
     const sandboxScript = `
         'use strict';
-        // window.addEventListener('message', (event) => {
-        //     if (event.data.type === 'runFunction') {
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'runFunction') {
                 const timeout = setTimeout(() => { throw new Error('Execution timed out!'); }, 3000);
                 try {
                     const userFunction = ${userCode}; // Convert to function
                     if (typeof userFunction !== 'function') throw new Error('Invalid function format');
                     // console.log('hey');
-                    const result = ${arrayString}.map((item) => item.map(userFunction));
+                    const result = event.data.args[0].map((item) => item.map((subItem) => userFunction(...subItem)));
                     clearTimeout(timeout);
                     window.parent.postMessage({ type: 'result', result: result }, '*');
                 } catch (error) {
                     clearTimeout(timeout);
                     window.parent.postMessage({ type: 'error', error: error.message }, '*');
                 }
-        //     }
-        // });
+            }
+        });
     `;
 
     // const result = userFunction(event.data.args[0], event.data.args[1]);
@@ -78,7 +79,7 @@ export function runUserFunction(inputArray) {
     iframe.srcdoc = `<html><body><script>${sandboxScript}</script></body></html>`;
 
     // Wait for iframe to load before sending data
-    // sendArgumentsToIframe(iframe, arg1, arg2);
+    sendArgumentsToIframe(iframe, inputArray);
 }
 
 export function sendArgumentsToIframe(iframe, ...functionArguments) {
