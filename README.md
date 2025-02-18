@@ -127,8 +127,15 @@ Whenever memory bank data is generated you may need more than one memory bank to
 3.  **location:** Whenever you are making a selector ROM system you will need a ROM for each physical location
 Using this makes your ROM a selector ROM (a therm I made up but will be using throughout this site)
 
-When designing a system using this tool consider how many bits you really need as each [SurvivalCraft memory bank](https://survivalcraftgame.fandom.com/wiki/Memory_Bank) has an 8-bit address input and a 4-bit output. The amount of memory banks required is: banks \= Locations × floor ( OutputSize 4 ) × 2 max ( 0 , InputSize \- 8 ) This calculation should be shown automatically each time data is generated.  
-As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need 256 banks: (1) × floor ( (4) 4 ) × 2 max ( 0 , (16) \- 8 ) \= 256
+When designing a system using this tool consider how many bits you really need as each [SurvivalCraft memory bank](https://survivalcraftgame.fandom.com/wiki/Memory_Bank) has an 8-bit address input and a 4-bit output. The amount of memory banks required is:  
+```
+banks = Locations × floor ( OutputSize 4 ) × 2 ^ max ( 0 , InputSize - 8 )
+```
+This calculation should be shown automatically each time data is generated.  
+As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need 256 banks: 
+```
+(1) × floor ( (4) 4 ) × 2 ^ max ( 0 , (16) - 8 ) = 256
+```
 
 - - -
 
