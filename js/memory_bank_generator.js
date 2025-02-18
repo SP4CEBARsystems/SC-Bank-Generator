@@ -270,7 +270,11 @@ export default class MemoryBankGenerator {
                         switch (element) {
                             case 'bank_digit.jpg':
                             case 'bank_digit_single.jpg':
-                                bankName = `Bank l${location} i${input} d${digit}`;
+                                bankName = `Bank L${location}-I${input}-D${digit}`;
+                                break;
+                            case 'bank_selector_4-bit.jpg':
+                            case 'bank_selector_8-bit.jpg':
+                                bankName = `Input Selector ${input}`;
                                 break;
                             default:
                                 bankName = undefined

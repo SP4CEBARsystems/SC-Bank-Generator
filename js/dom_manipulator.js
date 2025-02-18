@@ -71,7 +71,7 @@ export function newSVGImage(x=212, y=127, width=212, height=127, fileName='bank_
  * @param {HTMLElement} parent 
  */
 export function newSVGText(x=212, y=127, text='0', parent) {
-    parent.innerHTML += `<text x="${x}" y="${y+14}" class="small">${text}</text>`
+    parent.innerHTML += `<text x="${x}" y="${y+14}" class="circuitLabel">${text}</text>`
 }
 
 /**
