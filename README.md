@@ -1,3 +1,4 @@
+[Launch Tool](https://sp4cebarsystems.github.io/SC-Bank-Generator/)
 # Documentation
 
 - - -
