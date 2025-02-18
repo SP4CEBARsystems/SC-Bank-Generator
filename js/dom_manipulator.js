@@ -62,6 +62,19 @@ export function newSVGImage(x=212, y=127, width=212, height=127, fileName='bank_
 }
 
 /**
+ * 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {number} width 
+ * @param {number} height 
+ * @param {string} fileName 
+ * @param {HTMLElement} parent 
+ */
+export function newSVGText(x=212, y=127, text='0', parent) {
+    parent.innerHTML += `<text x="${x}" y="${y+14}" class="small">${text}</text>`
+}
+
+/**
  * Creates a new container element, assigns a class, and gives it a parent element
  * @param {string} type the type of element to be created. Will be rejected if type === script.
  * @param {*} elementText the element's soon-to-be textContent

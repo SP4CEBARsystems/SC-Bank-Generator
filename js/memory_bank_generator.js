@@ -1,5 +1,5 @@
 import { initConsoleListener, runUserFunction } from "./code_sandbox.js";
-import { newCodeBlock, newContainer, newSVGImage } from "./dom_manipulator.js";
+import { newCodeBlock, newContainer, newSVGImage, newSVGText } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import TypeValue from "./type_value.js";
 import Word from "./word.js";
@@ -218,17 +218,19 @@ export default class MemoryBankGenerator {
     generateCircuit(){
         /**
          * 
-         * @param {*} element 
-         * @param {*} currentX 
-         * @param {*} digitYOffset 
-         * @param {*} height 
+         * @param {string} element 
+         * @param {number} currentX 
+         * @param {number} digitYOffset 
+         * @param {number} height 
          * @param {*} parent 
-         * @param {*} svgWidth 
+         * @param {number} svgWidth 
+         * @param {string} nameText
          * @returns 
          */
-        const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth) => {
+        const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth, nameText) => {
             const width = this.getWidth(element);
             newSVGImage(currentX, digitYOffset, width, height, element, parent);
+            newSVGText(currentX, digitYOffset, nameText, parent);
             currentX += width;
             svgWidth += width;
             return [currentX, svgWidth];
@@ -263,15 +265,16 @@ export default class MemoryBankGenerator {
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
                     let svgRowWidth = 0;
+                    const bankName = `Bank l${location} i${input} d${digit}`;
                     process.forEach((element, index) => {
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
                     });
                     let hasConnected = false;
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
                         const isConnecting = digit === digitOut;
                         if (isConnecting) hasConnected = true;
                         const element = isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg';
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
                     }
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
