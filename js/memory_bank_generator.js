@@ -213,13 +213,13 @@ export default class MemoryBankGenerator {
 
     write() {
         console.log('write', this.getFormattedData());
-        this.getFormattedData().forEach((elementY, indexY) => {
-            elementY.forEach((elementZZ, indexZZ) => {
-                if (elementZZ.length == 0) {
-                    newCodeBlock(`Bank ${indexY}, obsolete`, '');
+        this.getFormattedData().forEach((dataAtPosition, positionIndex) => {
+            dataAtPosition.forEach((dataAtInputLayer, inputIndex) => {
+                if (dataAtInputLayer.length == 0) {
+                    newCodeBlock(`Bank ${positionIndex}, obsolete`, '');
                 } else {
-                    elementZZ.forEach((element, digitIndex) => 
-                        newCodeBlock(`${this.generateBankName(indexY, indexZZ, digitIndex)}`, element)
+                    dataAtInputLayer.forEach((dataAtDigit, digitIndex) => 
+                        newCodeBlock(`${this.generateBankName(positionIndex, inputIndex, digitIndex)}`, dataAtDigit)
                     )
                 }
             })
