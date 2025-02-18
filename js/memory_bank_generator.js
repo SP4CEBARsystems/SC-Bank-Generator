@@ -219,7 +219,7 @@ export default class MemoryBankGenerator {
                     newCodeBlock(`Bank ${indexY}, obsolete`, '');
                 } else {
                     elementZZ.forEach((element, digitIndex) => 
-                        newCodeBlock(`${this.generateBankName(indexY, 0, digitIndex)}`, element)
+                        newCodeBlock(`${this.generateBankName(indexY, indexZZ, digitIndex)}`, element)
                     )
                 }
             })
