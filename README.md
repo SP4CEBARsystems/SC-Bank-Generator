@@ -6,10 +6,10 @@
 
 *   [Description](#description)
 *   [Code](#code)
-*   [Data Types](#types)
+*   [Data Types](#data-types)
 *   [Data](#data)
-*   [Generated Circuit](#circuit)
-*   [Common Errors](#errors)
+*   [Generated Circuit](#generated-circuit)
+*   [Common Errors](#common-errors)
 
 - - -
 
@@ -38,7 +38,7 @@ Within the code field you can write a [javascript](https://developer.mozilla.org
 
 - - -
 
-## Data Types
+## Data-Types
 
 Each value may be split up into multiple smaller parameters of specific sizes in bits. Allowing you to treat them separately. You can use the "input types" and "output types" fields to set the amount of parameters and their types and sizes. This can be done by typing a numbers (sizes in bits) separated by commas, each number is a parameter Instead of a number you may type a datatype, the code supports the following types:
 
@@ -106,7 +106,7 @@ on this online tool it is formatted as "INT\_\[n\]" (without the quotes) (where 
 | INT\_32 | 32-bit | \-2,147,483,648 to 2,147,483,647 |
 | INT\_64 | 64-bit | \-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 |
 
-### *   Floating Point Number Types
+### Floating Point Number Types
 
 Currently unsupported
 
@@ -132,15 +132,11 @@ As you can see the input size scales exponentially: for one 4-bit-output-and-16-
 
 - - -
 
-## Generated Circuit
+## Generated-Circuit
 
 A circuit is generated alongside the data. The image is made up of multiple screenshots from SurvivalCraft stitched together and may cause some slight graphical artifacts as seen below. The circuit part shown in that image may be treated as a single trench with a wire in it.
 
 ![graphical artifact of two circuit tile images stitched together](./assets/generated_circuit_tile_stitch_artifact.png)
-
-- - -
-
-## Common Errors
 
 - - -
 
