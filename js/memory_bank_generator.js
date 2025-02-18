@@ -173,12 +173,13 @@ export default class MemoryBankGenerator {
     }
 
     write() {
+        console.log('write', this.getFormattedData());
         this.getFormattedData().forEach((elementY, indexY) => {
             if (elementY.length == 0) {
                 newCodeBlock(`Bank ${indexY}, obsolete`, '');
             } else {
-                elementY.forEach((element, index) => 
-                    newCodeBlock(`Bank ${indexY}, digit ${index}:`, element)
+                elementY.forEach((element, digitIndex) => 
+                    newCodeBlock(`${this.generateBankName(indexY, 0, digitIndex)} ${indexY}`, element)
                 )
             }
         })
@@ -270,7 +271,7 @@ export default class MemoryBankGenerator {
                         switch (element) {
                             case 'bank_digit.jpg':
                             case 'bank_digit_single.jpg':
-                                bankName = `Bank L${location}-I${input}-D${digit}`;
+                                bankName = this.generateBankName(location, input, digit);
                                 break;
                             case 'bank_selector_4-bit.jpg':
                             case 'bank_selector_8-bit.jpg':
@@ -298,6 +299,10 @@ export default class MemoryBankGenerator {
         parent.setAttribute("height", `${svgHeight}px`);
         // parent.setHeight(5000);
         console.log(`total banks ${this.numberOfLocations * inputLayerCount * outputWireCount} = count (${this.numberOfLocations}) * input requirement (${inputLayerCount}) * digits (${outputWireCount})`);
+    }
+
+    generateBankName(location, input, digit) {
+        return `Bank L${location}-I${input}-D${digit}`;
     }
 
     getStats() {
