@@ -214,13 +214,15 @@ export default class MemoryBankGenerator {
     write() {
         console.log('write', this.getFormattedData());
         this.getFormattedData().forEach((elementY, indexY) => {
-            if (elementY.length == 0) {
-                newCodeBlock(`Bank ${indexY}, obsolete`, '');
-            } else {
-                elementY.forEach((element, digitIndex) => 
-                    newCodeBlock(`${this.generateBankName(indexY, 0, digitIndex)}`, element)
-                )
-            }
+            elementY.forEach((elementZZ, indexZZ) => {
+                if (elementZZ.length == 0) {
+                    newCodeBlock(`Bank ${indexY}, obsolete`, '');
+                } else {
+                    elementZZ.forEach((element, digitIndex) => 
+                        newCodeBlock(`${this.generateBankName(indexY, 0, digitIndex)}`, element)
+                    )
+                }
+            })
         })
         this.generateCircuit();
     }
