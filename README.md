@@ -42,7 +42,7 @@ Within the code field you can write a [javascript](https://developer.mozilla.org
 
 Each value may be split up into multiple smaller parameters of specific sizes in bits. Allowing you to treat them separately. You can use the "input types" and "output types" fields to set the amount of parameters and their types and sizes. This can be done by typing a numbers (sizes in bits) separated by commas, each number is a parameter Instead of a number you may type a datatype, the code supports the following types:
 
-### *   Unsigned Integer Types
+### Unsigned Integer Types
 
 An unsigned integer is a whole number that can **not** be negative.
 
