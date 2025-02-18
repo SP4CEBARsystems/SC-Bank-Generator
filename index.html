@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bank Generator</title>
 	<link rel="stylesheet" href="./styles/styles.css">
+	<link rel="logo" type="image/x-icon" href="/assets/memory_bank_asset.png">
 	<style>
 	</style>
 </head>
@@ -33,18 +34,21 @@
 				<textarea id="codeInput" name="codeInput" cols="40" rows="5" placeholder="([x, y]) => {return [x + y];}"></textarea>
 			</div>
 			<button>Generate</button>
-			<hr />
 			<p id="bank-statistics"></p>
 			<p>Output: <span id="output">N/A</span></p>
 		</section>
+		<hr />
 		<section>
+			<h2>Generated Data</h2>
 			<div id="bank-data-output"></div>
 		</section>
+		<hr />
 		<section>
 			<h2>Circuit</h2>
 			<svg version="2.0" id="reference-circuit" width="0" height="0"></svg>
 			<p>Feel free to simplify the circuit in your own implementation.</p>
 		</section>
+		<hr />
 		
 		<!-- define symbol in hidden svg document -->
 		<!-- <svg style="display: none" version="2.0">

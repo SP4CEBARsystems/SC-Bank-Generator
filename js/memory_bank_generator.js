@@ -89,7 +89,7 @@ export default class MemoryBankGenerator {
                 bankDataStrings[digitIndex] += ExtendedMath.getHexDigit(bankValue, digitIndex);
             }
         }
-        return bankDataStrings
+        return bankDataStrings;
     }
 
     // sampleBank(bankPosition) {
@@ -179,7 +179,7 @@ export default class MemoryBankGenerator {
                 newCodeBlock(`Bank ${indexY}, obsolete`, '');
             } else {
                 elementY.forEach((element, digitIndex) => 
-                    newCodeBlock(`${this.generateBankName(indexY, 0, digitIndex)} ${indexY}`, element)
+                    newCodeBlock(`${this.generateBankName(indexY, 0, digitIndex)}`, element)
                 )
             }
         })
