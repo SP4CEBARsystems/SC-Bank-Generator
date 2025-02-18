@@ -83,11 +83,25 @@ export default class MemoryBankGenerator {
             }
             return [];
         }
+        // this.inputTypes.map(TypeValue.sizeOf);
+        // const inputSize = this.getTotalInputSize()
+        // const inputBanks = inputSize - 8;
+
+        const bankDataStrings = this.dataToArray(arrayLength, bankData);
+        return bankDataStrings;
+    }
+
+    dataToArray(arrayLength, bankData) {
         const bankDataStrings = new Array(arrayLength).fill("");
         for (const bankValue of bankData) {
             for (const digitIndex in bankDataStrings) {
                 bankDataStrings[digitIndex] += ExtendedMath.getHexDigit(bankValue, digitIndex);
             }
+        }
+        for (const digitIndex in bankDataStrings) {
+            const memoryBankInputSize = 256;
+            const memoryBankDefaultValue = "0";
+            bankDataStrings[digitIndex].padEnd(memoryBankInputSize, memoryBankDefaultValue);
         }
         return bankDataStrings;
     }
@@ -102,11 +116,18 @@ export default class MemoryBankGenerator {
 
     sampleBankInput(bankPosition) {
         const data = [];
-        for (let index = 0; index < 256; index++) {
+        const inputBitSize = this.getTotalInputSize();
+        const inputSize = 2 ** inputBitSize;
+        console.log('inputSize', inputSize);
+        for (let index = 0; index < inputSize; index++) {
             data.push([this.formatInput(index, this.inputTypes), bankPosition]);
         }
         // const output = this.generatorCallback(parameters, bankPosition);
         return data;
+    }
+
+    getTotalInputSize() {
+        return this.inputTypes.reduce((previous, element) => previous + TypeValue.sizeOf(element), 0);
     }
 
     /**
