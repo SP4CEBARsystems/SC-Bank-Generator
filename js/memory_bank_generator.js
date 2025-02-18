@@ -265,19 +265,18 @@ export default class MemoryBankGenerator {
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
                     let svgRowWidth = 0;
-                    const bankName = `Bank l${location} i${input} d${digit}`;
                     process.forEach((element, index) => {
-                        // switch (element) {
-                        //     case 'bank_digit.jpg':
-                        //     case 'bank_digit_single.jpg':
-                                
-                        //         break;
-                        
-                        //     default:
-                        //         break;
-                        // }
-                        const isTextShown = element === 'bank_digit.jpg' || element === 'bank_digit_single.jpg';
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, isTextShown ? bankName : undefined);
+                        let bankName;
+                        switch (element) {
+                            case 'bank_digit.jpg':
+                            case 'bank_digit_single.jpg':
+                                bankName = `Bank l${location} i${input} d${digit}`;
+                                break;
+                            default:
+                                bankName = undefined
+                                break;
+                        }
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
                     });
                     let hasConnected = false;
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
