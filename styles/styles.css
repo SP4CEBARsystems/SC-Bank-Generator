@@ -57,4 +57,10 @@ math {
     stroke: black;
     stroke-width: 5px;
     stroke-linejoin: round;
-  }
+}
+
+.generator-input-params{
+    display: grid;
+    grid-template-columns: 200px 200px;
+    row-gap: 10px;
+}
