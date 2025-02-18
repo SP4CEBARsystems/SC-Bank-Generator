@@ -9,7 +9,7 @@
 *   [Data Types](#data-types)
 *   [Data](#data)
 *   [Generated Circuit](#generated-circuit)
-*   [Common Errors](#common-errors)
+*   [Contribute](#contribute)
 
 - - -
 
