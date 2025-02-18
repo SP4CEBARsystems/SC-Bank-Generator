@@ -224,13 +224,13 @@ export default class MemoryBankGenerator {
          * @param {number} height 
          * @param {*} parent 
          * @param {number} svgWidth 
-         * @param {string} nameText
+         * @param {string=} nameText
          * @returns 
          */
         const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth, nameText) => {
             const width = this.getWidth(element);
             newSVGImage(currentX, digitYOffset, width, height, element, parent);
-            newSVGText(currentX, digitYOffset, nameText, parent);
+            if(nameText !== undefined) newSVGText(currentX, digitYOffset, nameText, parent);
             currentX += width;
             svgWidth += width;
             return [currentX, svgWidth];
@@ -267,14 +267,24 @@ export default class MemoryBankGenerator {
                     let svgRowWidth = 0;
                     const bankName = `Bank l${location} i${input} d${digit}`;
                     process.forEach((element, index) => {
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+                        // switch (element) {
+                        //     case 'bank_digit.jpg':
+                        //     case 'bank_digit_single.jpg':
+                                
+                        //         break;
+                        
+                        //     default:
+                        //         break;
+                        // }
+                        const isTextShown = element === 'bank_digit.jpg' || element === 'bank_digit_single.jpg';
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, isTextShown ? bankName : undefined);
                     });
                     let hasConnected = false;
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
                         const isConnecting = digit === digitOut;
                         if (isConnecting) hasConnected = true;
                         const element = isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg';
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
                     }
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
