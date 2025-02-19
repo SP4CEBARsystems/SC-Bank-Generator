@@ -180,7 +180,7 @@ output sizes: 4
 				On this online tool it is
 				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
 				bits)<br>
-				<h4>Examples</h4>
+				<h4>Unsigned Integer Examples</h4>
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -244,7 +244,6 @@ output sizes: 4
 					</tr>
 				</table>
 
-
 				<!-- <ul>
 					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
 					<li>"U_INT_2" is an 2-bit whole number ranging from 0 to 3</li>
@@ -255,7 +254,7 @@ output sizes: 4
 					<li>"U_INT_64" is an 64-bit whole number ranging from 0 to 18,446,744,073,709,551,615</li>
 				</ul> -->
 
-				<h4>Other forms</h4>
+				<h4>Other Unsigned Integer Forms</h4>
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -333,7 +332,7 @@ output sizes: 4
 				on this online tool it is formatted as "INT_[n]" (without the quotes) (where "[n]" is any number
 				representing the size in
 				bits)<br>
-				<h4>Examples</h4>
+				<h4>2s Complement Signed Integer Examples</h4>
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -397,6 +396,76 @@ output sizes: 4
 					</tr>
 				</table>
 
+				<h4>Sign-Magnitude Signed Integers</h4>
+				The tool also supports the <a href="https://en.wikipedia.org/wiki/Signed_number_representations#Sign%E2%80%93magnitude">Sign-magnitude</a> representation of negative numbers, this is simpler but not reccommended as it has some flaws.
+				Here the sign bit inverts the number by multiplying it by "-1" when it is high.
+				The main reason this tool suports it is so you can convert numbers formatted in sign-magnitude to 2s complement making it easier to input negative numbers.
+				Note: the sign-magnitude representation can represent both "0" and "-0" the latter of which is not a number, the 2s complement on the other hand does not have negative zero and can display an extra negative number.
+
+				<h4>Sign-Magnitude Signed Integer Examples</h4>
+				<table border="1">
+					<tr>
+						<th>Type</th>
+						<th>Bits</th>
+						<th>Range</th>
+					</tr>
+					<tr>
+						<td>SM_INT_1</td>
+						<td>1-bit</td>
+						<td>-0, +0 (Only represents zero)</td>
+					</tr>
+					<tr>
+						<td>SM_INT_2</td>
+						<td>2-bit</td>
+						<td>-1 to +1</td>
+					</tr>
+					<tr>
+						<td>SM_INT_3</td>
+						<td>3-bit</td>
+						<td>-3 to +3</td>
+					</tr>
+					<tr>
+						<td>SM_INT_4</td>
+						<td>4-bit</td>
+						<td>-7 to +7</td>
+					</tr>
+					<tr>
+						<td>SM_INT_5</td>
+						<td>5-bit</td>
+						<td>-15 to +15</td>
+					</tr>
+					<tr>
+						<td>SM_INT_6</td>
+						<td>6-bit</td>
+						<td>-31 to +31</td>
+					</tr>
+					<tr>
+						<td>SM_INT_7</td>
+						<td>7-bit</td>
+						<td>-63 to +63</td>
+					</tr>
+					<tr>
+						<td>SM_INT_8</td>
+						<td>8-bit</td>
+						<td>-127 to +127</td>
+					</tr>
+					<tr>
+						<td>SM_INT_16</td>
+						<td>16-bit</td>
+						<td>-32,767 to +32,767</td>
+					</tr>
+					<tr>
+						<td>SM_INT_32</td>
+						<td>32-bit</td>
+						<td>-2,147,483,647 to +2,147,483,647</td>
+					</tr>
+					<tr>
+						<td>SM_INT_64</td>
+						<td>64-bit</td>
+						<td>-9,223,372,036,854,775,807 to +9,223,372,036,854,775,807</td>
+					</tr>
+				</table>
+				
 				<!-- <ul>
 					<li>"INT_1" is an 1-bit whole number ranging from -1 to 0 (why would you need a signed 1-bit integer?)</li>
 					<li>"INT_2" is an 2-bit whole number ranging from -2 to 1</li>

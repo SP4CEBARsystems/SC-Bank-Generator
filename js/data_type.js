@@ -26,7 +26,7 @@ export default class DataType {
         this.floatExponentSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_e)\d+/);
         this.floatMantissaSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_m)\d+/);
         this.isSigned = !ExtendedMath.hasMatch(dataType, /^u(?=_)/);
-        this.isSignedTwosComplement = this.isSigned && !ExtendedMath.hasMatch(dataType, /^s(?=_)/);
+        this.isSignedTwosComplement = this.isSigned && !ExtendedMath.hasMatch(dataType, /^(sm)(?=_)/);
         this.baseType = ExtendedMath.matchFirst(dataType, /int|float|double|byte|nibble|bit|flag|boolean|bool/);
     }
 
