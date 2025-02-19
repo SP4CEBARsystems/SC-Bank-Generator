@@ -263,26 +263,26 @@ const underflowValue = position;</pre>
 						<li>
 								6-bit Pong Ball Controller FSM
 								<pre>
-	locations: 1
-	input sizes: 6, 1, 1
-	output sizes: 6, 1</pre>
+locations: 1
+input sizes: 6, 1, 1
+output sizes: 6, 1</pre>
 								<pre>([position, direction, reset]) => {
-		const maxPosition = 63;
-		const minPosition = 0;
-		if (reset != 0) {
-			position = 0;
+	const maxPosition = 63;
+	const minPosition = 0;
+	if (reset != 0) {
+		position = 0;
+		direction = 0;
+	} else {
+		if (position >= maxPosition && direction == 0) {
+			direction = 1;
+		} else if (position <= minPosition && direction != 0) {
 			direction = 0;
 		} else {
-			if (position >= maxPosition && direction == 0) {
-				direction = 1;
-			} else if (position <= minPosition && direction != 0) {
-				direction = 0;
-			} else {
-				position += (direction != 0 ? -1 : 1);
-			}
+			position += (direction != 0 ? -1 : 1);
 		}
-		return [position, direction];
-	}</pre>
+	}
+	return [position, direction];
+}</pre>
 						</li>
 					</ol>
 				</li>
