@@ -198,7 +198,7 @@ output sizes: 8</pre>
 }</pre>
 						</li>
 						<li>
-							Easily Controllable 4-bit Counter
+							Easily Controllable 4-bit Counter With Overflow
 							<pre>
 locations: 1
 input sizes: 4, 1, 1
@@ -206,45 +206,61 @@ output sizes: 4</pre>
 							<pre>([position, isBackwardDirection, reset]) => {
 	const maxPosition = 15;
 	const minPosition = 0;
+	const overflowValue = minPosition;
+	const underflowValue = maxPosition;
 	if (reset != 0) {
 		if (isBackwardDirection != 0) {
 			position = 0;
 		}
 	} else {
-		if (!(position >= maxPosition && isBackwardDirection == 0) && !(position <= minPosition && isBackwardDirection != 0)) {
+		if(position >= maxPosition && isBackwardDirection == 0) {
+			position = overflowValue
+		} else if(position <= minPosition && isBackwardDirection != 0) {
+			position = underflowValue
+		} else {
 			position += (isBackwardDirection != 0 ? -1 : 1);
 		}
 	}
 	return [position];
 }</pre>
-						</li>
-						<li>
-							Pong Bat Controller FSM (Easily Controllable 6-bit Counter)
-							<pre>
+							<h4>configurations</h4>
+							<ol>
+								<li>
+									4-bit counter without overflow
+									<pre>
+locations: 1
+input sizes: 4, 1, 1
+output sizes: 4</pre>
+	<pre>const maxPosition = 15;
+const minPosition = 0;
+const overflowValue = position;
+const underflowValue = position;</pre>
+								</li>
+								<li>
+									6-bit Counter FSM With Overflow
+									<pre>
 locations: 1
 input sizes: 6, 1, 1
 output sizes: 6</pre>
-							<pre>([position, isBackwardDirection, reset]) => {
-	const maxPosition = 63;
-	const minPosition = 0;
-	if (reset != 0) {
-		if (isBackwardDirection != 0) {
-			position = 0;
-		}
-	} else {
-		if (!(position >= maxPosition && isBackwardDirection == 0) && !(position <= minPosition && isBackwardDirection != 0)) {
-			position += (isBackwardDirection != 0 ? -1 : 1);
-		}
-	}
-	return [position];
-}</pre>
-						</li>
-						<li>
-							6-bit Pong Ball Controller FSM
-							<pre>
+	<pre>const maxPosition = 63;
+const minPosition = 0;
+const overflowValue = minPosition;
+const underflowValue = maxPosition;</pre>
+								</li>
+								<li>
+									6-bit Counter FSM Without Overflow
+									<pre>
 locations: 1
 input sizes: 6, 1, 1
-output sizes: 6, 1</pre>
+output sizes: 6</pre>
+	<pre>const maxPosition = 63;
+const minPosition = 0;
+const overflowValue = position;
+const underflowValue = position;</pre>
+								</li>
+							</ol>
+						</li>
+						<li>
 							<pre>([position, direction, reset]) => {
 	const maxPosition = 63;
 	const minPosition = 0;
