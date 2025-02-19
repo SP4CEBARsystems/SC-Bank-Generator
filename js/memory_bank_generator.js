@@ -147,21 +147,21 @@ export default class MemoryBankGenerator {
         return this.inputTypes.reduce((previous, element) => previous + TypeValue.sizeOf(element), 0);
     }
 
-    /**
-     * 
-     * @param {number} bankIndex 
-     * @param {number} bankPosition 
-     * @param {string[]} inputTypes 
-     * @param {string[]} outputTypes 
-     * @param {(bankIndex:number[], bankPosition:number) => number[]} callback 
-     * @returns {number}
-     */
-    callbackHost(bankIndex, bankPosition, inputTypes, outputTypes, callback){
-        let parameters = this.formatInput(inputTypes, bankIndex);
-        // runUserFunction(inputArray);
-        const output = callback(parameters, bankPosition);
-        return this.unformatOutput(outputTypes, output);
-    }
+    // /**
+    //  * 
+    //  * @param {number} bankIndex 
+    //  * @param {number} bankPosition 
+    //  * @param {string[]} inputTypes 
+    //  * @param {string[]} outputTypes 
+    //  * @param {(bankIndex:number[], bankPosition:number) => number[]} callback 
+    //  * @returns {number}
+    //  */
+    // callbackHost(bankIndex, bankPosition, inputTypes, outputTypes, callback){
+    //     let parameters = this.formatInput(inputTypes, bankIndex);
+    //     // runUserFunction(inputArray);
+    //     const output = callback(parameters, bankPosition);
+    //     return this.unformatOutput(outputTypes, output);
+    // }
 
     formatInput(bankIndex, inputTypes) {
         const inputSizes = inputTypes.map(TypeValue.sizeOf);

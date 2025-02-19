@@ -15,9 +15,10 @@ export default class DataType {
     
     /**
      * 
-     * @param {string} dataType 
+     * @param {string} rawDataType 
      */
-    constructor(dataType) {
+    constructor(rawDataType) {
+        const dataType = rawDataType.toLowerCase();
         this.size = ExtendedMath.matchFirstAsInt(dataType, /(\d+)$/);
         this.exponentialOffset = ExtendedMath.matchFirstAsInt(dataType, /(?<=_o)\d+/);
         this.floatExponentSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_e)\d+/);
