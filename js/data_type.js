@@ -11,6 +11,8 @@ export default class DataType {
 
     isSigned
 
+    isSignedTwosComplement
+
     baseType
     
     /**
@@ -24,6 +26,7 @@ export default class DataType {
         this.floatExponentSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_e)\d+/);
         this.floatMantissaSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_m)\d+/);
         this.isSigned = !ExtendedMath.hasMatch(dataType, /^u(?=_)/);
+        this.isSignedTwosComplement = this.isSigned && !ExtendedMath.hasMatch(dataType, /^s(?=_)/);
         this.baseType = ExtendedMath.matchFirst(dataType, /int|float|double|byte|nibble|bit|flag|boolean|bool/);
     }
 
@@ -38,12 +41,23 @@ export default class DataType {
         return 0;
     }
 
-    setAll(size, exponentialOffset, floatExponentSize, floatMantissaSize, isSigned, baseType){
+    /**
+     * 
+     * @param {*} size 
+     * @param {*} exponentialOffset 
+     * @param {*} floatExponentSize 
+     * @param {*} floatMantissaSize 
+     * @param {*} isSigned 
+     * @param {*} isSignedTwosComplement 
+     * @param {*} baseType 
+     */
+    setAll(size, exponentialOffset, floatExponentSize, floatMantissaSize, isSigned, isSignedTwosComplement, baseType){
         this.size = size;
         this.exponentialOffset = exponentialOffset;
         this.floatExponentSize = floatExponentSize;
         this.floatMantissaSize = floatMantissaSize;
         this.isSigned = isSigned;
+        this.isSignedTwosComplement = isSignedTwosComplement;
         this.baseType = baseType;
     }
 
@@ -127,15 +141,25 @@ export default class DataType {
         switch (this.baseType) {
             case 'int':
                 if (this.isSigned) {
-                    //uses 2s complement
-                    const signValue = 1 << (size - 1);
-                    const isNegative = inputvalue < 0;
-                    const sign = isNegative ? signValue : 0;
-                    const value = ExtendedMath.toWord(Math.abs(inputvalue), size-1);
-                    if (isNegative) {
-                        return signValue * 2 - value;
+                    if (this.isSignedTwosComplement) {                        
+                        //uses 2s complement
+                        const signValue = 1 << (size - 1);
+                        const isNegative = inputvalue < 0;
+                        const value = ExtendedMath.toWord(Math.abs(inputvalue), size-1);
+                        if (isNegative) {
+                            return signValue * 2 - value;
+                        } else {
+                            return value;
+                        }
                     } else {
-                        return value;
+                        const signValue = 1 << (size - 1);
+                        const isNegative = inputvalue < 0;
+                        const value = ExtendedMath.toWord(Math.abs(inputvalue), size-1);
+                        if (isNegative) {
+                            return signValue | value;
+                        } else {
+                            return value;
+                        }
                     }
                 } else {
                     return ExtendedMath.toWord(Math.abs(inputvalue), size);
@@ -159,10 +183,16 @@ export default class DataType {
         switch (this.baseType) {
             case 'int':
                 if (this.isSigned) {
-                    //uses 2s complement
-                    const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
-                    const sign = -ExtendedMath.bitSelectKeepOffset(value, size-1, 1);
-                    return value + sign;
+                    if (this.isSignedTwosComplement) {
+                        //uses 2s complement
+                        const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
+                        const sign = -ExtendedMath.bitSelectKeepOffset(value, size-1, 1);
+                        return value + sign;
+                    } else {
+                        const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
+                        const sign = ExtendedMath.bitSelect(value, size-1, 1) != 0 ? -1 : 1;
+                        return value * sign;
+                    }
                 } else {
                     return ExtendedMath.bitSelect(inputValue, 0, size);
                 }
