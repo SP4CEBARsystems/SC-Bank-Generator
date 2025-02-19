@@ -132,8 +132,16 @@ output sizes: 4, 4, 4</pre>
 	return [digit1, digit2, digit3];
 }</pre>
 						</li>
-					</ol>
-					<ol>
+						<li>
+							3 digit decimal input to 8-bit hexadecimal converter
+							<pre>
+locations: 1
+input sizes: 4, 4, 4
+output sizes: 8</pre>
+							<pre>([digit1, digit2, digit3]) => {
+	return [digit1 + digit2 * 10 + digit3 * 100];
+}</pre>
+						</li>
 						<li>
 							Sign-magnitude integer to two's complement integer converter (this code seems to be defect)
 							<pre>
