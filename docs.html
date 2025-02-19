@@ -40,7 +40,8 @@
 				cases: ROM, Selector ROM, and FSM.
 			<ul>
 				<li><b>ROM: <a href="https://en.wikipedia.org/wiki/Read-only_memory">Read only Memory</a></b><br>for any
-					input value coming in, one programmed output value is coming out. This can be used to make calculators or
+					input value coming in, one programmed output value is coming out. This can be used to make
+					calculators or
 					displays. This is the simplest, and likely most common, of the three.</li>
 				<li><b>Selector ROM:</b><br>An array of ROMs that all have the same input. Each ROM will respond
 					differently to the input. For example, it may be set to activate only when its input is equal to its
@@ -59,16 +60,104 @@
 		<section id="code">
 			<h2>Code</h2>
 			<p>
-				Within the code field you can write a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">javascript</a> function.
+				Within the code field you can write a <a
+					href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">javascript</a> function.
 				When you press the run button, the function will be evaluated for every input of your memory bank, the
-				output of the function will be saved as memory bank data. It will be encoded in <a href="#types">data types</a> and split over <a href="#data">digits</a>.
-				<h3>Relevant Javascript Documentation</h3>
-				<ul>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">Javascript</a></li>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">Basic Calculating</a></li>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Math Functions</a></li>
-				</ul>
+				output of the function will be saved as memory bank data. It will be encoded in <a href="#types">data
+					types</a> and split over <a href="#data">digits</a>.
+			<h3>Relevant Javascript Documentation</h3>
+			<ul>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">Javascript</a>
+				</li>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">Basic
+						Calculating</a></li>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Math
+						Functions</a></li>
+			</ul>
 			</p>
+			<h3>Examples</h3>
+			<ol>
+				<li>
+					addition
+					<pre>
+locations: 1
+input sizes: 4, 4
+output sizes: 5
+					</pre>
+					<pre>
+([x, y]) {
+	return [x + y];
+}
+					</pre>
+				</li>
+				<li>
+					subtraction
+					<pre>
+locations: 1
+input sizes: 4, 4
+output sizes: INT_5
+				</pre>
+					<pre>
+([x, y]) {
+	return x - y;
+}
+				</pre>
+				</li>
+				<li>
+					Pong Ball Controller FSM
+					<pre>
+locations: 1
+input sizes: 6, 1, 1
+output sizes: 6, 1, 1
+				</pre>
+					<pre>
+([position, direction, reset]) {
+	const maxPosition = 63;
+	const minPosition = 0;
+	if (reset != 0) {
+		position = 0;
+		direction = 0;
+	} else {
+		if (position >= maxPosition && direction == 0) {
+			direction = 1;
+		} else if (position <= minPosition && direction != 0) {
+			direction = 0;
+		} else {
+			position += (direction != 0 ? -1 : 1);
+		}
+	}
+	return [position, direction, 0];
+}
+				</pre>
+				</li>
+				<li>
+					display
+					<pre>
+locations: 16
+input sizes: 4
+output sizes: 4
+				</pre>
+					<pre>
+([x], bankPosition) => {
+	return [x == bankPosition ? 0xf : 0x0];
+}
+				</pre>
+				</li>
+				<li>
+					highResDisplay
+					<pre>
+locations: 16
+input sizes: 4
+output sizes: 4
+				</pre>
+					<pre>
+([x], bankPosition) => {
+	return [Math.floor(x/2) != bankPosition ? 0x0 :
+		((x % 2 == 0) ? 0x3 : 0xc)];
+}
+				</pre>
+				</li>
+			</ol>
 		</section>
 		<hr>
 		<section id="types">
@@ -86,7 +175,7 @@
 					<li>Unsigned Integer Types</li>
 				</h3>
 				An unsigned integer is a whole number that can <b>not</b> be negative.
-				
+
 				<h4>Format</h4>
 				On this online tool it is
 				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
@@ -154,8 +243,8 @@
 						<td>0 to 18,446,744,073,709,551,615</td>
 					</tr>
 				</table>
-				
-				
+
+
 				<!-- <ul>
 					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
 					<li>"U_INT_2" is an 2-bit whole number ranging from 0 to 3</li>
@@ -217,7 +306,7 @@
 						<td>0 to 1</td>
 					</tr>
 				</table>
-				
+
 				<!-- <ul>
 					<li>[n]: same as "U_INT_[n]" (where "[n]" is any number), for example: "8" is the same as "U_INT_8"
 					</li>
@@ -233,13 +322,16 @@
 				<h3>
 					<li>(Signed) Integer Types</li>
 				</h3>
-				A signed integer (aka integer) is a whole number that can be negative. 
-				
+				A signed integer (aka integer) is a whole number that can be negative.
+
 				<h4>Two's Complement</h4>
-				This tool uses <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> to represent negative numbers in binary, here the most significant bit has been negated. For example a four bit number's bits in 2s complement would be valued: 1, 2, 4, -8 instead of 1, 2, 4, 8.
-				
+				This tool uses <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> to
+				represent negative numbers in binary, here the most significant bit has been negated. For example a four
+				bit number's bits in 2s complement would be valued: 1, 2, 4, -8 instead of 1, 2, 4, 8.
+
 				<h4>Format</h4>
-				on this online tool it is formatted as "INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
+				on this online tool it is formatted as "INT_[n]" (without the quotes) (where "[n]" is any number
+				representing the size in
 				bits)<br>
 				<h4>Examples</h4>
 				<table border="1">
@@ -304,7 +396,7 @@
 						<td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
 					</tr>
 				</table>
-				
+
 				<!-- <ul>
 					<li>"INT_1" is an 1-bit whole number ranging from -1 to 0 (why would you need a signed 1-bit integer?)</li>
 					<li>"INT_2" is an 2-bit whole number ranging from -2 to 1</li>
@@ -391,7 +483,8 @@
 				</mrow>
 			</math>
 			This calculation should be shown automatically each time data is generated.<br>
-			As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need 256 banks:
+			As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need
+			256 banks:
 
 			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 				<mrow>
@@ -433,9 +526,12 @@
 			<h2>Generated Circuit</h2>
 			<p>
 				A circuit is generated alongside the data.
-				The image is made up of multiple screenshots from SurvivalCraft stitched together and may cause some slight graphical artifacts as seen below. The circuit part shown in that image may be treated as a single trench with a wire in it.
+				The image is made up of multiple screenshots from SurvivalCraft stitched together and may cause some
+				slight graphical artifacts as seen below. The circuit part shown in that image may be treated as a
+				single trench with a wire in it.
 			</p>
-			<img src="./assets/generated_circuit_tile_stitch_artifact.png" alt="graphical artifact of two circuit tile images stitched together">
+			<img src="./assets/generated_circuit_tile_stitch_artifact.png"
+				alt="graphical artifact of two circuit tile images stitched together">
 		</section>
 		<hr>
 		<section id="errors">
@@ -448,7 +544,12 @@
 		<section id="contribute">
 			<h2>Contribute</h2>
 			<p>
-				If you have an idea for a feature or bug fix for this site, you can <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">fork</a> it, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">develop</a> it and make a <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">pull request</a>. If I see it, it works, and I like it I will add it to this project.
+				If you have an idea for a feature or bug fix for this site, you can <a
+					href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">fork</a>
+				it, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">develop</a> it
+				and make a <a
+					href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">pull
+					request</a>. If I see it, it works, and I like it I will add it to this project.
 			</p>
 		</section>
 	</main>
