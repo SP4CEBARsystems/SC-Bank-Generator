@@ -77,44 +77,44 @@
 			</ul>
 			</p>
 		</section>
-		<section id="examples">		
+		<section id="examples">
 			<h3>Examples</h3>
 			<ol>
 				<li>
-					addition
-					<pre>
+					<h4>ROM Calculations</h4>
+					<ol>
+						<li>
+							addition
+							<pre>
 locations: 1
 input sizes: 4, 4
-output sizes: 5
-					</pre>
-					<pre>
-([x, y]) => {
+output sizes: 5</pre>
+							<pre>([x, y]) => {
 	return [x + y];
-}
-					</pre>
-				</li>
-				<li>
-					subtraction
-					<pre>
+}</pre>
+						</li>
+						<li>
+							subtraction
+							<pre>
 locations: 1
 input sizes: 4, 4
-output sizes: INT_5
-				</pre>
-					<pre>
-([x, y]) => {
+output sizes: INT_5</pre>
+							<pre>([x, y]) => {
 	return [x - y];
-}
-				</pre>
+}</pre>
+						</li>
+					</ol>
 				</li>
 				<li>
-					Pong Ball Controller FSM
-					<pre>
+					<h4>FSM Smart Counters</h4>
+					<ol>
+						<li>
+							Pong Ball Controller FSM
+							<pre>
 locations: 1
 input sizes: 6, 1, 1
-output sizes: 6, 1, 1
-				</pre>
-					<pre>
-([position, direction, reset]) => {
+output sizes: 6, 1, 1</pre>
+							<pre>([position, direction, reset]) => {
 	const maxPosition = 63;
 	const minPosition = 0;
 	if (reset != 0) {
@@ -130,35 +130,35 @@ output sizes: 6, 1, 1
 		}
 	}
 	return [position, direction, 0];
-}
-				</pre>
+}</pre>
+						</li>
+					</ol>
 				</li>
 				<li>
-					display
-					<pre>
+					<h4>Selector ROM</h4>
+					<ol>
+						<li>
+							display
+							<pre>
 locations: 16
 input sizes: 4
-output sizes: 4
-				</pre>
-					<pre>
-([x], bankPosition) => {
+output sizes: 4</pre>
+							<pre>([x], bankPosition) => {
 	return [x == bankPosition ? 0xf : 0x0];
-}
-				</pre>
-				</li>
-				<li>
-					highResDisplay
-					<pre>
+}</pre>
+						</li>
+						<li>
+							highResDisplay
+							<pre>
 locations: 16
 input sizes: 5
-output sizes: 4
-				</pre>
-					<pre>
-([x], bankPosition) => {
+output sizes: 4</pre>
+							<pre>([x], bankPosition) => {
 	return [Math.floor(x/2) != bankPosition ? 0x0 :
 		((x % 2 == 0) ? 0x3 : 0xc)];
-}
-				</pre>
+}</pre>
+						</li>
+					</ol>
 				</li>
 			</ol>
 		</section>
@@ -400,10 +400,15 @@ output sizes: 4
 				</table>
 
 				<h4>Sign-Magnitude Signed Integers</h4>
-				The tool also supports the <a href="https://en.wikipedia.org/wiki/Signed_number_representations#Sign%E2%80%93magnitude">Sign-magnitude</a> representation of negative numbers, this is simpler but not reccommended as it has some flaws.
+				The tool also supports the <a
+					href="https://en.wikipedia.org/wiki/Signed_number_representations#Sign%E2%80%93magnitude">Sign-magnitude</a>
+				representation of negative numbers, this is simpler but not reccommended as it has some flaws.
 				Here the sign bit inverts the number by multiplying it by "-1" when it is high.
-				The main reason this tool suports it is so you can convert numbers formatted in sign-magnitude to 2s complement making it easier to input negative numbers.
-				Note: the sign-magnitude representation can represent both "0" and "-0" the latter of which is not a number, the 2s complement on the other hand does not have negative zero and can display an extra negative number.
+				The main reason this tool suports it is so you can convert numbers formatted in sign-magnitude to 2s
+				complement making it easier to input negative numbers.
+				Note: the sign-magnitude representation can represent both "0" and "-0" the latter of which is not a
+				number, the 2s complement on the other hand does not have negative zero and can display an extra
+				negative number.
 
 				<h4>Sign-Magnitude Signed Integer Examples</h4>
 				<table border="1">
@@ -468,7 +473,7 @@ output sizes: 4
 						<td>-9,223,372,036,854,775,807 to +9,223,372,036,854,775,807</td>
 					</tr>
 				</table>
-				
+
 				<!-- <ul>
 					<li>"INT_1" is an 1-bit whole number ranging from -1 to 0 (why would you need a signed 1-bit integer?)</li>
 					<li>"INT_2" is an 2-bit whole number ranging from -2 to 1</li>
@@ -609,7 +614,8 @@ output sizes: 4
 		<section id="errors">
 			<h2>Common Errors</h2>
 			<p>
-				There are way too few error messages, if the code doesn't work, please replace the code with one of the <a href="#examples">example programs</a>. 
+				There are way too few error messages, if the code doesn't work, please replace the code with one of the
+				<a href="#examples">example programs</a>.
 			</p>
 		</section>
 		<hr>
