@@ -39,20 +39,19 @@
 		<section id="description">
 			<h2>Description</h2>
 			<p>
-				This tool allows you to easily program the data for memory bank systems. It supports three different use
-				cases: ROM, Selector ROM, and FSM.
+				This tool allows you to easily program the data for <a href="https://survivalcraftgame.fandom.com/wiki/Memory_Bank">memory bank</a> systems in <a href="https://en.wikipedia.org/wiki/Survivalcraft">Survivalcraft</a>. It supports three different use cases: ROM, Selector ROM, and FSM.
 			<ul>
 				<li><b>ROM: <a href="https://en.wikipedia.org/wiki/Read-only_memory">Read only Memory</a></b><br>for any
 					input value coming in, one programmed output value is coming out. This can be used to make
 					calculators or
-					displays. This is the simplest, and likely most common, of the three.</li>
+					displays. This is the simplest, and likely most common, of the three use cases.</li>
 				<li><b>Selector ROM:</b><br>An array of ROMs that all have the same input. Each ROM will respond
 					differently to the input. For example, it may be set to activate only when its input is equal to its
 					location number, thus creating a selector. This has many uses in displays, ROMs and <a
-						href="https://en.wikipedia.org/wiki/Random-access_memory">RAMs</a>. This online tool will even
-					generate some if your ROMs have too many inputs for a single Memory Bank</li>
+						href="https://en.wikipedia.org/wiki/Random-access_memory">RAMs</a>. Any data generated with this online tool will need
+					some of these selectors if your ROM design has too many inputs for a single Memory Bank to process</li>
 				<li><b>FSM: <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State
-							Machine</a></b><br> A memory bank with its output connected to its input will behave like an
+					Machine</a></b><br> A memory bank with its output connected to its input will behave like an
 					FSM. An FSM has a fixed number of states and can choose to go to any other state depending on its
 					current state and some external inputs. It can be used to store and step through its states. I found
 					it most useful for handling game loops.</li>
