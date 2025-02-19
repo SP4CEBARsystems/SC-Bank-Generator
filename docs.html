@@ -63,18 +63,27 @@
 			<p>
 				Within the code field you can write a <a
 					href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">javascript</a> function.
+				The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">function</a> must take an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array of numbers</a> and an optional number as parameters.
+				and it must return an array of numbers.
+				This optional number is the location index when you want many sets of banks with the same inputs each (called Selector ROM on this page) but you wont need it often.
+				The amount of numbers in the input and output arrays and the sizes in <a href="https://en.wikipedia.org/wiki/Bit">bits</a> of each number within the arrays are determined by the "input types" and "output types" text fields.
+				The amount of types within these type fields must match the amount of numbers within their corresponding arrays.
+				<pre>(number[], number) => number[]</pre>
+				<pre>([parameter1, parameter2, parameter3, parameter4], locationIndex) => {
+	return [parameter1, parameter2, parameter3, parameter4]
+}</pre>
 				When you press the run button, the function will be evaluated for every input of your memory bank, the
 				output of the function will be saved as memory bank data. It will be encoded in <a href="#types">data
 					types</a> and split over <a href="#data">digits</a>.
-			<h3>Relevant Javascript Documentation</h3>
-			<ul>
-				<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">Javascript</a>
-				</li>
-				<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">Basic
-						Calculating</a></li>
-				<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Math
-						Functions</a></li>
-			</ul>
+				<h3>Relevant Javascript Documentation</h3>
+				<ul>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">Javascript</a>
+					</li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">Basic
+							Calculating</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Math
+							Functions</a></li>
+				</ul>
 			</p>
 		</section>
 		<section id="examples">
@@ -122,26 +131,106 @@ output sizes: 4, 4, 4</pre>
 }</pre>
 						</li>
 					</ol>
-					Sign-magnitude integer to two's complement integer converter (this code seems to be defect)
-					<pre>
+					<ol>
+						<li>
+							Sign-magnitude integer to two's complement integer converter (this code seems to be defect)
+							<pre>
 locations: 1
 input sizes: SM_INT_8
 output sizes: INT_8</pre>
-					<ol>
-						<li>([x]) => {
+							<pre>([x]) => {
 	return [x];
-}</li>
+}</pre>
+						</li>
+						<li>
+							Bit mask and shift left
+							<pre>
+locations: 1
+input sizes: 4
+output sizes: 8</pre>
+							<pre>([x]) => {
+	const bitShiftLeftAmount = 1;
+	const bitMask = 0b1111;
+	return [(x &amp; bitMask)&lt;&lt;bitShiftLeftAmount];
+}</pre>
+						</li>
+						<li>
+							Bit mask and shift right
+							<pre>
+locations: 1
+input sizes: 4
+output sizes: 8</pre>
+							<pre>([x]) => {
+	const bitShiftRightAmount = 1;
+	const bitMask = 0b1111;
+	return [((x &amp; bitMask)&lt;&lt;4)&gt;&gt;bitShiftRightAmount];
+}</pre>
+						</li>
 					</ol>
 				</li>
 				<li>
 					<h4>FSM Smart Counters</h4>
 					<ol>
 						<li>
-							Pong Ball Controller FSM
+							8-bit incrementing counter that resets on the maximum value (aka "FF", "1111 1111").
+							Trigger the memory bank clock inputs to increment. Send the maximum signal (aka "F", "1.5v", "1111") to both input wires to reset it.
+							<pre>
+locations: 1
+input sizes: 8
+output sizes: 8</pre>
+							<pre>([x]) => {
+	if(x == 0xff) return 0;
+	return [x + 1];
+}</pre>
+						</li>
+						<li>
+							Easily Controllable 4-bit Counter
+							<pre>
+locations: 1
+input sizes: 4, 1, 1
+output sizes: 4</pre>
+							<pre>([position, isBackwardDirection, reset]) => {
+	const maxPosition = 15;
+	const minPosition = 0;
+	if (reset != 0) {
+		if (isBackwardDirection != 0) {
+			position = 0;
+		}
+	} else {
+		if (!(position >= maxPosition && isBackwardDirection == 0) && !(position <= minPosition && isBackwardDirection != 0)) {
+			position += (isBackwardDirection != 0 ? -1 : 1);
+		}
+	}
+	return [position];
+}</pre>
+						</li>
+						<li>
+							Pong Bat Controller FSM (Easily Controllable 6-bit Counter)
 							<pre>
 locations: 1
 input sizes: 6, 1, 1
-output sizes: 6, 1, 1</pre>
+output sizes: 6</pre>
+							<pre>([position, isBackwardDirection, reset]) => {
+	const maxPosition = 63;
+	const minPosition = 0;
+	if (reset != 0) {
+		if (isBackwardDirection != 0) {
+			position = 0;
+		}
+	} else {
+		if (!(position >= maxPosition && isBackwardDirection == 0) && !(position <= minPosition && isBackwardDirection != 0)) {
+			position += (isBackwardDirection != 0 ? -1 : 1);
+		}
+	}
+	return [position];
+}</pre>
+						</li>
+						<li>
+							6-bit Pong Ball Controller FSM
+							<pre>
+locations: 1
+input sizes: 6, 1, 1
+output sizes: 6, 1</pre>
 							<pre>([position, direction, reset]) => {
 	const maxPosition = 63;
 	const minPosition = 0;
@@ -157,7 +246,7 @@ output sizes: 6, 1, 1</pre>
 			position += (direction != 0 ? -1 : 1);
 		}
 	}
-	return [position, direction, 0];
+	return [position, direction];
 }</pre>
 						</li>
 					</ol>
