@@ -106,6 +106,34 @@ output sizes: INT_5</pre>
 					</ol>
 				</li>
 				<li>
+					<h4>ROM Conversions</h4>
+					<ol>
+						<li>
+							8-bit hexadecimal to 3 digit decimal display driver
+							<pre>
+locations: 1
+input sizes: 8
+output sizes: 4, 4, 4</pre>
+							<pre>([x]) => {
+	const digit1 = x % 10;
+	const digit2 = Math.floor(x/10) % 10;
+	const digit3 = Math.floor(x/100) % 10;  
+	return [digit1, digit2, digit3];
+}</pre>
+						</li>
+					</ol>
+					Sign-magnitude integer to two's complement integer converter (this code seems to be defect)
+					<pre>
+locations: 1
+input sizes: SM_INT_8
+output sizes: INT_8</pre>
+					<ol>
+						<li>([x]) => {
+	return [x];
+}</li>
+					</ol>
+				</li>
+				<li>
 					<h4>FSM Smart Counters</h4>
 					<ol>
 						<li>
