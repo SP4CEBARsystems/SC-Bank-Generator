@@ -85,7 +85,7 @@ input sizes: 4, 4
 output sizes: 5
 					</pre>
 					<pre>
-([x, y]) {
+([x, y]) => {
 	return [x + y];
 }
 					</pre>
@@ -98,7 +98,7 @@ input sizes: 4, 4
 output sizes: INT_5
 				</pre>
 					<pre>
-([x, y]) {
+([x, y]) => {
 	return x - y;
 }
 				</pre>
@@ -111,7 +111,7 @@ input sizes: 6, 1, 1
 output sizes: 6, 1, 1
 				</pre>
 					<pre>
-([position, direction, reset]) {
+([position, direction, reset]) => {
 	const maxPosition = 63;
 	const minPosition = 0;
 	if (reset != 0) {
