@@ -298,6 +298,16 @@ output sizes: 4</pre>
 							<pre>([x], bankPosition) => {
 	return [x == bankPosition ? 0xf : 0x0];
 }</pre>
+         <ol>
+           <li>
+             8-bit selector
+             (generated 256 banks)
+							  <pre>
+locations: 256
+input sizes: 8
+output sizes: 4</pre>
+           </li>
+         </ol>
 						</li>
 						<li>
 							highResDisplay
@@ -309,6 +319,13 @@ output sizes: 4</pre>
 	return [Math.floor(x/2) != bankPosition ? 0x0 :
 		((x % 2 == 0) ? 0x3 : 0xc)];
 }</pre>
+						</li>
+						<li>
+						 4-bit Multiplexer
+							<pre>
+locations: 256
+input sizes: 8
+output sizes: 4</pre>wip</pre>
 						</li>
 					</ol>
 				</li>
