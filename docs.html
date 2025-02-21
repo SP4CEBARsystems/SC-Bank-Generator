@@ -248,7 +248,7 @@ const overflowValue = minPosition;
 const underflowValue = maxPosition;</pre>
 								</li>
 								<li>
-									6-bit Counter FSM Without Overflow
+									(6-bit) Counter FSM Without Overflow
 									<pre>
 locations: 1
 input sizes: 6, 1, 1
@@ -301,7 +301,7 @@ output sizes: 4</pre>
          <h4>Configurations</h4>
          <ol>
            <li>
-             8-bit Selector
+             Selector [8-bit]
              (generated 256 banks)
 							  <pre>
 locations: 256
@@ -317,9 +317,17 @@ locations: 16
 input sizes: 
 output sizes: 4</pre>
 							<pre>([x], bankPosition) => {
-	return [Math.floor(x/2) != bankPosition ? 0x0 :
-		((x % 2 == 0) ? 0x3 : 0xc)];
+  const values = [0x3, 0xc];
+  const isActive = Math.floor(x/values.length) == bankPosition;
+	return [!isActive ? 0x0 : values[x % values.length]];
 }</pre>
+         <h4>Configurations</h4>
+         <ol>
+           <li>
+             High-Resolution Vertical Segment AND-grid driver for 4-LED Displays
+							  <pre>const values = [0x5, 0xa];</pre>
+           </li>
+         </ol>
 						</li>
          <li>
 							High-Resolution Vertical Segment AND-grid driver for 4-LED Displays
