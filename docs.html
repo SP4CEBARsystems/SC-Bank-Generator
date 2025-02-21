@@ -319,7 +319,7 @@ output sizes: 4</pre>
 							<pre>([x], bankPosition) => {
   const values = [0x3, 0xc];
   const isActive = Math.floor(x/values.length) == bankPosition;
-	return [!isActive ? 0x0 : values[x % values.length]];
+  return [!isActive ? 0x0 : values[x % values.length]];
 }</pre>
          <h4>Configurations</h4>
          <ol>
@@ -328,17 +328,6 @@ output sizes: 4</pre>
 							  <pre>const values = [0x5, 0xa];</pre>
            </li>
          </ol>
-						</li>
-         <li>
-							High-Resolution Vertical Segment AND-grid driver for 4-LED Displays
-							<pre>
-locations: 16
-input sizes: 4
-output sizes: 4</pre>
-							<pre>([x], bankPosition) => {
-	return [Math.floor(x/2) != bankPosition ? 0x0 :
-		((x % 2 == 0) ? 0x5 : 0xa)];
-}</pre>
 						</li>
 						<li>
 						 4-bit Multiplexer
