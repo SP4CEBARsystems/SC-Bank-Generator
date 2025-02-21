@@ -290,7 +290,7 @@ output sizes: 6, 1</pre>
 					<h3>Selector ROM</h3>
 					<ol>
 						<li>
-							display
+							4-bit selector
 							<pre>
 locations: 16
 input sizes: 4
@@ -298,9 +298,10 @@ output sizes: 4</pre>
 							<pre>([x], bankPosition) => {
 	return [x == bankPosition ? 0xf : 0x0];
 }</pre>
+         <h4>Configurations<h4/>
          <ol>
            <li>
-             8-bit selector
+             8-bit Selector
              (generated 256 banks)
 							  <pre>
 locations: 256
@@ -310,22 +311,35 @@ output sizes: 4</pre>
          </ol>
 						</li>
 						<li>
-							highResDisplay
+							High-Resolution Horizontal Segment AND-grid driver for 4-LED Displays
 							<pre>
 locations: 16
-input sizes: 5
+input sizes: 
 output sizes: 4</pre>
 							<pre>([x], bankPosition) => {
 	return [Math.floor(x/2) != bankPosition ? 0x0 :
 		((x % 2 == 0) ? 0x3 : 0xc)];
 }</pre>
 						</li>
+         <li>
+							High-Resolution Vertical Segment AND-grid driver for 4-LED Displays
+							<pre>
+locations: 16
+input sizes: 4
+output sizes: 4</pre>
+							<pre>([x], bankPosition) => {
+	return [Math.floor(x/2) != bankPosition ? 0x0 :
+		((x % 2 == 0) ? 0x5 : 0xa)];
+}</pre>
+						</li>
 						<li>
 						 4-bit Multiplexer
 							<pre>
-locations: 256
-input sizes: 8
-output sizes: 4</pre>wip</pre>
+locations: 16
+input sizes: 4, 4
+output sizes: 4</pre>([x, y], bankPosition) => {
+	return [y == bankPosition ? x : 0x0];
+}</pre>
 						</li>
 					</ol>
 				</li>
