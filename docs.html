@@ -310,6 +310,7 @@ output sizes: 2, 2, 2, 2, 1</pre>
 		switch(instructionRegister){
 			case 0: // halt (aka HLT)
 				programCounter -= 1;
+				isCycleFetch = 0;
 				break;
 			case 1: // load (aka LDA)
 				accumulator = programData[addressRegister];
