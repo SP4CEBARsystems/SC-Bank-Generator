@@ -292,7 +292,7 @@ output sizes: 6, 1</pre>
 locations: 1
 input sizes: 2, 2, 2, 2, 1
 output sizes: 2, 2, 2, 2, 1</pre>
-								<pre>([programCounter, accumulator, addressRegister, instructionRegister, isCycleFetch]) => {
+								<pre>([programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute]) => {
 	const assemblyProgram = [
 		{instruction: 1, address: 0}, // load the first value from programData into the accumulator
 		{instruction: 2, address: 1}, // subtract the second value of programData from the accumulator
@@ -300,17 +300,17 @@ output sizes: 2, 2, 2, 2, 1</pre>
 		{instruction: 0, address: 0}, // stop the program
 	];
 	const programData = [3, 1, 0, 0];
-	if (isCycleFetch != 0){
-		isCycleFetch = 0;
+	if (isCycleExecute == 0){
+		isCycleExecute = 1;
 		instructionRegister = assemblyProgram[programCounter].instruction;
 		addressRegister = assemblyProgram[programCounter].address;
 	} else {
-		isCycleFetch = 1;
+		isCycleExecute = 0;
 		programCounter += 1;
 		switch(instructionRegister){
 			case 0: // halt (aka HLT)
 				programCounter -= 1;
-				isCycleFetch = 0;
+				isCycleExecute = 0;
 				break;
 			case 1: // load (aka LDA)
 				accumulator = programData[addressRegister];
@@ -326,7 +326,7 @@ output sizes: 2, 2, 2, 2, 1</pre>
 			// store (STA) can be implemented with additional ROMs to manage the clock and writing data inputs of the memory banks depending on these parameters
 		}
 	}
-	return [programCounter, accumulator, addressRegister, instructionRegister, isCycleFetch];
+	return [programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute];
 }</pre>
 						</li>
 					</ol>

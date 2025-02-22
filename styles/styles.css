@@ -22,6 +22,12 @@ pre {
     position: relative;
 }
 
+textarea {
+    background: #333;
+    color: white;
+    border-color: #aaa;
+}
+
 button.copy-btn {
     position: absolute;
     top: 5px;
