@@ -310,6 +310,8 @@ export default class MemoryBankGenerator {
                     let currentX = 0;
                     let svgRowWidth = 0;
                     process.forEach((element, index) => {
+                        let additionalInputWireIndex = 0;
+                        const selectorLocation = Math.floor(input / 256 ** additionalInputWireIndex);
                         let bankName;
                         switch (element) {
                             case 'bank_digit.jpg':
@@ -317,10 +319,12 @@ export default class MemoryBankGenerator {
                                 bankName = this.generateBankName(location, input, digit);
                                 break;
                             case 'bank_selector_4-bit.jpg':
-                                bankName = `4-bit Multiplexer L${input}`;
+                                bankName = `4-bit Multiplexer L${selectorLocation}`;
+                                additionalInputWireIndex++;
                                 break;
                             case 'bank_selector_8-bit.jpg':
-                                bankName = `8-bit Selector L${input}`;
+                                bankName = `8-bit Selector L${selectorLocation}`;
+                                additionalInputWireIndex++;
                                 break;
                             default:
                                 bankName = undefined
