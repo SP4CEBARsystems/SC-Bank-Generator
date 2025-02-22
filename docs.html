@@ -99,7 +99,7 @@
 					<h3>ROM Calculations</h3>
 					<ol>
 						<li>
-							addition
+							<h4>addition</h4>
 							<pre>
 locations: 1
 input sizes: 4, 4
@@ -109,7 +109,7 @@ output sizes: 5</pre>
 }</pre>
 						</li>
 						<li>
-							subtraction
+							<h4>subtraction</h4>
 							<pre>
 locations: 1
 input sizes: 4, 4
@@ -124,7 +124,7 @@ output sizes: INT_5</pre>
 					<h3>ROM Conversions</h3>
 					<ol>
 						<li>
-							8-bit hexadecimal to 3-digit decimal display driver
+							<h4>8-bit hexadecimal to 3-digit decimal display driver</h4>
 							<pre>
 locations: 1
 input sizes: 8
@@ -137,7 +137,7 @@ output sizes: 4, 4, 4</pre>
 }</pre>
 						</li>
 						<li>
-							3-digit decimal input to 8-bit hexadecimal converter
+							<h4>3-digit decimal input to 8-bit hexadecimal converter</h4>
 							<pre>
 locations: 1
 input sizes: 4, 4, 4
@@ -147,7 +147,8 @@ output sizes: 8</pre>
 }</pre>
 						</li>
 						<li>
-							Sign-magnitude integer to two's complement integer converter (this code seems to be defect)
+							<h4>Sign-magnitude integer to two's complement integer converter</h4>
+							(an underlying system seems to be defect)
 							<pre>
 locations: 1
 input sizes: SM_INT_8
@@ -157,7 +158,7 @@ output sizes: INT_8</pre>
 }</pre>
 						</li>
 						<li>
-							Bit mask and shift left
+							<h4>Bit mask and shift left</h4>
 							<pre>
 locations: 1
 input sizes: 4
@@ -169,7 +170,7 @@ output sizes: 8</pre>
 }</pre>
 						</li>
 						<li>
-							Bit mask and shift right
+							<h4>Bit mask and shift right</h4>
 							<pre>
 locations: 1
 input sizes: 4
@@ -186,7 +187,8 @@ output sizes: 8</pre>
 					<h3>FSM Smart Counters</h3>
 					<ol>
 						<li>
-							8-bit incrementing counter that resets on the maximum value (aka "FF", "1111 1111").
+							<h4>8-bit increment-only counter</h4>
+							that resets on the maximum value (aka "FF", "1111 1111").
 							Trigger the memory bank clock inputs to increment. Send the maximum signal (aka "F", "1.5v", "1111") to both input wires to reset it.
 							<pre>
 locations: 1
@@ -198,17 +200,18 @@ output sizes: 8</pre>
 }</pre>
 						</li>
 						<li>
-							Easily Controllable 4-bit Counter With Overflow
+							<h4>4-bit Counter With Overflow</h4>
+							Inputs: keep, reset, increment, decrement
 							<pre>
 locations: 1
 input sizes: 4, 1, 1
 output sizes: 4</pre>
-							<pre>([position, isBackwardDirection, reset]) => {
+							<pre>([position, isMoving, isBackwardDirection]) => {
 	const maxPosition = 15;
 	const minPosition = 0;
 	const overflowValue = minPosition;
 	const underflowValue = maxPosition;
-	if (reset != 0) {
+	if (isMoving == 0) {
 		if (isBackwardDirection != 0) {
 			position = 0;
 		}
@@ -335,7 +338,7 @@ output sizes: 2, 2, 2, 2, 1</pre>
 					<h3>Selector ROM</h3>
 					<ol>
 						<li>
-							4-bit selector
+							4-bit Selector
 							<pre>
 locations: 16
 input sizes: 4
@@ -346,8 +349,7 @@ output sizes: 4</pre>
          <h4>Configurations</h4>
          <ol>
            <li>
-             Selector [8-bit]
-             (generated 256 banks)
+			8-bit Selector
 							  <pre>
 locations: 256
 input sizes: 8
@@ -375,7 +377,7 @@ output sizes: 4</pre>
          </ol>
 						</li>
 						<li>
-						 4-bit Multiplexer
+						4-bit Multiplexer
 							<pre>
 locations: 16
 input sizes: 4, 4

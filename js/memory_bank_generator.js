@@ -315,8 +315,10 @@ export default class MemoryBankGenerator {
                                 bankName = this.generateBankName(location, input, digit);
                                 break;
                             case 'bank_selector_4-bit.jpg':
+                                bankName = `4-bit Multiplexer L${input}`;
+                                break;
                             case 'bank_selector_8-bit.jpg':
-                                bankName = `Input Selector ${input}`;
+                                bankName = `8-bit Selector L${input}`;
                                 break;
                             default:
                                 bankName = undefined
