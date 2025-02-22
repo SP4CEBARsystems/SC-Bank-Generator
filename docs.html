@@ -285,7 +285,8 @@ output sizes: 6, 1</pre>
 }</pre>
 						</li>
 						<li>
-								2-bit CPU with instructions: load, add, subtract, branch if zero. The assembly code will never halt.
+								2-bit CPU with instructions: halt, load, subtract, branch if not zero, and a program to decrement until zero is reached.
+								Given the small instruction set (2-bit gives only four different instructions) you should adjust it per program.
 								Inspired by <a href="https://peterhigginson.co.uk/lmc/">The Little Man Computer (Online Demo)</a>
 								<pre>
 locations: 1
@@ -293,10 +294,10 @@ input sizes: 2, 2, 2, 2, 1
 output sizes: 2, 2, 2, 2, 1</pre>
 								<pre>([programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute]) => {
 	const assemblyProgram = [
-		{instruction: 0, address: 0}, // load the first value from programData
-		{instruction: 2, address: 1}, // subtract the second value of programData from the loaded value
-		{instruction: 3, address: 0}, // 
-		{instruction: 3, address: 0}, //
+		{instruction: 1, address: 0}, // load the first value from programData into the accumulator
+		{instruction: 2, address: 1}, // subtract the second value of programData from the accumulator
+		{instruction: 3, address: 0}, // jump (branch) to the first instruction if the accumulator is not zero
+		{instruction: 0, address: 0}, // stop the program
 	];
 	const programData = [3, 1, 0, 0];
 	const isCycleFetch = isCycleExecute == 0;
@@ -306,17 +307,17 @@ output sizes: 2, 2, 2, 2, 1</pre>
 	} else {
 		programCounter += 1;
 		switch(instructionRegister){
-			case 0: // load (aka LDA)
-				accumulator = programData[addressRegister];
+			case 0: // halt (aka HLT)
+				programCounter -= 1;
 				break;
-			case 1: // add (aka ADD)
-				accumulator += programData[addressRegister];
+			case 1: // load (aka LDA)
+				accumulator = programData[addressRegister];
 				break;
 			case 2: // subtract (aka SUB)
 				accumulator -= programData[addressRegister];
 				break;
-			case 3: // branch if zero (aka BRZ)
-				if(accumulator == 0){
+			case 3: // branch if not zero
+				if(accumulator != 0){
 					programCounter = addressRegister;
 				}
 				break;
