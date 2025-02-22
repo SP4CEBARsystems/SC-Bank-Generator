@@ -206,22 +206,22 @@ output sizes: 8</pre>
 locations: 1
 input sizes: 4, 1, 1
 output sizes: 4</pre>
-							<pre>([position, isMoving, isBackwardDirection]) => {
+							<pre>([position, isMoving, isDecrementing]) => {
 	const maxPosition = 15;
 	const minPosition = 0;
 	const overflowValue = minPosition;
 	const underflowValue = maxPosition;
 	if (isMoving == 0) {
-		if (isBackwardDirection != 0) {
+		if (isDecrementing != 0) {
 			position = 0;
 		}
 	} else {
-		if(position >= maxPosition && isBackwardDirection == 0) {
+		if(position >= maxPosition && isDecrementing == 0) {
 			position = overflowValue
-		} else if(position <= minPosition && isBackwardDirection != 0) {
+		} else if(position <= minPosition && isDecrementing != 0) {
 			position = underflowValue
 		} else {
-			position += (isBackwardDirection != 0 ? -1 : 1);
+			position += (isDecrementing != 0 ? -1 : 1);
 		}
 	}
 	return [position];
@@ -269,22 +269,22 @@ const underflowValue = position;</pre>
 locations: 1
 input sizes: 6, 1, 1
 output sizes: 6, 1</pre>
-								<pre>([position, direction, reset]) => {
+								<pre>([position, isDecrementing, isResetting]) => {
 	const maxPosition = 63;
 	const minPosition = 0;
-	if (reset != 0) {
+	if (isResetting != 0) {
 		position = 0;
-		direction = 0;
+		isDecrementing = 0;
 	} else {
-		if (position >= maxPosition && direction == 0) {
-			direction = 1;
-		} else if (position <= minPosition && direction != 0) {
-			direction = 0;
+		if (position >= maxPosition && isDecrementing == 0) {
+			isDecrementing = 1;
+		} else if (position <= minPosition && isDecrementing != 0) {
+			isDecrementing = 0;
 		} else {
-			position += (direction != 0 ? -1 : 1);
+			position += (isDecrementing != 0 ? -1 : 1);
 		}
 	}
-	return [position, direction];
+	return [position, isDecrementing];
 }</pre>
 						</li>
 						<li>
