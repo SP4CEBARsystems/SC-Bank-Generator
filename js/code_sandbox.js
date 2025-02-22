@@ -62,20 +62,30 @@ export function runUserFunction(inputArray) {
         'use strict';
         window.addEventListener('message', (event) => {
             if (event.data.type === 'runFunction') {
-                const timeout = setTimeout(() => { throw new Error('Execution timed out!'); }, 3000);
+                // const timeout = setTimeout(() => {
+                //     postError('Execution timed out!');
+                //     throw new Error('Execution timed out!');
+                // }, 10000);
                 try {
                     const userFunction = ${userCode}; // Convert to function
                     if (typeof userFunction !== 'function') throw new Error('Invalid function format');
-                    // console.log('hey');
                     const result = event.data.args[0].map((item) => item.map((subItem) => userFunction(...subItem)));
-                    clearTimeout(timeout);
-                    window.parent.postMessage({ type: 'result', result: result }, '*');
+                    // clearTimeout(timeout);
+                    postMessage(result);
                 } catch (error) {
-                    clearTimeout(timeout);
-                    window.parent.postMessage({ type: 'error', error: error.message }, '*');
+                    // clearTimeout(timeout);
+                    postError(error.message);
                 }
             }
         });
+
+        function postMessage(message){
+            window.parent.postMessage({ type: 'result', result: message }, '*');
+        }
+
+        function postError(message){
+            window.parent.postMessage({ type: 'error', error: message }, '*');
+        }
     `;
 
     // const result = userFunction(event.data.args[0], event.data.args[1]);
