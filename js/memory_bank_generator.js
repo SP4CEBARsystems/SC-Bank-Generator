@@ -283,18 +283,20 @@ export default class MemoryBankGenerator {
         const totalInputSize = this.inputTypes.map(TypeValue.sizeOf).reduce(sum);
         const inputWireCount = Math.ceil(totalInputSize / 4);
         const outputWireCount = Math.ceil(this.outputTypes.map(TypeValue.sizeOf).reduce(sum) / 4);
-        let process;
+        const process = [];
         if (inputWireCount <= 0) {
-            process = [];
         } else if (inputWireCount <= 1) {
-            process = ['bank_digit_single.jpg'];
+            process.push('bank_digit_single.jpg');
         } else if (inputWireCount <= 2) {
-            process = ['bank_digit.jpg'];
-        } else if (inputWireCount <= 3) {
-            process = ['bank_digit.jpg', 'bank_selector_4-bit.jpg'];
+            process.push('bank_digit.jpg');
         } else {
-            const amountOfSelectors = Math.ceil((inputWireCount - 2) / 2);
-            process = ['bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg')];
+            const additionalInputWireCount = inputWireCount - 2;
+            const amountOfSelectors = Math.floor(additionalInputWireCount / 2);
+            const hasUnevenInputWireCount = additionalInputWireCount % 2 != 0;
+            process.push('bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg'));
+            if (hasUnevenInputWireCount) {
+                process.push('bank_selector_4-bit.jpg');
+            }
         }
         let svgWidth = 0;
         let svgHeight = 0;
