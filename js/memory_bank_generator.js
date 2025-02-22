@@ -1,5 +1,6 @@
 import { initConsoleListener, runUserFunction } from "./code_sandbox.js";
 import { newCodeBlock, newContainer, newSVGImage, newSVGText } from "./dom_manipulator.js";
+import ElapsedTimer from "./ElapsedTimer.js";
 import ExtendedMath from "./extended_math.js";
 import TypeValue from "./type_value.js";
 import Word from "./word.js";
@@ -17,6 +18,8 @@ export default class MemoryBankGenerator {
      * @type {string[][][]}
      */
     generatedData = [];
+
+    elapsedTimer;
     
     // * @param {(bankIndex:number[], bankPosition?:number) => number[]} generatorCallback 
     /**
@@ -31,6 +34,7 @@ export default class MemoryBankGenerator {
         this.outputTypes = outputTypes;
         // this.generatorCallback = generatorCallback;
         initConsoleListener(this.processOutput.bind(this));
+        this.elapsedTimer = new ElapsedTimer('elapsed-time-display');
     }
 
     init(numberOfLocations = 1, inputTypes, outputTypes){
@@ -49,10 +53,12 @@ export default class MemoryBankGenerator {
                 // );
         }
         console.log('bankInput', bankInput);
-        runUserFunction(bankInput);
+        this.elapsedTimer.start();
+        // runUserFunction(bankInput);
     }
 
     processOutput(data){
+        this.elapsedTimer.stop();
         console.log("processOutput", data);
         const bankArrayData = [];
         data.forEach(element => {
@@ -309,7 +315,7 @@ export default class MemoryBankGenerator {
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
                     let svgRowWidth = 0;
-                    process.forEach((element, index) => {
+                    process.forEach((element) => {
                         let additionalInputWireIndex = 0;
                         const selectorLocation = Math.floor(input / 256 ** additionalInputWireIndex);
                         let bankName;
