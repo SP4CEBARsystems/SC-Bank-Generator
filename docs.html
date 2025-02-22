@@ -124,7 +124,7 @@ output sizes: INT_5</pre>
 					<h3>ROM Conversions</h3>
 					<ol>
 						<li>
-							8-bit hexadecimal to 3 digit decimal display driver
+							8-bit hexadecimal to 3-digit decimal display driver
 							<pre>
 locations: 1
 input sizes: 8
@@ -137,7 +137,7 @@ output sizes: 4, 4, 4</pre>
 }</pre>
 						</li>
 						<li>
-							3 digit decimal input to 8-bit hexadecimal converter
+							3-digit decimal input to 8-bit hexadecimal converter
 							<pre>
 locations: 1
 input sizes: 4, 4, 4
@@ -282,6 +282,48 @@ output sizes: 6, 1</pre>
 		}
 	}
 	return [position, direction];
+}</pre>
+						</li>
+						<li>
+								2-bit CPU with instructions: load, add, subtract, branch if zero. The assembly code will never halt.
+								Inspired by <a href="https://peterhigginson.co.uk/lmc/">The Little Man Computer (Online Demo)</a>
+								<pre>
+locations: 1
+input sizes: 2, 2, 2, 2, 1
+output sizes: 2, 2, 2, 2, 1</pre>
+								<pre>([programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute]) => {
+	const assemblyProgram = [
+		{instruction: 0, address: 0}, // load the first value from programData
+		{instruction: 2, address: 1}, // subtract the second value of programData from the loaded value
+		{instruction: 3, address: 0}, // 
+		{instruction: 3, address: 0}, //
+	];
+	const programData = [3, 1, 0, 0];
+	const isCycleFetch = isCycleExecute == 0;
+	if (isCycleFetch){
+		instructionRegister = assemblyProgram[programCounter].instruction;
+		addressRegister = assemblyProgram[programCounter].address;
+	} else {
+		programCounter += 1;
+		switch(instructionRegister){
+			case 0: // load (aka LDA)
+				accumulator = programData[addressRegister];
+				break;
+			case 1: // add (aka ADD)
+				accumulator += programData[addressRegister];
+				break;
+			case 2: // subtract (aka SUB)
+				accumulator -= programData[addressRegister];
+				break;
+			case 3: // branch if zero (aka BRZ)
+				if(accumulator == 0){
+					programCounter = addressRegister;
+				}
+				break;
+			// store (STA) can be implemented with additional ROMs to manage the clock and writing data inputs of the memory banks depending on these parameters
+		}
+	}
+	return [programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute];
 }</pre>
 						</li>
 					</ol>
