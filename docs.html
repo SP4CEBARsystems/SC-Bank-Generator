@@ -99,7 +99,7 @@
 					<h3>ROM Calculations</h3>
 					<ol>
 						<li>
-							<h4>addition</h4>
+							<h4>Addition</h4>
 							<pre>
 locations: 1
 input sizes: 4, 4
@@ -109,7 +109,7 @@ output sizes: 5</pre>
 }</pre>
 						</li>
 						<li>
-							<h4>subtraction</h4>
+							<h4>Subtraction</h4>
 							<pre>
 locations: 1
 input sizes: 4, 4
@@ -124,7 +124,7 @@ output sizes: INT_5</pre>
 					<h3>ROM Conversions</h3>
 					<ol>
 						<li>
-							<h4>8-bit hexadecimal to 3-digit decimal display driver</h4>
+							<h4>8-bit Hexadecimal To 3-digit Decimal</h4>
 							<pre>
 locations: 1
 input sizes: 8
@@ -137,7 +137,7 @@ output sizes: 4, 4, 4</pre>
 }</pre>
 						</li>
 						<li>
-							<h4>3-digit decimal input to 8-bit hexadecimal converter</h4>
+							<h4>3-digit Decimal Input To 8-bit Hexadecimal</h4>
 							<pre>
 locations: 1
 input sizes: 4, 4, 4
@@ -147,7 +147,7 @@ output sizes: 8</pre>
 }</pre>
 						</li>
 						<li>
-							<h4>Sign-magnitude integer to two's complement integer converter</h4>
+							<h4>Sign-magnitude Integer To Two's Complement Integer</h4>
 							(an underlying system seems to be defect)
 							<pre>
 locations: 1
@@ -158,7 +158,7 @@ output sizes: INT_8</pre>
 }</pre>
 						</li>
 						<li>
-							<h4>Bit mask and shift left</h4>
+							<h4>Bit Mask And Shift Left</h4>
 							<pre>
 locations: 1
 input sizes: 4
@@ -170,7 +170,7 @@ output sizes: 8</pre>
 }</pre>
 						</li>
 						<li>
-							<h4>Bit mask and shift right</h4>
+							<h4>Bit Mask And Shift Right</h4>
 							<pre>
 locations: 1
 input sizes: 4
@@ -187,7 +187,7 @@ output sizes: 8</pre>
 					<h3>FSM Smart Counters</h3>
 					<ol>
 						<li>
-							<h4>8-bit increment-only counter</h4>
+							<h4>8-bit Increment-only Counter</h4>
 							that resets on the maximum value (aka "FF", "1111 1111").
 							Trigger the memory bank clock inputs to increment. Send the maximum signal (aka "F", "1.5v", "1111") to both input wires to reset it.
 							<pre>
@@ -226,10 +226,10 @@ output sizes: 4</pre>
 	}
 	return [position];
 }</pre>
-							<h4>configurations</h4>
+							<h4>Configurations</h4>
 							<ol>
 								<li>
-									4-bit counter without overflow
+									<h4>4-bit Counter Without Overflow</h4>
 									<pre>
 locations: 1
 input sizes: 4, 1, 1
@@ -240,7 +240,7 @@ const overflowValue = position;
 const underflowValue = position;</pre>
 								</li>
 								<li>
-									6-bit Counter FSM With Overflow
+									<h4>6-bit Counter FSM With Overflow</h4>
 									<pre>
 locations: 1
 input sizes: 6, 1, 1
@@ -251,7 +251,7 @@ const overflowValue = minPosition;
 const underflowValue = maxPosition;</pre>
 								</li>
 								<li>
-									(6-bit) Counter FSM Without Overflow
+									<h4>6-bit Counter FSM Without Overflow</h4>
 									<pre>
 locations: 1
 input sizes: 6, 1, 1
@@ -264,7 +264,7 @@ const underflowValue = position;</pre>
 							</ol>
 						</li>
 						<li>
-								6-bit Pong Ball Controller FSM
+								<h4>6-bit Pong Ball Controller FSM</h4>
 								<pre>
 locations: 1
 input sizes: 6, 1, 1
@@ -288,10 +288,11 @@ output sizes: 6, 1</pre>
 }</pre>
 						</li>
 						<li>
-								2-bit CPU with instructions: halt, load, subtract, branch if not zero, and a program to decrement until zero is reached.
-								Given the small instruction set (2-bit gives only four different instructions) you should adjust it per program.
-								Inspired by <a href="https://peterhigginson.co.uk/lmc/">The Little Man Computer (Online Demo)</a>
-								<pre>
+							<h4>2-bit CPU</h4>
+							with instructions: halt, load, subtract, branch if not zero, and a program to decrement until zero is reached.
+							Given the small instruction set (2-bit gives only four different instructions) you should adjust it per program.
+							Inspired by <a href="https://peterhigginson.co.uk/lmc/">The Little Man Computer (Online Demo)</a>
+							<pre>
 locations: 1
 input sizes: 2, 2, 2, 2, 1
 output sizes: 2, 2, 2, 2, 1</pre>
@@ -338,7 +339,7 @@ output sizes: 2, 2, 2, 2, 1</pre>
 					<h3>Selector ROM</h3>
 					<ol>
 						<li>
-							4-bit Selector
+							<h4>4-bit Selector</h4>
 							<pre>
 locations: 16
 input sizes: 4
@@ -349,7 +350,7 @@ output sizes: 4</pre>
          <h4>Configurations</h4>
          <ol>
            <li>
-			8-bit Selector
+			<h4>8-bit Selector</h4>
 							  <pre>
 locations: 256
 input sizes: 8
@@ -358,7 +359,7 @@ output sizes: 4</pre>
          </ol>
 						</li>
 						<li>
-							High-Resolution Horizontal Segment AND-grid driver for 4-LED Displays
+							<h4>Horizontal Segment AND-grid Driver For 4-LED Plotters</h4>
 							<pre>
 locations: 16
 input sizes: 
@@ -368,16 +369,16 @@ output sizes: 4</pre>
   const isActive = Math.floor(x/values.length) == bankPosition;
   return [!isActive ? 0x0 : values[x % values.length]];
 }</pre>
-         <h4>Configurations</h4>
-         <ol>
-           <li>
-             High-Resolution Vertical Segment AND-grid driver for 4-LED Displays
-							  <pre>const values = [0x5, 0xa];</pre>
-           </li>
-         </ol>
+							<h4>Configurations</h4>
+							<ol>
+								<li>
+									<h4>Vertical Segment AND-grid Driver For 4-LED Plotters</h4>
+									<pre>const values = [0x5, 0xa];</pre>
+								</li>
+							</ol>
 						</li>
 						<li>
-						4-bit Multiplexer
+							<h4>4-bit Multiplexer</h4>
 							<pre>
 locations: 16
 input sizes: 4, 4
