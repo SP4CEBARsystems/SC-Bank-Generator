@@ -54,7 +54,7 @@ export default class MemoryBankGenerator {
         }
         console.log('bankInput', bankInput);
         this.elapsedTimer.start();
-        // runUserFunction(bankInput);
+        runUserFunction(bankInput);
     }
 
     processOutput(data){
