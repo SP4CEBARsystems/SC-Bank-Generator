@@ -315,9 +315,9 @@ export default class MemoryBankGenerator {
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
                     let svgRowWidth = 0;
+                    let additionalInputWireIndex = 0;
                     process.forEach((element) => {
-                        let additionalInputWireIndex = 0;
-                        const selectorLocation = Math.floor(input / 256 ** additionalInputWireIndex);
+                        const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
                         let bankName;
                         switch (element) {
                             case 'bank_digit.jpg':
