@@ -50,8 +50,15 @@ export default class standardCode {
         }
     )
 
+    static incrementCounterFsm = new Code(
+        ([x], bankPosition, [maxValue] = [0xff]) => {
+            if(x == maxValue) return [0];
+            return [x + 1];
+        }
+    )
+
     static counterFsm = new Code(
-        ([position, isMoving, isDecrementing], bankPosition, [maxPosition, minPosition, isOverflowEnabled] = [15, 0, 0]) => {
+        ([position, isMoving, isDecrementing], bankPosition, [minPosition, maxPosition, isOverflowEnabled] = [0, 15, 1]) => {
             const [underflowValue, overflowValue] = isOverflowEnabled ? [maxPosition, minPosition] : [position, position];
             if (isMoving == 0) {
                 if (isDecrementing != 0) {
@@ -117,8 +124,9 @@ export default class standardCode {
                         accumulator = currentValue;
                         break;
                     // case 'store': // (aka STA)
-                    //     // can be implemented with additional ROMs to manage the clock and writing data inputs of the memory banks depending on these parameters
-                    //     // one issue with this is that it is stored only on this specific program state and not all program states that at this addressRegister, to write that you will need a system to write in multiple places
+                    //     // can be implemented with additional ROMs to manage the clock and writing-data inputs of the memory banks
+                    //     // To write it in this architecture: you need to simulate this program in Survivalcraft with a different programData array
+                    //     // The current design has a lot of overlap in data as each combination of parameters has a state, it may be more efficient to split it up into aset of SFMs working together
                     //     isWriteMode = 1;
                     //     writeValue = accumulator;
                     //     break;

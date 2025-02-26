@@ -6,55 +6,155 @@ import standardCode from "./StandardCode.js";
  */
 export const codePresets = [
     new CodePreset(
-        'addition',
-        standardCode.addition
+        standardCode.addition,
+        'Addition',
+        '',
+        ['4', '4'],
+        ['5'],
     ),
     new CodePreset(
-        'manualSubtraction',
-        standardCode.manualSubtraction
+        standardCode.manualSubtraction,
+        'Manual Subtraction',
+        '',
+        ['4', '4'],
+        ['4', '1'],
     ),
     new CodePreset(
-        'subtraction',
-        standardCode.subtraction
+        standardCode.subtraction,
+        'Subtraction',
+        '',
+        ['4', '4'],
+        ['INT_5'],
     ),
     new CodePreset(
-        'hexToDec',
-        standardCode.hexToDec
+        standardCode.hexToDec,
+        '8-bit Hexadecimal To 3-digit Decimal',
+        '',
+        ['8'],
+        ['4', '4', '4'],
     ),
     new CodePreset(
-        'decToHex',
-        standardCode.decToHex
+        standardCode.decToHex,
+        '3-digit Decimal Input To 8-bit Hexadecimal',
+        '',
+        ['4', '4', '4'],
+        ['8'],
     ),
     new CodePreset(
-        'typeConverter',
-        standardCode.typeConverter
+        standardCode.typeConverter,
+        "Sign-magnitude Integer To Two's Complement Integer",
+        '',
+        ['SM_INT_8'],
+        ['INT_8'],
     ),
     new CodePreset(
-        'bitMaskAndShift',
-        standardCode.bitMaskAndShift
+        standardCode.bitMaskAndShift,
+        'Bit Mask And Shift Left',
+        '',
+        ['4'],
+        ['8'],
     ),
     new CodePreset(
-        'counterFsm',
-        standardCode.counterFsm
+        standardCode.bitMaskAndShift,
+        'Bit Mask And Shift Right',
+        '',
+        ['4'],
+        ['8'],
     ),
     new CodePreset(
-        'bouncyCounterFsm',
-        standardCode.bouncyCounterFsm
+        standardCode.incrementCounterFsm,
+        '8-bit Increment-only Counter FSM',
+        'that resets on the maximum value (aka "FF", "1111 1111"). Trigger the memory bank clock inputs to increment. Send the maximum signal (aka "F", "1.5v", "1111") to both input wires to reset it.',
+        ['8'],
+        ['8'],
     ),
     new CodePreset(
-        'cpuFsm',
-        standardCode.cpuFsm
+        standardCode.counterFsm,
+        '4-bit Counter FSM With Overflow',
+        'Inputs: keep, reset, increment, decrement',
+        ['4, 1, 1'],
+        ['4'],
+        [0, 15, 1],
     ),
     new CodePreset(
-        'selector',
-        standardCode.selector
+        standardCode.counterFsm,
+        '4-bit Counter FSM Without Overflow',
+        'Inputs: keep, reset, increment, decrement',
+        ['4, 1, 1'],
+        ['4'],
+        [0, 15, 0],
     ),
     new CodePreset(
-        'subSelector',
-        standardCode.subSelector
+        standardCode.counterFsm,
+        '6-bit Counter FSM With Overflow',
+        'Inputs: keep, reset, increment, decrement',
+        ['6, 1, 1'],
+        ['6'],
+        [0, 63, 1],
     ),
     new CodePreset(
-        'multiplexer',
-        standardCode.multiplexer
+        standardCode.counterFsm,
+        '6-bit Counter FSM Without Overflow',
+        'Inputs: keep, reset, increment, decrement',
+        ['6, 1, 1'],
+        ['6'],
+        [0, 63, 0],
+    ),
+    new CodePreset(
+        standardCode.bouncyCounterFsm,
+        '6-bit Bouncy Counter FSM',
+        '',
+        ['6', '1', '1'],
+        ['6', '1'],
+    ),
+    new CodePreset(
+        standardCode.cpuFsm,
+        '2-bit CPU FSM',
+        'with instructions: halt, load, subtract, branch if not zero, and a program to decrement until zero is reached. Given the small instruction set (2-bit gives only four different instructions) you should adjust it per program. Inspired by The Little Man Computer (Online Demo)',
+        ['2', '2', '2', '2', '1'],
+        ['2', '2', '2', '2', '1'],
+    ),
+    new CodePreset(
+        standardCode.selector,
+        '4-bit Selector',
+        '',
+        ['4'],
+        ['4'],
+        [],
+        16,
+    ),
+    new CodePreset(
+        standardCode.selector,
+        '8-bit Selector',
+        '',
+        ['8'],
+        ['4'],
+        [],
+        256,
+    ),
+    new CodePreset(
+        standardCode.subSelector,
+        'Horizontal Segment AND-grid Driver For 4-LED Plotters',
+        '',
+        ['4'],
+        ['4'],
+        [0x3, 0xc],
+        16,
+    ),
+    new CodePreset(
+        standardCode.subSelector,
+        'Vertical Segment AND-grid Driver For 4-LED Plotters',
+        '',
+        ['4'],
+        ['4'],
+        [0x5, 0xa],
+        16,
+    ),
+    new CodePreset(
+        standardCode.multiplexer,
+        '4-bit Multiplexer',
+        '',
+        [],
+        [],
     ),
 ];
