@@ -119,3 +119,17 @@ export function assignCodeBlockCopyButton() {
         () => copyTextToClipboard(codeContainer.textContent)
     );
 }
+
+export function createCopyButtons() {
+    [...document.querySelectorAll('.has-copy-btn')].forEach(element => {
+        const code = element.querySelector('code')?.innerText ?? '';
+        newButton('Copy', 'copy-btn', element, copyTextToClipboard, [code]);
+    });
+}
+
+export function assignCopyButtons() {
+    [...document.querySelectorAll('.copy-btn')].forEach(element => {
+        const code = element.nextElementSibling?.innerText ?? '';
+        element.addEventListener('click', () => copyTextToClipboard(code));
+    });
+}

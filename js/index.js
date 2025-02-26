@@ -15,7 +15,7 @@ function runOnStart() {
     // functionTesting();
     const generatorUI = new MemoryBankGeneratorUI(
         new MemoryBankGenerator());
-    init_code_sandbox();
+    // init_code_sandbox();
 }
 
 function functionTesting() {

@@ -1,7 +1,7 @@
-import { init_code_sandbox } from "./code_sandbox.js";
+import { createCopyButtons } from "./dom_manipulator.js";
 
 document.addEventListener( "DOMContentLoaded", runOnStart);
 
 function runOnStart() {
-    init_code_sandbox();
+    createCopyButtons();
 }

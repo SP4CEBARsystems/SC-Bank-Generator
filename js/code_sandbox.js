@@ -1,16 +1,9 @@
 import { copyTextToClipboard } from "./copying.js";
+import { createCopyButtons, newButton } from "./dom_manipulator.js";
 
 export function init_code_sandbox() {
-    assignCopyButtons();
     // Listen for messages from the iframe
     // initConsoleListener();
-}
-
-function assignCopyButtons() {
-    [...document.querySelectorAll('.copy-btn')].forEach(element => {
-        const code = element.nextElementSibling?.innerText ?? '';
-        element.addEventListener('click', () => copyTextToClipboard(code));
-    });
 }
 
 export function initConsoleListener(callback) {

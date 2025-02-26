@@ -104,10 +104,7 @@
 locations: 1
 input sizes: 4, 4
 output sizes: 5</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x, y]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x, y]) => {
 	return [x + y];
 }</code></pre>
 						</li>
@@ -117,10 +114,7 @@ output sizes: 5</pre>
 locations: 1
 input sizes: 4, 4
 output sizes: INT_5</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x, y]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x, y]) => {
 	return [x - y];
 }</code></pre>
 						</li>
@@ -135,10 +129,7 @@ output sizes: INT_5</pre>
 locations: 1
 input sizes: 8
 output sizes: 4, 4, 4</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x]) => {
 	const digit1 = x % 10;
 	const digit2 = Math.floor(x/10) % 10;
 	const digit3 = Math.floor(x/100) % 10;  
@@ -151,10 +142,7 @@ output sizes: 4, 4, 4</pre>
 locations: 1
 input sizes: 4, 4, 4
 output sizes: 8</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([digit1, digit2, digit3]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([digit1, digit2, digit3]) => {
 	return [digit1 + digit2 * 10 + digit3 * 100];
 }</code></pre>
 						</li>
@@ -165,10 +153,7 @@ output sizes: 8</pre>
 locations: 1
 input sizes: SM_INT_8
 output sizes: INT_8</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x]) => {
 	return [x];
 }</code></pre>
 						</li>
@@ -178,10 +163,7 @@ output sizes: INT_8</pre>
 locations: 1
 input sizes: 4
 output sizes: 8</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x]) => {
 	const bitShiftLeftAmount = 1;
 	const bitMask = 0b1111;
 	return [(x &amp; bitMask)&lt;&lt;bitShiftLeftAmount];
@@ -193,10 +175,7 @@ output sizes: 8</pre>
 locations: 1
 input sizes: 4
 output sizes: 8</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x]) => {
 	const bitShiftRightAmount = 1;
 	const bitMask = 0b1111;
 	return [((x &amp; bitMask)&lt;&lt;4)&gt;&gt;bitShiftRightAmount];
@@ -215,10 +194,7 @@ output sizes: 8</pre>
 locations: 1
 input sizes: 8
 output sizes: 8</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x]) => {
 	if(x == 0xff) return 0;
 	return [x + 1];
 }</code></pre>
@@ -230,10 +206,7 @@ output sizes: 8</pre>
 locations: 1
 input sizes: 4, 1, 1
 output sizes: 4</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([position, isMoving, isDecrementing]) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([position, isMoving, isDecrementing]) => {
 	const maxPosition = 15;
 	const minPosition = 0;
 	const overflowValue = minPosition;
@@ -261,9 +234,7 @@ output sizes: 4</pre>
 locations: 1
 input sizes: 4, 1, 1
 output sizes: 4</pre>
-	<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">const maxPosition = 15;
+	<pre class="code-block-root has-copy-btn"><code class="code-block">const maxPosition = 15;
 const minPosition = 0;
 const overflowValue = position;
 const underflowValue = position;</code></pre>
@@ -274,9 +245,7 @@ const underflowValue = position;</code></pre>
 locations: 1
 input sizes: 6, 1, 1
 output sizes: 6</pre>
-	<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">const maxPosition = 63;
+	<pre class="code-block-root has-copy-btn"><code class="code-block">const maxPosition = 63;
 const minPosition = 0;
 const overflowValue = minPosition;
 const underflowValue = maxPosition;</code></pre>
@@ -287,9 +256,7 @@ const underflowValue = maxPosition;</code></pre>
 locations: 1
 input sizes: 6, 1, 1
 output sizes: 6</pre>
-	<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">const maxPosition = 63;
+	<pre class="code-block-root has-copy-btn"><code class="code-block">const maxPosition = 63;
 const minPosition = 0;
 const overflowValue = position;
 const underflowValue = position;</code></pre>
@@ -302,10 +269,7 @@ const underflowValue = position;</code></pre>
 locations: 1
 input sizes: 6, 1, 1
 output sizes: 6, 1</pre>
-								<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([position, isDecrementing, isResetting]) => {
+								<pre class="code-block-root has-copy-btn"><code class="code-block">([position, isDecrementing, isResetting]) => {
 	const maxPosition = 63;
 	const minPosition = 0;
 	if (isResetting != 0) {
@@ -332,10 +296,7 @@ output sizes: 6, 1</pre>
 locations: 1
 input sizes: 2, 2, 2, 2, 1
 output sizes: 2, 2, 2, 2, 1</pre>
-								<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute]) => {
+								<pre class="code-block-root has-copy-btn"><code class="code-block">([programCounter, accumulator, addressRegister, instructionRegister, isCycleExecute]) => {
 	const assemblyProgram = [
 		{instruction: 1, address: 0}, // load the first value from programData into the accumulator
 		{instruction: 2, address: 1}, // subtract the second value of programData from the accumulator
@@ -383,9 +344,7 @@ output sizes: 2, 2, 2, 2, 1</pre>
 locations: 16
 input sizes: 4
 output sizes: 4</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
+							<pre class="code-block-root has-copy-btn has-copy-btn"><code class="code-block">
 ([x], bankPosition) => {
 	return [x == bankPosition ? 0xf : 0x0];
 }</code></pre>
@@ -406,10 +365,7 @@ output sizes: 4</pre>
 locations: 16
 input sizes: 
 output sizes: 4</pre>
-							<pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x], bankPosition) => {
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x], bankPosition) => {
   const values = [0x3, 0xc];
   const isActive = Math.floor(x/values.length) == bankPosition;
   return [!isActive ? 0x0 : values[x % values.length]];
@@ -427,10 +383,7 @@ output sizes: 4</pre>
 							<pre>
 locations: 16
 input sizes: 4, 4
-output sizes: 4</pre><pre class="code-block-root">
-								<button class="copy-btn">Copy</button>
-								<code class="code-block">
-([x, y], bankPosition) => {
+output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code-block">([x, y], bankPosition) => {
 	return [y == bankPosition ? x : 0x0];
 }</code></pre>
 						</li>
