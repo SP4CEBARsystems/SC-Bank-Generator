@@ -4,25 +4,57 @@ import standardCode from "./StandardCode.js";
 /**
  * @type {CodePreset[]}
  */
-export const generatorPresets = [
+export const codePresets = [
     new CodePreset(
         'addition',
-        standardCode.addition,
+        standardCode.addition
+    ),
+    new CodePreset(
+        'manualSubtraction',
+        standardCode.manualSubtraction
     ),
     new CodePreset(
         'subtraction',
         standardCode.subtraction
     ),
     new CodePreset(
-        'FSM',
-        standardCode.FSM
+        'hexToDec',
+        standardCode.hexToDec
     ),
     new CodePreset(
-        'display',
-        standardCode.display
+        'decToHex',
+        standardCode.decToHex
     ),
     new CodePreset(
-        'highResDisplay',
-        standardCode.highResDisplay
-    )
+        'typeConverter',
+        standardCode.typeConverter
+    ),
+    new CodePreset(
+        'bitMaskAndShift',
+        standardCode.bitMaskAndShift
+    ),
+    new CodePreset(
+        'counterFsm',
+        standardCode.counterFsm
+    ),
+    new CodePreset(
+        'bouncyCounterFsm',
+        standardCode.bouncyCounterFsm
+    ),
+    new CodePreset(
+        'cpuFsm',
+        standardCode.cpuFsm
+    ),
+    new CodePreset(
+        'selector',
+        standardCode.selector
+    ),
+    new CodePreset(
+        'subSelector',
+        standardCode.subSelector
+    ),
+    new CodePreset(
+        'multiplexer',
+        standardCode.multiplexer
+    ),
 ];
