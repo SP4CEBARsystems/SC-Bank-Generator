@@ -156,7 +156,7 @@ export const codePresets = [
         'Selector ROM',
         ['4'],
         ['4'],
-        [0x3, 0xc],
+        [[0x3, 0xc]],
         16,
     ),
     new CodePreset(
@@ -166,7 +166,7 @@ export const codePresets = [
         'Selector ROM',
         ['4'],
         ['4'],
-        [0x5, 0xa],
+        [[0x5, 0xa]],
         16,
     ),
     new CodePreset(

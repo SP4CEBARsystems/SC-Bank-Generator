@@ -9,7 +9,7 @@ export default class CodePreset {
      * @param {'ROM' | 'FSM' | 'Selector ROM'} type 
      * @param {string[]} inputTypes 
      * @param {string[]} outputTypes 
-     * @param {number[]} codePresetValues to define parameters for the code
+     * @param {any[]} codePresetValues to define parameters for the code
      * @param {number} locations 
      */
     constructor(code = new Code(), name = 'Addition Example', description = 'Adds two 4-bit numbers', type = 'ROM', inputTypes = ['4', '4'], outputTypes = ['8'], codePresetValues = [], locations = 1){
@@ -41,7 +41,7 @@ export default class CodePreset {
         let parametersInCode = "";
         for (let index = 0; index < codeParameters.length; index++) {
             const inputParameter = codeParameters[index];
-            const codePresetValue = presets[index];
+            const codePresetValue = JSON.stringify(presets[index]);
             parametersInCode += `\r\n    const ${inputParameter} = ${codePresetValue};`;
         }
         parametersInCode = `\r\n    //PARAMETERS:${parametersInCode}\r\n`;
@@ -50,6 +50,8 @@ export default class CodePreset {
         // inputParameters.reduce((accumulator, current) => accumulator + `const ${current} = ${value};`)
         // Example usage:
         this.codeString = insertAfterMatch(CodeWithoutParameters, matchFunctionHeader, parametersInCode);
+
+        console.log();
 
         function reduceIndentation(str) {
             return str.replace(/^ {1,8}/gm, ""); // Match up to 8 leading spaces and remove them
