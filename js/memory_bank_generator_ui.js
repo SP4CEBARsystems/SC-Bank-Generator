@@ -23,6 +23,10 @@ export default class MemoryBankGeneratorUI {
     generateButton = document.querySelector('button');
 
     statisticsParagraph = document.getElementById('bank-statistics');
+    
+    presetNameElement = document.getElementById('preset-name');
+
+    presetDescriptionElement = document.getElementById('preset-description');
 
     generator
 
@@ -87,13 +91,19 @@ export default class MemoryBankGeneratorUI {
      * @param {CodePreset} preset 
      */
     loadPreset(preset) {
-        if (this.codeInputElement?.value === undefined ||
-            this.amountInputElement?.value === undefined ||
-            this.inputSizesInputElement?.value === undefined ||
-            this.outputSizesInputElement?.value === undefined) return;
+        if (
+            this.codeInputElement === null ||
+            this.amountInputElement === null ||
+            this.inputSizesInputElement === null ||
+            this.outputSizesInputElement === null ||
+            this.presetNameElement === null ||
+            this.presetDescriptionElement === null
+        ) return;
         this.amountInputElement.value = preset.locations.toString();
         this.codeInputElement.value = preset.codeString;
         this.outputSizesInputElement.value = preset.outputTypes.toString();
         this.inputSizesInputElement.value = preset.inputTypes.toString();
+        this.presetNameElement.textContent = preset.name;
+        this.presetDescriptionElement.textContent = preset.description;
     }
 }
