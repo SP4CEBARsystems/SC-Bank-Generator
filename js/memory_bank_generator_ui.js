@@ -33,7 +33,7 @@ export default class MemoryBankGeneratorUI {
         if (this.generateButton) {
             this.generateButton.onclick = this.generate.bind(this);
         }
-        // this.loadPreset(codePresets[0]);
+        // this.loadPreset(codePresets[11]);
     }
 
     generate() {
