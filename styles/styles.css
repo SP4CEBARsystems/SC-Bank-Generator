@@ -67,7 +67,7 @@ math {
 
 .generator-input-params{
     display: grid;
-    grid-template-columns: 400px 200px;
+    grid-template-columns: 300px 200px;
     row-gap: 10px;
 }
 
