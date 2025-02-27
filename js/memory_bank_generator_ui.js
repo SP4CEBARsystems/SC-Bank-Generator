@@ -38,7 +38,22 @@ export default class MemoryBankGeneratorUI {
         if(!presetSelector) return;
         // this.loadPreset.bind(this);
         codePresets.forEach((preset) => {
-            newButton(preset.name, '', presetSelector, this.loadPreset.bind(this), [preset]);
+            let classNames;
+            switch (preset.type) {
+                case 'ROM':
+                    classNames = 'blue';
+                    break;
+                case 'Selector ROM':
+                    classNames = 'red';
+                    break;
+                case 'FSM':
+                    classNames = 'green';
+                    break;
+                default:
+                    classNames = '';
+                    break;
+            }
+            newButton(preset.name, classNames, presetSelector, this.loadPreset.bind(this), [preset]);
         })
     }
 

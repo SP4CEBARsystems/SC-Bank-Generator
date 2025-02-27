@@ -74,3 +74,21 @@ math {
 .inline {
     display: inline;
 }
+
+.blue {
+    background-color: #004;
+    color: white;
+    border-color: black;
+}
+
+.red {
+    background-color: #400;
+    color: white;
+    border-color: black;
+}
+
+.green {
+    background-color: #040;
+    color: white;
+    border-color: black;
+}
