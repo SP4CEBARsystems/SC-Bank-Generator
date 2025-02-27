@@ -1,3 +1,5 @@
+import CodePreset from "./code presets/CodePreset.js";
+import { codePresets } from "./code presets/codePresets.js";
 import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
 // import {runUserFunction} from "./code_sandbox.js";
@@ -31,6 +33,7 @@ export default class MemoryBankGeneratorUI {
         if (this.generateButton) {
             this.generateButton.onclick = this.generate.bind(this);
         }
+        // this.loadPreset(codePresets[0]);
     }
 
     generate() {
@@ -39,10 +42,7 @@ export default class MemoryBankGeneratorUI {
         if (this.codeInputElement?.value === undefined ||
             this.amountInputElement?.value === undefined ||
             this.inputSizesInputElement?.value === undefined ||
-            this.outputSizesInputElement?.value === undefined
-        ) {
-            return;
-        }
+            this.outputSizesInputElement?.value === undefined) return;
 
         const inputSizesArray = ExtendedMath.stringToArray(this.inputSizesInputElement.value);
         const outputsSizesArray = ExtendedMath.stringToArray(this.outputSizesInputElement.value);
@@ -66,9 +66,13 @@ export default class MemoryBankGeneratorUI {
      * @param {CodePreset} preset 
      */
     loadPreset(preset) {
-        this.amountInputElement?.textContent = preset.locations;
-        this.codeInputElement?.textContent = preset.codeString;
-        this.outputSizesInputElement?.textContent = preset.outputTypes;
-        this.inputSizesInputElement?.textContent = preset.inputTypes;
+        if (this.codeInputElement?.value === undefined ||
+            this.amountInputElement?.value === undefined ||
+            this.inputSizesInputElement?.value === undefined ||
+            this.outputSizesInputElement?.value === undefined) return;
+        this.amountInputElement.value = preset.locations.toString();
+        this.codeInputElement.value = preset.codeString;
+        this.outputSizesInputElement.value = preset.outputTypes.toString();
+        this.inputSizesInputElement.value = preset.inputTypes.toString();
     }
 }

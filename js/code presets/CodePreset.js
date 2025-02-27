@@ -19,6 +19,6 @@ export default class CodePreset {
         this.outputTypes = outputTypes;
         this.codePresetValues = codePresetValues;
         this.locations = locations;
-        this.codeString = this.code.toString();
+        this.codeString = this.code.code.toString();
     }
 }
