@@ -60,4 +60,15 @@ export default class MemoryBankGeneratorUI {
             this.statisticsParagraph.textContent = generator.getStats();
         }
     }
+
+    /**
+     * 
+     * @param {CodePreset} preset 
+     */
+    loadPreset(preset) {
+        this.amountInputElement?.textContent = preset.locations;
+        this.codeInputElement?.textContent = preset.codeString;
+        this.outputSizesInputElement?.textContent = preset.outputTypes;
+        this.inputSizesInputElement?.textContent = preset.inputTypes;
+    }
 }
