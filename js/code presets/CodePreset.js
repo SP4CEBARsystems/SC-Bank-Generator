@@ -34,14 +34,20 @@ export default class CodePreset {
             return;
         }
         const codeParameters = codeParameterNames.split(/, */gm);
-        const codePresets = codeParameterPresets.split(/, */gm);
+        let codePresets;
+        try {
+            codePresets = JSON.parse(`[${codeParameterPresets}]`);
+        } catch (error) {
+            codePresets = codeParameterPresets.split(/, */gm);
+        }
 
         const presets = (codePresetValues !== undefined && codePresetValues.length > 0) ? codePresetValues : codePresets;
 
         let parametersInCode = "";
         for (let index = 0; index < codeParameters.length; index++) {
             const inputParameter = codeParameters[index];
-            const codePresetValue = JSON.stringify(presets[index]);
+            const presetValue = presets[index];
+            const codePresetValue = isNaN(presetValue) ? JSON.stringify(presetValue) : presetValue;
             parametersInCode += `\r\n    const ${inputParameter} = ${codePresetValue};`;
         }
         parametersInCode = `\r\n    //PARAMETERS:${parametersInCode}\r\n`;
@@ -50,8 +56,6 @@ export default class CodePreset {
         // inputParameters.reduce((accumulator, current) => accumulator + `const ${current} = ${value};`)
         // Example usage:
         this.codeString = insertAfterMatch(CodeWithoutParameters, matchFunctionHeader, parametersInCode);
-
-        console.log();
 
         function reduceIndentation(str) {
             return str.replace(/^ {1,8}/gm, ""); // Match up to 8 leading spaces and remove them
