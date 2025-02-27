@@ -1,5 +1,6 @@
 import CodePreset from "./code presets/CodePreset.js";
 import { codePresets } from "./code presets/codePresets.js";
+import { newButton } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
 // import {runUserFunction} from "./code_sandbox.js";
@@ -33,7 +34,12 @@ export default class MemoryBankGeneratorUI {
         if (this.generateButton) {
             this.generateButton.onclick = this.generate.bind(this);
         }
-        // this.loadPreset(codePresets[11]);
+        const presetSelector = document.getElementById("preset-selector");
+        if(!presetSelector) return;
+        // this.loadPreset.bind(this);
+        codePresets.forEach((preset) => {
+            newButton(preset.name, '', presetSelector, this.loadPreset.bind(this), [preset]);
+        })
     }
 
     generate() {
