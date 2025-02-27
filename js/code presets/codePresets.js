@@ -154,7 +154,8 @@ export const codePresets = [
         standardCode.multiplexer,
         '4-bit Multiplexer',
         '',
-        [],
-        [],
+        ['4', '4'],
+        ['4'],
+        16,
     ),
 ];
