@@ -26,9 +26,10 @@ export default class CodePreset {
 
     formatCodeString(codePresetValues) {
         const originalCode = reduceIndentation(this.code.code.toString());
-        const matchLastParameterArrayWithDefault = /, *\[.*=.*\](?=\) *=> *{)/gm;
+        const matchLastParameterArrayWithDefault = /, *\[.*=[\s\S]*\](?=\) *=> *{)/gm;
         const [codeParameterNameSection, CodeWithoutParameters] = spliceFirstMatch(originalCode, matchLastParameterArrayWithDefault);
         const [codeParameterNames, codeParameterPresets] = extractParts(codeParameterNameSection);
+        // console.log('codeParameterNameSection', codeParameterNameSection, codeParameterNames);
         if (codeParameterNameSection === '' || codeParameterNames === null) {
             this.codeString = originalCode;
             return;
@@ -37,8 +38,11 @@ export default class CodePreset {
         let codePresets;
         try {
             codePresets = JSON.parse(`[${codeParameterPresets}]`);
+            // console.log('codePresets', codePresets);
         } catch (error) {
             codePresets = codeParameterPresets.split(/, */gm);
+            // codePresets = codeParameterPresets.split(/(?<=\])\s*,\s*(?=\[)/gm);
+            console.log('codePresets', codePresets, 'error', error, codeParameterPresets);
         }
 
         const presets = (codePresetValues !== undefined && codePresetValues.length > 0) ? codePresetValues : codePresets;
@@ -71,7 +75,7 @@ export default class CodePreset {
         }
 
         function extractParts(str) {
-            const regex = /^, *\[(.*?)\] = \[(.*)\]$/; // Capture both sections separately
+            const regex = /^, *\[(.*?)\] = \[([\s\S]*)\]$/; // Capture both sections separately
             const match = str.match(regex);
             return match ? [match[1], match[2]] : [null, null];
         }
