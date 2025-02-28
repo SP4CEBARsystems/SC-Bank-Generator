@@ -36,30 +36,42 @@ export default class CodePreset {
         }
         const codeParameters = codeParameterNames.split(/, */gm);
         let codePresets;
-        try {
-            codePresets = JSON.parse(`[${codeParameterPresets}]`);
-            // console.log('codePresets', codePresets);
-        } catch (error) {
-            codePresets = codeParameterPresets.split(/, */gm);
-            // codePresets = codeParameterPresets.split(/(?<=\])\s*,\s*(?=\[)/gm);
-            console.log('codePresets', codePresets, 'error', error, codeParameterPresets);
-        }
+        // try {
+        //     codePresets = JSON.parse(`[${codeParameterPresets}]`);
+        //     // console.log('codePresets', codePresets);
+        // } catch (error) {
+        //     codePresets = codeParameterPresets.split(/, */gm);
+        //     // codePresets = codeParameterPresets.split(/(?<=\])\s*,\s*(?=\[)/gm);
+        //     console.log('codePresets', codePresets, 'error', error, codeParameterPresets);
+        // }
+        codePresets = splitByTopLevelCommas(codeParameterPresets);
+        // console.log('codePresets', codePresets, 'from', codeParameterPresets);
 
-        const presets = (codePresetValues !== undefined && codePresetValues.length > 0) ? codePresetValues : codePresets;
+        const stringifiedCodePresetValues = codePresetValues.map((element) => JSON.stringify(element));
+        
+        const presets = (stringifiedCodePresetValues !== undefined && stringifiedCodePresetValues.length > 0) ? stringifiedCodePresetValues : codePresets;
+        // if ((stringifiedCodePresetValues !== undefined && stringifiedCodePresetValues.length > 0)) console.log('presets', stringifiedCodePresetValues, codePresets);
 
-        let parametersInCode = "";
-        for (let index = 0; index < codeParameters.length; index++) {
-            const inputParameter = codeParameters[index];
-            const presetValue = presets[index];
-            const codePresetValue = isNaN(presetValue) ? JSON.stringify(presetValue) : presetValue;
-            parametersInCode += `\r\n    const ${inputParameter} = ${codePresetValue};`;
-        }
-        parametersInCode = `\r\n    //PARAMETERS:${parametersInCode}\r\n`;
+        let parametersInCode = parametersToDeclarations();
 
         const matchFunctionHeader = /^\( *\[.*\],.*\) *=> *{/m;
         // inputParameters.reduce((accumulator, current) => accumulator + `const ${current} = ${value};`)
         // Example usage:
         this.codeString = insertAfterMatch(CodeWithoutParameters, matchFunctionHeader, parametersInCode);
+
+        function parametersToDeclarations() {
+            let parametersInCode = "";
+            for (let index = 0; index < codeParameters.length; index++) {
+                const inputParameter = codeParameters[index];
+                const presetValue = presets[index];
+                //JSON.stringify(presetValue)
+                const codePresetValue = isNaN(presetValue) ? presetValue : presetValue;
+                parametersInCode += `\r\n    const ${inputParameter} = ${codePresetValue};`;
+                // if(isNaN(presetValue)) console.log('presetValue', presetValue, isNaN(presetValue), codePresetValue);
+            }
+            parametersInCode = `\r\n    //PARAMETERS:${parametersInCode}\r\n`;
+            return parametersInCode;
+        }
 
         function reduceIndentation(str) {
             return str.replace(/^ {1,8}/gm, ""); // Match up to 8 leading spaces and remove them
@@ -87,5 +99,24 @@ export default class CodePreset {
             const newStr = str.replace(regex, ""); // Remove only the first match
             return [removed, newStr];
         }
+
+        function splitByTopLevelCommas(input) {
+            let parts = [];
+            let start = 0;
+            let stack = 0; // Tracks nesting depth
+        
+            for (let i = 0; i < input.length; i++) {
+                if (input[i] === "[") stack++;
+                if (input[i] === "]") stack--;
+        
+                if (input[i] === "," && stack === 0) {
+                    parts.push(input.slice(start, i).trim()); // Push the current segment
+                    start = i + 1; // Move start to after the comma
+                }
+            }
+        
+            parts.push(input.slice(start).trim()); // Add the last segment
+            return parts;
+        }        
     }
 }
