@@ -181,4 +181,15 @@ export default class ExtendedMath {
     static hasMatch(string, regex){
         return ExtendedMath.matchFirst(string, regex) !== null;
     }
+
+    /**
+     * use arr1.flat() instead
+     * @param {any[]} data 
+     */
+    // static flattenArray(data) {
+    //     if (!Array.isArray(data)) {
+    //         return data;
+    //     }
+    //     return data.map(ExtendedMath.flattenArray);
+    // }
 }

@@ -1,5 +1,6 @@
 import CodePreset from "./code presets/CodePreset.js";
 import { codePresets } from "./code presets/codePresets.js";
+import { copyTextArrayToClipboard } from "./copying.js";
 import { newButton } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
@@ -28,6 +29,8 @@ export default class MemoryBankGeneratorUI {
 
     presetDescriptionElement = document.getElementById('preset-description');
 
+    recursiveCopyButton = document.getElementById('recursive-copy-button');
+
     generator
 
     constructor(generator) {
@@ -37,6 +40,9 @@ export default class MemoryBankGeneratorUI {
         }
         if (this.generateButton) {
             this.generateButton.onclick = this.generate.bind(this);
+        }
+        if (this.recursiveCopyButton) {
+            this.recursiveCopyButton.onclick = this.recursiveCopy.bind(this);
         }
         const presetSelector = document.getElementById("preset-selector");
         if(!presetSelector) return;
@@ -84,6 +90,13 @@ export default class MemoryBankGeneratorUI {
         if (this.statisticsParagraph) {
             this.statisticsParagraph.textContent = generator.getStats();
         }
+    }
+
+    recursiveCopy() {
+        const flattenedBankData = this.generator.generatedData.flat(2);
+        copyTextArrayToClipboard(flattenedBankData)
+            .then(() => console.log('successful copy'))
+            .catch((error)=>console.error(error))
     }
 
     /**
