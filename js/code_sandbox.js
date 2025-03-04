@@ -7,27 +7,32 @@ export function init_code_sandbox() {
 }
 
 export function initConsoleListener() {
-	return new Promise((resolve, reject) => {
-        // console.log("initConsoleListener");
-        const consoleListener = window.addEventListener('message', (event) => {
+    return new Promise((resolve, reject) => {
+        // Define the event listener separately so we can reference it later
+        function consoleListener(event) {
             console.log('message');
             const output = document.getElementById('output');
             if (!output) {
+                window.removeEventListener('message', consoleListener);
                 reject('no output element');
-            } else if (event.data.type === 'result') {
+                return;
+            }
+
+            if (event.data.type === 'result') {
                 console.log('message valid');
                 output.innerText = 'Success!';
-                // output.innerText = 'Result: ' + event.data.result;
                 resolve(event.data.result);
             } else if (event.data.type === 'error') {
-                // console.log("error");
                 output.innerText = 'Error: ' + event.data.error;
                 reject(event.data.error);
             }
-            // if (consoleListener) {
-            //     window.removeEventListener('message', consoleListener);
-            // }
-        });
+
+            // Remove the event listener after handling the message
+            window.removeEventListener('message', consoleListener);
+        }
+
+        // Attach the event listener
+        window.addEventListener('message', consoleListener);
     });
 }
 

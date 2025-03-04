@@ -33,7 +33,6 @@ export default class MemoryBankGenerator {
         this.inputTypes = inputTypes;
         this.outputTypes = outputTypes;
         // this.generatorCallback = generatorCallback;
-        initConsoleListener().then(this.processOutput.bind(this));
         this.elapsedTimer = new ElapsedTimer('elapsed-time-display');
     }
 
@@ -45,6 +44,7 @@ export default class MemoryBankGenerator {
     }
 
     generate(){
+        initConsoleListener().then(this.processOutput.bind(this));
         const bankInput = [];
         for (let bankPosition = 0; bankPosition < this.numberOfLocations; bankPosition++) {
             bankInput.push(this.sampleBankInput(bankPosition));
