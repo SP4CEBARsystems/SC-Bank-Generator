@@ -6,25 +6,28 @@ export function init_code_sandbox() {
     // initConsoleListener();
 }
 
-export function initConsoleListener(callback) {
-    // console.log("initConsoleListener");
-    let consoleListener = null;
-    consoleListener = window.addEventListener('message', (event) => {
-        console.log("message");
-        const output = document.getElementById('output');
-        if (!output) return;
-        if (event.data.type === 'result') {
-            console.log("message valid");
-            output.innerText = 'Success!';
-            // output.innerText = 'Result: ' + event.data.result;
-            callback(event.data.result);
-        } else if (event.data.type === 'error') {
-            // console.log("error");
-            output.innerText = 'Error: ' + event.data.error;
-        }
-        // if (consoleListener) {
-        //     window.removeEventListener('message', consoleListener);
-        // }
+export function initConsoleListener() {
+	return new Promise((resolve, reject) => {
+        // console.log("initConsoleListener");
+        const consoleListener = window.addEventListener('message', (event) => {
+            console.log('message');
+            const output = document.getElementById('output');
+            if (!output) {
+                reject('no output element');
+            } else if (event.data.type === 'result') {
+                console.log('message valid');
+                output.innerText = 'Success!';
+                // output.innerText = 'Result: ' + event.data.result;
+                resolve(event.data.result);
+            } else if (event.data.type === 'error') {
+                // console.log("error");
+                output.innerText = 'Error: ' + event.data.error;
+                reject(event.data.error);
+            }
+            // if (consoleListener) {
+            //     window.removeEventListener('message', consoleListener);
+            // }
+        });
     });
 }
 

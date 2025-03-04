@@ -33,7 +33,7 @@ export default class MemoryBankGenerator {
         this.inputTypes = inputTypes;
         this.outputTypes = outputTypes;
         // this.generatorCallback = generatorCallback;
-        initConsoleListener(this.processOutput.bind(this));
+        initConsoleListener().then(this.processOutput.bind(this));
         this.elapsedTimer = new ElapsedTimer('elapsed-time-display');
     }
 
