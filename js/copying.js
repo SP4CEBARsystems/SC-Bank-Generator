@@ -26,11 +26,13 @@ export function copyTextToClipboard(codeBlock) {
  * @returns {Promise<void>} a promise for the string encoded into the text file
  * (resolve: (value: string) => void, reject: (reason?: any) => void)
  */
-export function copyTextArrayToClipboard(codeBlocks) {
+export function copyTextArrayToClipboard(codeBlocks, isWinV = false) {
 	return (new Promise(async (resolve, reject) => {
 		for (const codeBlock of codeBlocks) {
             try {
                 await navigator.clipboard.writeText(codeBlock)
+                // await navigator.clipboard.readText()
+                await sleep(isWinV ? 300 : 10);
             } catch (error) {
                 reject(error)
             }
@@ -62,3 +64,12 @@ export async function loadTextFile(filePath) {
 // 		console.error(error.message);
 // 	}
 // }
+
+/**
+ * source: https://stackoverflow.com/a/39914235/17730914
+ * @param {number} ms milliseconds to wait
+ * @returns {Promise<any>}
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
