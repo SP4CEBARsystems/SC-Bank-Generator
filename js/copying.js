@@ -27,7 +27,7 @@ export function copyTextToClipboard(codeBlock) {
  * (resolve: (value: string) => void, reject: (reason?: any) => void)
  */
 export function copyTextArrayToClipboard(codeBlocks, isWinV = false) {
-	return (new Promise(async (resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
 		for (const codeBlock of codeBlocks) {
             try {
                 await navigator.clipboard.writeText(codeBlock)
@@ -38,7 +38,7 @@ export function copyTextArrayToClipboard(codeBlocks, isWinV = false) {
             }
         }
         resolve();
-	}));
+	});
 }
 
 /**
