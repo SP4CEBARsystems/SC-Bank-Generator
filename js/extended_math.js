@@ -192,4 +192,13 @@ export default class ExtendedMath {
     //     }
     //     return data.map(ExtendedMath.flattenArray);
     // }
+
+    static pluralFix( number, singularWord, pluralWord ){
+        if( number == 1 ) return singularWord;
+        return pluralWord;
+    }
+
+    static pluralFixedPhrase( number, singularWord, pluralWord ){
+        return `${number} ${ExtendedMath.pluralFix(number, singularWord, pluralWord)}`;
+    }
 }

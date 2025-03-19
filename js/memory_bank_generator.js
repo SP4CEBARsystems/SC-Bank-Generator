@@ -352,10 +352,21 @@ export default class MemoryBankGenerator {
         }
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
-        // parent.setHeight(5000);
-        console.log(`total banks ${this.numberOfLocations * inputLayerCount * outputWireCount} = count (${this.numberOfLocations}) * input requirement (${inputLayerCount}) * digits (${outputWireCount})`);
+        this.generateBankCountDisplay(inputLayerCount, outputWireCount);
+
+        // console.log(bankCountMessage);
     }
 
+    generateBankCountDisplay(inputLayerCount, outputWireCount) {
+        const totalBanks = this.numberOfLocations * inputLayerCount * outputWireCount;
+        // parent.setHeight(5000);
+        const bankCountMessage = `Generated ${totalBanks} banks: (${ExtendedMath.pluralFixedPhrase(this.numberOfLocations, 'location', 'locations')}) * (${ExtendedMath.pluralFixedPhrase(inputLayerCount, 'input', 'inputs')}) * (${ExtendedMath.pluralFixedPhrase(outputWireCount, 'digit', 'digits')})`;
+        const bankCountElement = document.getElementById('bank-count-display');
+        if (bankCountElement) {
+            bankCountElement.textContent = bankCountMessage;
+        }
+    }
+    
     generateBankName(location, input, digit) {
         return `Bank L${location}-I${input}-D${digit}`;
     }
