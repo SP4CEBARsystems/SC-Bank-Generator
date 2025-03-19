@@ -342,13 +342,43 @@ export default class MemoryBankGenerator {
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
                         const isConnecting = digit === digitOut;
                         if (isConnecting) hasConnected = true;
-                        const element = isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg';
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+                        const isFirstElementOfLocation = input == 0 && digit == 0;
+                        const element = isFirstElementOfLocation ? (
+                            isConnecting ? 'fsm_corner_bottom_left.jpg' : !hasConnected ? 'fsm_horizontal.jpg' : 'fsm_empty.jpg'
+                        ) : (
+                            isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
+                        );
+                        const message = (element == 'fsm_horizontal.jpg' || element ==  'fsm_corner_bottom_left.jpg') ? 'wire should be red' : undefined;
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, message);
                     }
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
                 }
             }
+            // const height = 127;
+            // const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
+            // let currentX = 0;
+            // let svgRowWidth = 0;
+            // let additionalInputWireIndex = 0;
+            // process.forEach((element) => {
+            //     const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
+            //     let wireElement;
+            //     switch (element) {
+            //         case 'bank_digit_single.jpg':
+            //             wireElement = 'bank_wires.jpg';
+            //         case 'bank_digit.jpg':
+            //         case 'bank_selector_8-bit.jpg':
+            //             wireElement = 'bank_wires.jpg';
+            //             break;
+            //         case 'bank_selector_4-bit.jpg':
+            //             wireElement = `fsm_vertical.jpg`; // replacement image
+            //             break;
+            //         default:
+            //             wireElement = 'fsm_empty.jpg'
+            //             break;
+            //     }
+            //     [currentX, svgRowWidth] = drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+            // });
         }
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
