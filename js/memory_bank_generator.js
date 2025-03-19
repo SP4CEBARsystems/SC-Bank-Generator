@@ -342,8 +342,8 @@ export default class MemoryBankGenerator {
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
                         const isConnecting = digit === digitOut;
                         if (isConnecting) hasConnected = true;
-                        const isFirstElementOfLocation = input == 0 && digit == 0;
-                        const element = isFirstElementOfLocation ? (
+                        const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
+                        const element = isFirstElementOfNonFirstLocation ? (
                             isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
                         ) : (
                             isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
