@@ -344,12 +344,11 @@ export default class MemoryBankGenerator {
                         if (isConnecting) hasConnected = true;
                         const isFirstElementOfLocation = input == 0 && digit == 0;
                         const element = isFirstElementOfLocation ? (
-                            isConnecting ? 'fsm_corner_bottom_left.jpg' : !hasConnected ? 'fsm_horizontal.jpg' : 'fsm_empty.jpg'
+                            isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
                         ) : (
                             isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
                         );
-                        const message = (element == 'fsm_horizontal.jpg' || element ==  'fsm_corner_bottom_left.jpg') ? 'wire should be red' : undefined;
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, message);
+                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
                     }
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
