@@ -183,9 +183,9 @@ export default class TypeValue {
     }
 
     /**
-     * 
-     * @param {string[]} types 
-     * @param {number[]} values 
+     * Creates an array of TypeValues
+     * @param {string[]} types of the TypeValue
+     * @param {number[]} values of the TypeValue
      * @returns {TypeValue[]}
      */
     static arrayFromValues(types, values) {

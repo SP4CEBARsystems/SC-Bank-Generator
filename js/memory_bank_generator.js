@@ -169,12 +169,24 @@ export default class MemoryBankGenerator {
     //     return this.unformatOutput(outputTypes, output);
     // }
 
+    /**
+     * Cuts the input value up into the multiple function parameters according to each input's size
+     * @param {number} bankIndex 
+     * @param {string[]} inputTypes 
+     * @returns {number[]}
+     */
     formatInput(bankIndex, inputTypes) {
         const inputSizes = inputTypes.map(TypeValue.sizeOf);
         const rawParameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
         return TypeValue.arrayFromValues(inputTypes, rawParameters).map(element => element.outputValue());
     }
 
+    /**
+     * 
+     * @param {*} outputTypes 
+     * @param {*} output 
+     * @returns 
+     */
     unformatOutput(outputTypes, output) {
         const outputSizes = outputTypes.map(TypeValue.sizeOf);
         if (output.length != outputSizes.length) {

@@ -72,10 +72,10 @@ export default class ExtendedMath {
     }
 
     /**
-     * 
-     * @param {number} input 
-     * @param  {number[]} subWordSizes 
-     * @returns {number[]} 
+     * Splits a binary word up into words of each subWordSizes in size
+     * @param {number} input the word to be split up
+     * @param  {number[]} subWordSizes the size in bits of each output word
+     * @returns {number[]} an array of words
      */
     static wordSplit(input, subWordSizes){
         let bitOffset = 0;
