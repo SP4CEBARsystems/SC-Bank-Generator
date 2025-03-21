@@ -10,25 +10,15 @@ export default class TypeValue {
      * 
      * @param {string} type 
      * @param {number} [value]
+     * @param {boolean} isPassThrough
      */
-    constructor(type, value) {
+    constructor(type, value, isPassThrough = false) {
         this.type = new DataType(type);
         if (value !== undefined) {
-            this.value = this.type.encode(value);
+            this.value = isPassThrough ? value : this.type.encode(value);
         } else {
             this.value = 0;
         }
-    }
-
-    /**
-     * 
-     * @param {string} type 
-     * @param {number} inputvalue 
-     */
-    static inputValue(type, inputvalue) {
-        const dataType = new TypeValue(type);
-        dataType.value = inputvalue;
-        return dataType;
     }
     
     /**
@@ -170,28 +160,16 @@ export default class TypeValue {
     }
 
     /**
-     * 
-     * @param {string[]} types 
-     * @param {number[]} values 
-     * @returns {TypeValue[]}
-     */
-    static arrayFromPreFormatted(types, values) {
-        if (types.length !== values.length) {
-            return [];
-        }
-        return types.map((type, index) => TypeValue.inputValue(type, values[index]));
-    }
-
-    /**
      * Creates an array of TypeValues
      * @param {string[]} types of the TypeValue
      * @param {number[]} values of the TypeValue
+     * @param {boolean} isPreformatted true if the value should not be encoded into its type but interpreted as data rather than a value
      * @returns {TypeValue[]}
      */
-    static arrayFromValues(types, values) {
+    static arrayFromValues(types, values, isPreformatted = false) {
         if (types.length !== values.length) {
             return [];
         }
-        return types.map((type, index) => new TypeValue(type, values[index]));
+        return types.map((type, index) => new TypeValue(type, values[index], isPreformatted));
     }
 }
