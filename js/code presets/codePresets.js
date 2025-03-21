@@ -54,6 +54,14 @@ export const codePresets = [
         ['INT_8'],
     ),
     new CodePreset(
+        standardCode.typeConverter,
+        "Two's Complement Integer To Sign-magnitude Integer",
+        '',
+        'ROM',
+        ['INT_8'],
+        ['SM_INT_8'],
+    ),
+    new CodePreset(
         standardCode.bitMaskAndShift,
         '4-bit Mask',
         '',
