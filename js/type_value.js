@@ -25,31 +25,11 @@ export default class TypeValue {
      * 
      * @param {string} type 
      * @param {number} inputvalue 
+     * @returns {number}
      */
     static encode(type, inputvalue) {
-        // const [type] = TypeValue.reduceType(type);
-        const size = TypeValue.sizeOf(type);
-        switch (type) {
-            case 'int':
-                //uses 2s complement
-                const signValue = 1 << (size - 1);
-                const isNegative = inputvalue < 0;
-                const sign = isNegative ? signValue : 0;
-                const value = ExtendedMath.toWord(Math.abs(inputvalue), size-1);
-                if (isNegative) {
-                    return signValue * 2 - value;
-                } else {
-                    return value;
-                }
-            case 'u_int':
-                return ExtendedMath.toWord(Math.abs(inputvalue), size);
-            case 'float':
-                return ExtendedMath.toWord(Math.abs(inputvalue), size)
-            case 'u_float':
-                return ExtendedMath.toWord(Math.abs(inputvalue), size)
-            default:
-                return ExtendedMath.toWord(Math.abs(inputvalue), size);
-        }
+        const dataType = new DataType(type);
+        return dataType.encode(inputvalue);
     }
 
     /**

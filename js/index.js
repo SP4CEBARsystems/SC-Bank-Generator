@@ -20,7 +20,7 @@ function runOnStart() {
 
 function functionTesting() {
     for (let index = -256; index < 256; index++) {
-        console.log(index, dec2bin(TypeValue.encode('int', index)), TypeValue.encode('int', index));
+        // console.log(index, dec2bin(TypeValue.encode('int', index)), TypeValue.encode('int', index));
         // console.log(new TypeValue('u_int', index).outputValue());
     }
 
