@@ -178,7 +178,7 @@ export default class MemoryBankGenerator {
     formatInput(bankIndex, inputTypes) {
         const inputSizes = inputTypes.map(TypeValue.sizeOf);
         const rawParameters = ExtendedMath.wordSplit(bankIndex, inputSizes);
-        return TypeValue.arrayFromValues(inputTypes, rawParameters).map(element => element.outputValue());
+        return TypeValue.arrayFromValues(inputTypes, rawParameters, true).map(element => element.outputValue());
     }
 
     /**
