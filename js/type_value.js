@@ -56,48 +56,6 @@ export default class TypeValue {
     }
 
     /**
-     * 
-     * @param {string} dataType 
-     * @returns {string}
-     */
-    static reduceType(dataType) {
-        switch (dataType) {
-            case '':
-            case undefined:
-            case null:
-                return 'null';
-        }
-        const parts = dataType.toString().toLowerCase().split(/(\d+)$/);
-        new DataType(dataType);
-        if (parts.length < 1) {
-            return 'null';
-        } else if (parts.length >= 2) {
-            return parts[1];
-        }
-        switch (parts[0]) {
-            case 'bit':
-            case 'flag':
-            case 'bool':
-            case 'boolean':
-                return 'u_int_1';
-            case 'nibble':
-                return 'u_int_4';
-            case 'byte':
-                return 'u_int_8';
-            case 'int':
-                return 'int_16';
-            case 'u_int':
-                return 'u_int_16';
-            case 'float':
-                return 'float_32';
-            case 'double':
-                return 'float_64';
-            default:
-                return 'null';
-        }
-    }
-
-    /**
      * Gets the size of datatypes
      * @param {string} dataType 
      * @returns {number} the size

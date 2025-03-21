@@ -93,7 +93,7 @@ export default class DataType {
      * @param {string} dataType 
      * @returns {string}
      */
-    reduceType(dataType) {
+    static reduceType(dataType) {
         switch (dataType) {
             case '':
             case undefined:
