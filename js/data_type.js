@@ -186,11 +186,11 @@ export default class DataType {
                     if (this.isSignedTwosComplement) {
                         //uses 2s complement
                         const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
-                        const sign = -ExtendedMath.bitSelectKeepOffset(value, size-1, 1);
+                        const sign = -ExtendedMath.bitSelectKeepOffset(inputValue, size-1, 1);
                         return value + sign;
                     } else {
                         const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
-                        const sign = ExtendedMath.bitSelect(value, size-1, 1) != 0 ? -1 : 1;
+                        const sign = ExtendedMath.bitSelect(inputValue, size-1, 1) != 0 ? -1 : 1;
                         return value * sign;
                     }
                 } else {
