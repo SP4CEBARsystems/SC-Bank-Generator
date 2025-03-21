@@ -61,40 +61,7 @@ export default class TypeValue {
      * @returns {number} the size
      */
     static sizeOf(dataType) {
-        switch (dataType) {
-            case '':
-            case undefined:
-            case null:
-                return 0;
-        }
-        const parts = dataType.toString().toLowerCase().split(/(\d+)$/);
-        if (parts.length < 1) {
-            return 0;
-        } else if (parts.length >= 2) {
-            return parseInt(parts[1]);
-        }
-        switch (parts[0]) {
-            case 'bit':
-            case 'flag':
-            case 'bool':
-            case 'boolean':
-                return 1;
-            case 'nibble':
-                return 4;
-            case 'byte':
-                return 8;
-            case 'int':
-                return 8;
-                // return 16;
-            case 'u_int':
-                return 16;
-            case 'float':
-                return 32;
-            case 'double':
-                return 64;
-            default:
-                return 0;
-        }
+        return new DataType(dataType).getSize();
     }
 
     /**
