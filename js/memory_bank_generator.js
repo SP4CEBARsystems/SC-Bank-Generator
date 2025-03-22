@@ -424,7 +424,8 @@ export default class MemoryBankGenerator {
     generateEmptyOutputRoutingCircuitPart(outputWireCount, currentX, svgRowWidth, digitYOffset, height, parent) {
         for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
             const element = 'output_vertical.jpg';
-            [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+            const wireNames = [new NamedVector(`O${digitOut}`, 70)];
+            [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, wireNames);
         }
         return [currentX, svgRowWidth];
     }
