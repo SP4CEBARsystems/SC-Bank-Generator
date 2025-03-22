@@ -432,7 +432,7 @@ export default class MemoryBankGenerator {
             'parameter',
             'function',
             'magnitude',
-        ]);
+        ], true);
         for (let index = 0, dataTypeOffset = 0, typeIndex = 0, segmentOffset = 0, segmentIndex = 0; index < totalSize; index++, dataTypeOffset++, segmentOffset++) {
             if (dataTypeOffset >= sizes[typeIndex]){
                 dataTypeOffset = 0;

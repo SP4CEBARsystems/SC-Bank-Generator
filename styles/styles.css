@@ -92,3 +92,38 @@ math {
     color: white;
     border-color: black;
 }
+
+.data-type-table {
+    table {
+        border-spacing: 0; 
+        /* Removes any default spacing between cells */
+        border-collapse: collapse; /* Ensures borders don’t double up */
+        width: 100%; /* Optional: Makes the table fill the container */
+        /* color: red; */
+    }
+
+    /* tr {
+        border-spacing: 0;
+    } */
+    
+    th, td {
+        border-right: 1px solid white;
+        padding: 8px;
+    }
+
+    th {
+        border-bottom: 1px solid white;
+    }
+    
+    /* Remove the border from the last column */
+    th:last-child, td:last-child {
+        border-right: none;
+    }
+      
+    /* td {
+        border: solid;
+        border-top: 0px;
+        border-bottom: 0px;
+        border-left: 0px;
+    } */
+}

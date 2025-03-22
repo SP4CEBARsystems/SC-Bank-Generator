@@ -138,8 +138,9 @@ export function assignCopyButtons() {
  * 
  * @param {HTMLElement} tableRoot 
  * @param {string[]} tableData 
+ * @param {boolean} isHeaderRow 
  */
-export function newTableRow(tableRoot, tableData) {
+export function newTableRow(tableRoot, tableData, isHeaderRow = false) {
     const tableRow = newContainer('tr', '', tableRoot);
-    tableData.map(text => newElement('td', text, '', tableRow));
+    tableData.map(text => newElement(isHeaderRow ? 'th' : 'td', text, '', tableRow));
 }
