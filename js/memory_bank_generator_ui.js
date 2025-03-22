@@ -68,6 +68,7 @@ export default class MemoryBankGeneratorUI {
     }
 
     generate() {
+        this.revealHiddenElements();
         // runUserFunction()
         const generator = this.generator;
         if (this.codeInputElement?.value === undefined ||
@@ -89,6 +90,13 @@ export default class MemoryBankGeneratorUI {
 
         if (this.statisticsParagraph) {
             this.statisticsParagraph.textContent = generator.getStats();
+        }
+    }
+
+    revealHiddenElements() {
+        const elementsToBeRevealed = [...document.querySelectorAll('.initially-hidden')];
+        for (const element of elementsToBeRevealed) {
+            element.classList.remove('initially-hidden');
         }
     }
 

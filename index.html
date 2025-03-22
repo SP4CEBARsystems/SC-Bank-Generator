@@ -46,33 +46,34 @@
 				<textarea id="codeInput" name="codeInput" cols="50" rows="20" wrap="off" placeholder="([x, y]) => {return [x + y];}"></textarea>
 			</div>
 			<button>Generate</button>
-			<p id="bank-statistics"></p>
-			<p>Elapsed: <span id="elapsed-time-display">N/A</span></p>
-			<p>Output: <span id="output">N/A</span></p>
-			<p id="bank-count-display"></p>
+			<div class="initially-hidden">
+				<p id="bank-statistics"></p>
+				<p>Elapsed: <span id="elapsed-time-display">N/A</span></p>
+				<p>Output: <span id="output">N/A</span></p>
+				<p id="bank-count-display"></p>
+			</div>
 		</section>
-		<hr />
-		<section>
+		<section class="initially-hidden">
+			<hr />
 			<h2>Generated Data</h2>
 			<button id="recursive-copy-button">Copy All data</button>
 			<p>Copying all data requires my <a href="https://github.com/SP4CEBARsystems/clipboard-stack" target="_blank" rel="noopener noreferrer">Clipboard Stack</a> macro.</p>
 			<div id="bank-data-output"></div>
 		</section>
-		<hr />
-		<section>
+		<section class="initially-hidden">
+			<hr />
 			<h2>Circuit</h2>
 			<svg version="2.0" id="reference-circuit" width="0" height="0"></svg>
 			<p>Feel free to simplify the circuit in your own implementation.</p>
 		</section>
-		<hr />
-		<section>
+		<section class="initially-hidden">
+			<hr />
 			<h2>IO Overview</h2>
 			<h3>Input</h3>
 			<div id="bank-input-type-table"></div>
 			<h3>Output</h3>
 			<div id="bank-output-type-table"></div>
 		</section>
-		<hr />
 		
 		<!-- define symbol in hidden svg document -->
 		<!-- <svg style="display: none" version="2.0">
@@ -100,6 +101,7 @@
 		</div> -->
 	</main>
 	<footer>
+		<hr />
 		<aside>
 			<ul>
 				<li><a href="https://github.com/SP4CEBARsystems/SC-Bank-Generator/issues" target="_blank" rel="noopener noreferrer">Report Issue</a></li>

@@ -56,6 +56,10 @@ math {
     display: none;
 }
 
+.initially-hidden {
+    display: none;
+}
+
 .circuitLabel {
     font: italic 13px sans-serif;
     fill: white;
