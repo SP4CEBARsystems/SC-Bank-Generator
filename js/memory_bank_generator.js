@@ -271,31 +271,32 @@ export default class MemoryBankGenerator {
                 return 127;
         }
     }
+    
+    /**
+     * 
+     * @param {string} element 
+     * @param {number} currentX 
+     * @param {number} digitYOffset 
+     * @param {number} height 
+     * @param {*} parent 
+     * @param {number} svgWidth 
+     * @param {string=} nameText
+     * @returns 
+     */
+    drawCircuitCell(element, currentX, digitYOffset, height, parent, svgWidth, nameText) {
+        const width = this.getWidth(element);
+        newSVGImage(currentX, digitYOffset, width, height, element, parent);
+        if(nameText !== undefined) newSVGText(currentX, digitYOffset, nameText, parent);
+        currentX += width;
+        svgWidth += width;
+        return [currentX, svgWidth];
+    }
 
     /**
      * 
      * @returns 
      */
     generateCircuit(){
-        /**
-         * 
-         * @param {string} element 
-         * @param {number} currentX 
-         * @param {number} digitYOffset 
-         * @param {number} height 
-         * @param {*} parent 
-         * @param {number} svgWidth 
-         * @param {string=} nameText
-         * @returns 
-         */
-        const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth, nameText) => {
-            const width = this.getWidth(element);
-            newSVGImage(currentX, digitYOffset, width, height, element, parent);
-            if(nameText !== undefined) newSVGText(currentX, digitYOffset, nameText, parent);
-            currentX += width;
-            svgWidth += width;
-            return [currentX, svgWidth];
-        }
         const parent = /** @type {SVGElement} */ document.getElementById('reference-circuit');
         if (parent === null) return;
         const sum = (accumulator, value) => accumulator + value;
@@ -349,7 +350,7 @@ export default class MemoryBankGenerator {
                                 bankName = undefined
                                 break;
                         }
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+                        [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
                     });
                     let hasConnected = false;
                     for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
@@ -361,7 +362,7 @@ export default class MemoryBankGenerator {
                         ) : (
                             isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
                         );
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+                        [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
                     }
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
@@ -389,7 +390,7 @@ export default class MemoryBankGenerator {
             //             wireElement = 'fsm_empty.jpg'
             //             break;
             //     }
-            //     [currentX, svgRowWidth] = drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+            //     [currentX, svgRowWidth] = this.drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
             // });
         }
         parent.setAttribute("width", `${svgWidth}px`);
