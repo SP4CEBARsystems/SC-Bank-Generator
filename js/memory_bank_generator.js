@@ -308,43 +308,14 @@ export default class MemoryBankGenerator {
         let svgHeight = 0;
         const SingleBankInputSize = 8;
         const inputLayerCount = 2 ** Math.ceil(Math.max(0, totalInputSize - SingleBankInputSize));
+        const height = 127;
+        ({ svgWidth, svgHeight } = this.generateEmptyWire(process, height, parent, outputWireCount, svgWidth, svgHeight));
         for (let location = 0; location < this.numberOfLocations; location++) {
             for (let input = 0; input < inputLayerCount; input++) {
                 for (let digit = 0; digit < outputWireCount; digit++) {
-                    const height = 127;
-                    const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
-                    let currentX = 0;
-                    let svgRowWidth = 0;
-                    [currentX, svgRowWidth] = this.generateRomCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent);
-                    [currentX, svgRowWidth] = this.generateOutputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent);
-                    svgWidth = Math.max(svgWidth, svgRowWidth);
-                    svgHeight += height;
+                    ({ svgWidth, svgHeight } = this.generateCircuitRow(location, inputLayerCount, input, outputWireCount, digit, height, process, parent, svgWidth, svgHeight));
                 }
             }
-            // const height = 127;
-            // const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
-            // let currentX = 0;
-            // let svgRowWidth = 0;
-            // let additionalInputWireIndex = 0;
-            // process.forEach((element) => {
-            //     const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
-            //     let wireElement;
-            //     switch (element) {
-            //         case 'bank_digit_single.jpg':
-            //             wireElement = 'bank_wires.jpg';
-            //         case 'bank_digit.jpg':
-            //         case 'bank_selector_8-bit.jpg':
-            //             wireElement = 'bank_wires.jpg';
-            //             break;
-            //         case 'bank_selector_4-bit.jpg':
-            //             wireElement = `fsm_vertical.jpg`; // replacement image
-            //             break;
-            //         default:
-            //             wireElement = 'fsm_empty.jpg'
-            //             break;
-            //     }
-            //     [currentX, svgRowWidth] = this.drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
-            // });
         }
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
@@ -353,6 +324,28 @@ export default class MemoryBankGenerator {
         this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table');
 
         // console.log(bankCountMessage);
+    }
+
+    generateCircuitRow(location, inputLayerCount, input, outputWireCount, digit, height, process, parent, svgWidth, svgHeight) {
+        const emptyWireOffset = 1;
+        const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit + emptyWireOffset) * height;
+        let currentX = 0;
+        let svgRowWidth = 0;
+        [currentX, svgRowWidth] = this.generateRomCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent);
+        [currentX, svgRowWidth] = this.generateOutputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent);
+        svgWidth = Math.max(svgWidth, svgRowWidth);
+        svgHeight += height;
+        return { svgWidth, svgHeight };
+    }
+
+    generateEmptyWire(process, height, parent, outputWireCount, svgWidth, svgHeight) {
+        let currentX = 0;
+        let svgRowWidth = 0;
+        [currentX, svgRowWidth] = this.generateEmptyCircuitRow(process, currentX, svgRowWidth, 0, height, parent);
+        [currentX, svgRowWidth] = this.generateEmptyOutputRoutingCircuitPart(outputWireCount, currentX, svgRowWidth, 0, height, parent);
+        svgWidth = Math.max(svgWidth, svgRowWidth);
+        svgHeight += height;
+        return { svgWidth, svgHeight };
     }
 
     createCircuitTemplate(inputWireCount) {
@@ -372,6 +365,29 @@ export default class MemoryBankGenerator {
             }
         }
         return process;
+    }
+
+    generateEmptyCircuitRow(process, currentX, svgRowWidth, digitYOffset, height, parent) {
+        process.forEach((element) => {
+            let wireElement;
+            switch (element) {
+                case 'bank_digit_single.jpg':
+                    wireElement = 'bank_wire.jpg';
+                case 'bank_digit.jpg':
+                case 'bank_selector_8-bit.jpg':
+                    wireElement = 'bank_wires.jpg';
+                    break;
+                case 'bank_selector_4-bit.jpg':
+                    wireElement = `input_vertical.jpg`;
+                    break;
+                default:
+                    wireElement = 'fsm_empty.jpg'
+                    break;
+            }
+            const wireName = 'I0';
+            [currentX, svgRowWidth] = this.drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, wireName);
+        });
+        return [currentX, svgRowWidth];
     }
 
     generateRomCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent) {
@@ -398,6 +414,14 @@ export default class MemoryBankGenerator {
             }
             [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
         });
+        return [currentX, svgRowWidth];
+    }
+
+    generateEmptyOutputRoutingCircuitPart(outputWireCount, currentX, svgRowWidth, digitYOffset, height, parent) {
+        for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
+            const element = 'output_vertical.jpg';
+            [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+        }
         return [currentX, svgRowWidth];
     }
 
