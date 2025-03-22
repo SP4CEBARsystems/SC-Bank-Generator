@@ -90,7 +90,7 @@ export default class DataType {
 
     getSegments(){
         const segments = [
-            new Segment('numerical', this.getBaseSize()),
+            new Segment('number', this.getBaseSize()),
         ];
         if (this.isSigned) {
             segments.push(

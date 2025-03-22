@@ -433,15 +433,17 @@ export default class MemoryBankGenerator {
             'function',
             'magnitude',
         ]);
-        for (let index = 0, dataTypeOffset = 0, typeIndex = 0, segmentIndex = 0; index < totalSize; index++, dataTypeOffset++) {
+        for (let index = 0, dataTypeOffset = 0, typeIndex = 0, segmentOffset = 0, segmentIndex = 0; index < totalSize; index++, dataTypeOffset++, segmentOffset++) {
             if (dataTypeOffset >= sizes[typeIndex]){
                 dataTypeOffset = 0;
                 segmentIndex = 0;
+                segmentOffset = 0;
                 typeIndex++;
             }
             const currentDataType = encodedTypes[typeIndex];
             const segments = currentDataType.getSegments();
-            if (dataTypeOffset > segments[segmentIndex].exponent + segments[segmentIndex].size) {
+            if (dataTypeOffset >= segments[segmentIndex].exponent + segments[segmentIndex].size) {
+                segmentOffset = 0;
                 segmentIndex++;
             }
             const currectSection = segments[segmentIndex];
@@ -450,7 +452,7 @@ export default class MemoryBankGenerator {
                 `${index + 1}`,
                 `${typeIndex + 1}`,
                 currectSection.name,
-                `${2**dataTypeOffset}`,
+                `${2**segmentOffset}`,
             ]);
         }
 
