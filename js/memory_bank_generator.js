@@ -420,27 +420,36 @@ export default class MemoryBankGenerator {
     generateTypeTableDisplay(types, elementId){
         const TypeTableElement = document.getElementById(elementId);
         if (!TypeTableElement) return;
+        TypeTableElement.innerHTML = '';
         const encodedTypes = types.map(type => new DataType(type));
         const sizes = encodedTypes.map(type => type.getSize());
         const totalSize = sizes.reduce((acc, num) => acc + num, 0);
 
         const tableRoot = newContainer('table', 'data-type-table', TypeTableElement);
         newTableRow(tableRoot, [
+            'wire',
             'bit',
             'parameter',
             'function',
             'magnitude',
         ]);
-        for (let index = 0, dataTypeOffset = 0, typeIndex = 0; index < totalSize; index++, dataTypeOffset++) {
+        for (let index = 0, dataTypeOffset = 0, typeIndex = 0, segmentIndex = 0; index < totalSize; index++, dataTypeOffset++) {
             if (dataTypeOffset >= sizes[typeIndex]){
                 dataTypeOffset = 0;
+                segmentIndex = 0;
                 typeIndex++;
             }
-            const activeDataType = encodedTypes[typeIndex];
+            const currentDataType = encodedTypes[typeIndex];
+            const segments = currentDataType.getSegments();
+            if (dataTypeOffset > segments[segmentIndex].exponent + segments[segmentIndex].size) {
+                segmentIndex++;
+            }
+            const currectSection = segments[segmentIndex];
             newTableRow(tableRoot, [
-                `${index}`,
-                `${typeIndex}`,
-                `value`,
+                `${Math.floor(index / 4) + 1}`,
+                `${index + 1}`,
+                `${typeIndex + 1}`,
+                currectSection.name,
                 `${2**dataTypeOffset}`,
             ]);
         }

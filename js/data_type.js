@@ -1,4 +1,5 @@
 import ExtendedMath from "./extended_math.js"
+import Segment from "./Segment.js"
 
 export default class DataType {
     size
@@ -85,6 +86,18 @@ export default class DataType {
             default:
                 return 'unknown type'
         }
+    }
+
+    getSegments(){
+        const segments = [
+            new Segment('numerical', this.getBaseSize()),
+        ];
+        if (this.isSigned) {
+            segments.push(
+                new Segment('sign', this.getSignSize(), this.getBaseSize())
+            );
+        }
+        return segments;
     }
 
     /**
