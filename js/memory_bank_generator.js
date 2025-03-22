@@ -415,9 +415,10 @@ export default class MemoryBankGenerator {
      * 
      * @param {string[]} types 
      * @param {string} elementId 
+     * @param {string} wireNamePrefix 
      * @returns 
      */
-    generateTypeTableDisplay(types, elementId){
+    generateTypeTableDisplay(types, elementId, wireNamePrefix = ''){
         const TypeTableElement = document.getElementById(elementId);
         if (!TypeTableElement) return;
         TypeTableElement.innerHTML = '';
@@ -451,7 +452,7 @@ export default class MemoryBankGenerator {
             const isFirstBitParameter = dataTypeOffset === 0;
             const rowCells = newTableRow(tableRoot, [
                 isFirstBitParameter ? `${typeIndex + 1}` : '',
-                isFirstBitWire ? `${Math.floor(index / 4) + 1}` : '',
+                isFirstBitWire ? `${wireNamePrefix}${Math.floor(index / 4) + 1}` : '',
                 `${index + 1}`,
                 currectSection.name,
                 `${2**segmentOffset}`,
