@@ -315,8 +315,8 @@ export default class MemoryBankGenerator {
                     const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
                     let currentX = 0;
                     let svgRowWidth = 0;
-                    [currentX, svgRowWidth] = this.romCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent);
-                    [currentX, svgRowWidth] = this.outputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent);
+                    [currentX, svgRowWidth] = this.generateRomCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent);
+                    [currentX, svgRowWidth] = this.generateOutputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent);
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
                 }
@@ -374,7 +374,7 @@ export default class MemoryBankGenerator {
         return process;
     }
 
-    romCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent) {
+    generateRomCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent) {
         let additionalInputWireIndex = 0;
         process.forEach((element) => {
             const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
@@ -401,7 +401,7 @@ export default class MemoryBankGenerator {
         return [currentX, svgRowWidth];
     }
 
-    outputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent) {
+    generateOutputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent) {
         let hasConnected = false;
         for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
             const isConnecting = digit === digitOut;
