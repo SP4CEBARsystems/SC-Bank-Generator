@@ -321,8 +321,8 @@ export default class MemoryBankGenerator {
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
         this.generateBankCountDisplay(inputLayerCount, outputWireCount);
-        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table');
-        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table');
+        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table', 'I');
+        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table', 'O');
 
         // console.log(bankCountMessage);
     }
