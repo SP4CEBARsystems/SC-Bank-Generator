@@ -427,12 +427,12 @@ export default class MemoryBankGenerator {
 
         const tableRoot = newContainer('table', 'data-type-table', TypeTableElement);
         newTableRow(tableRoot, [
+            'parameter',
             'wire',
             'bit',
-            'parameter',
             'function',
             'magnitude',
-        ], true);
+        ], 'tableHeader', true);
         for (let index = 0, dataTypeOffset = 0, typeIndex = 0, segmentOffset = 0, segmentIndex = 0; index < totalSize; index++, dataTypeOffset++, segmentOffset++) {
             if (dataTypeOffset >= sizes[typeIndex]){
                 dataTypeOffset = 0;
@@ -447,13 +447,19 @@ export default class MemoryBankGenerator {
                 segmentIndex++;
             }
             const currectSection = segments[segmentIndex];
-            newTableRow(tableRoot, [
-                `${Math.floor(index / 4) + 1}`,
+            const isFirstBitWire = index % 4 === 0;
+            const isFirstBitParameter = dataTypeOffset === 0;
+            const rowCells = newTableRow(tableRoot, [
+                isFirstBitParameter ? `${typeIndex + 1}` : '',
+                isFirstBitWire ? `${Math.floor(index / 4) + 1}` : '',
                 `${index + 1}`,
-                `${typeIndex + 1}`,
                 currectSection.name,
                 `${2**segmentOffset}`,
-            ]);
+            ], `row${index}${isFirstBitParameter ? ' new-table-section' : ''}`, false, true);
+            // if (index % 4 === 0) {
+            //     // rowCells[0].classlist.add('');
+            //     // rowCells[0].rowSpan = 4;
+            // }
         }
 
         // const columnCount = 5;

@@ -138,9 +138,11 @@ export function assignCopyButtons() {
  * 
  * @param {HTMLElement} tableRoot 
  * @param {string[]} tableData 
+ * @param {string} rowClassName 
  * @param {boolean} isHeaderRow 
  */
-export function newTableRow(tableRoot, tableData, isHeaderRow = false) {
-    const tableRow = newContainer('tr', '', tableRoot);
-    tableData.map(text => newElement(isHeaderRow ? 'th' : 'td', text, '', tableRow));
+export function newTableRow(tableRoot, tableData, rowClassName, isHeaderRow = false, shouldReturnCells = false) {
+    const tableRow = newContainer('tr', rowClassName, tableRoot);
+    const cells = tableData.map((text, index) => newElement(isHeaderRow ? 'th' : 'td', text, `collumn${index}`, tableRow));
+    return shouldReturnCells ? cells : tableRow;
 }

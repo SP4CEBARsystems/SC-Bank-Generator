@@ -97,8 +97,10 @@ math {
     table {
         border-spacing: 0; 
         /* Removes any default spacing between cells */
-        border-collapse: collapse; /* Ensures borders don’t double up */
-        width: 100%; /* Optional: Makes the table fill the container */
+        border-collapse: collapse;
+        /* Ensures borders don’t double up */
+        width: 100%;
+        /* Optional: Makes the table fill the container */
         /* color: red; */
     }
 
@@ -118,6 +120,10 @@ math {
     /* Remove the border from the last column */
     th:last-child, td:last-child {
         border-right: none;
+    }
+
+    .new-table-section * {
+        border-top: 1px solid white;
     }
       
     /* td {
