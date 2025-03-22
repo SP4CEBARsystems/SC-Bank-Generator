@@ -94,7 +94,7 @@ export default class DataType {
         ];
         if (this.isSigned) {
             segments.push(
-                new Segment('sign', this.getSignSize(), this.getBaseSize())
+                new Segment(this.isSignedTwosComplement ? "two's complement sign" : 'sign magnitude sign', this.getSignSize(), this.getBaseSize())
             );
         }
         return segments;
