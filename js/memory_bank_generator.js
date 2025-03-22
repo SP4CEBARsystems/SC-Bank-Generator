@@ -280,13 +280,13 @@ export default class MemoryBankGenerator {
      * @param {number} height 
      * @param {*} parent 
      * @param {number} svgWidth 
-     * @param {string=} nameText
+     * @param {string[]} nameTexts
      * @returns 
      */
-    drawCircuitCell(element, currentX, digitYOffset, height, parent, svgWidth, nameText) {
+    drawCircuitCell(element, currentX, digitYOffset, height, parent, svgWidth, nameTexts = []) {
         const width = this.getWidth(element);
         newSVGImage(currentX, digitYOffset, width, height, element, parent);
-        if(nameText !== undefined) newSVGText(currentX, digitYOffset, nameText, parent);
+        nameTexts.forEach(nameText => newSVGText(currentX, digitYOffset, nameText, parent));
         currentX += width;
         svgWidth += width;
         return [currentX, svgWidth];
@@ -368,24 +368,29 @@ export default class MemoryBankGenerator {
     }
 
     generateEmptyCircuitRow(process, currentX, svgRowWidth, digitYOffset, height, parent) {
+        let wireIndex = 0;
         process.forEach((element) => {
             let wireElement;
+            let wireName;
             switch (element) {
                 case 'bank_digit_single.jpg':
                     wireElement = 'bank_wire.jpg';
+                    wireName = `I${wireIndex++}`;
                 case 'bank_digit.jpg':
                 case 'bank_selector_8-bit.jpg':
                     wireElement = 'bank_wires.jpg';
+                    wireName = `${'. '.repeat(8)}I${wireIndex++}${'. '.repeat(10)}I${wireIndex++}`;
                     break;
                 case 'bank_selector_4-bit.jpg':
                     wireElement = `input_vertical.jpg`;
+                    wireName = `I${wireIndex++}`;
                     break;
                 default:
                     wireElement = 'fsm_empty.jpg'
                     break;
             }
-            const wireName = 'I0';
-            [currentX, svgRowWidth] = this.drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, wireName);
+            const wireNames = wireName ? [wireName] : [];
+            [currentX, svgRowWidth] = this.drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, wireNames);
         });
         return [currentX, svgRowWidth];
     }
@@ -412,7 +417,8 @@ export default class MemoryBankGenerator {
                     bankName = undefined;
                     break;
             }
-            [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+            const bankNames = bankName ? [bankName] : [];
+            [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankNames);
         });
         return [currentX, svgRowWidth];
     }
