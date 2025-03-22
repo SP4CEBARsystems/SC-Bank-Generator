@@ -21,13 +21,15 @@ export default class DataType {
      */
     constructor(rawDataType) {
         const dataType = rawDataType.toLowerCase();
+        const baseType = ExtendedMath.matchFirst(dataType, /int|float|double|byte|nibble|bit|flag|boolean|bool/);
+        const isSetDefault = baseType === null
+        this.baseType = isSetDefault ? 'int' : baseType;
         this.size = ExtendedMath.matchFirstAsInt(dataType, /(\d+)$/);
+        this.isSigned = isSetDefault ? false : !ExtendedMath.hasMatch(dataType, /^u(?=_)/);
+        this.isSignedTwosComplement = this.isSigned && !ExtendedMath.hasMatch(dataType, /^(sm)(?=_)/);
         this.exponentialOffset = ExtendedMath.matchFirstAsInt(dataType, /(?<=_o)\d+/);
         this.floatExponentSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_e)\d+/);
         this.floatMantissaSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_m)\d+/);
-        this.isSigned = !ExtendedMath.hasMatch(dataType, /^u(?=_)/);
-        this.isSignedTwosComplement = this.isSigned && !ExtendedMath.hasMatch(dataType, /^(sm)(?=_)/);
-        this.baseType = ExtendedMath.matchFirst(dataType, /int|float|double|byte|nibble|bit|flag|boolean|bool/);
     }
 
     getSize(){
@@ -39,6 +41,13 @@ export default class DataType {
         const typeSpecificSize = this.getTypeSpecificSize();
         if (typeSpecificSize !== null) return typeSpecificSize;
         return 0;
+    }
+
+    getName(){
+        if (this.baseType === null) return 'null';
+        const prefix = !this.isSigned ? 'u_' : this.isSignedTwosComplement ? '' : 'sm_';
+        const suffix = `_${this.getSize()}`;
+        return prefix + this.baseType + suffix;
     }
 
     /**
