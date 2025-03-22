@@ -1,5 +1,5 @@
 import ExtendedMath from "./extended_math.js"
-import Segment from "./Segment.js"
+import Segment from "./segment.js"
 
 export default class DataType {
     size
