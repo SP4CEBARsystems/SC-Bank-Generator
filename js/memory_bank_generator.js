@@ -3,6 +3,7 @@ import DataType from "./data_type.js";
 import { newCodeBlock, newContainer, newElement, newSVGImage, newSVGText, newTableRow } from "./dom_manipulator.js";
 import ElapsedTimer from "./ElapsedTimer.js";
 import ExtendedMath from "./extended_math.js";
+import NamedVector from "./named_vector.js";
 import TypeValue from "./type_value.js";
 import Word from "./word.js";
 
@@ -280,13 +281,13 @@ export default class MemoryBankGenerator {
      * @param {number} height 
      * @param {*} parent 
      * @param {number} svgWidth 
-     * @param {string[]} nameTexts
+     * @param {NamedVector[]} nameTexts
      * @returns 
      */
     drawCircuitCell(element, currentX, digitYOffset, height, parent, svgWidth, nameTexts = []) {
         const width = this.getWidth(element);
         newSVGImage(currentX, digitYOffset, width, height, element, parent);
-        nameTexts.forEach(nameText => newSVGText(currentX, digitYOffset, nameText, parent));
+        nameTexts.forEach(nameText => newSVGText(currentX + nameText.x, digitYOffset + nameText.y, nameText.name, parent));
         currentX += width;
         svgWidth += width;
         return [currentX, svgWidth];
@@ -371,25 +372,24 @@ export default class MemoryBankGenerator {
         let wireIndex = 0;
         process.forEach((element) => {
             let wireElement;
-            let wireName;
+            const wireNames = [];
             switch (element) {
                 case 'bank_digit_single.jpg':
                     wireElement = 'bank_wire.jpg';
-                    wireName = `I${wireIndex++}`;
+                    wireNames.push(new NamedVector(`I${wireIndex++}`, 70));
                 case 'bank_digit.jpg':
                 case 'bank_selector_8-bit.jpg':
                     wireElement = 'bank_wires.jpg';
-                    wireName = `${'. '.repeat(8)}I${wireIndex++}${'. '.repeat(10)}I${wireIndex++}`;
+                    wireNames.push(new NamedVector(`I${wireIndex++}`, 70), new NamedVector(`I${wireIndex++}`, 150));
                     break;
                 case 'bank_selector_4-bit.jpg':
                     wireElement = `input_vertical.jpg`;
-                    wireName = `I${wireIndex++}`;
+                    wireNames.push(new NamedVector(`I${wireIndex++}`, 70));
                     break;
                 default:
                     wireElement = 'fsm_empty.jpg'
                     break;
             }
-            const wireNames = wireName ? [wireName] : [];
             [currentX, svgRowWidth] = this.drawCircuitCell(wireElement, currentX, digitYOffset, height, parent, svgRowWidth, wireNames);
         });
         return [currentX, svgRowWidth];
@@ -399,25 +399,23 @@ export default class MemoryBankGenerator {
         let additionalInputWireIndex = 0;
         process.forEach((element) => {
             const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
-            let bankName;
+            let bankNames = [];
             switch (element) {
                 case 'bank_digit.jpg':
                 case 'bank_digit_single.jpg':
-                    bankName = this.generateBankName(location, input, digit);
+                    bankNames.push(new NamedVector(this.generateBankName(location, input, digit)));
                     break;
                 case 'bank_selector_4-bit.jpg':
-                    bankName = `4-bit Multiplexer L${selectorLocation}`;
+                    bankNames.push(new NamedVector(`4-bit Multiplexer L${selectorLocation}`));
                     additionalInputWireIndex++;
                     break;
                 case 'bank_selector_8-bit.jpg':
-                    bankName = `8-bit Selector L${selectorLocation}`;
+                    bankNames.push(new NamedVector(`8-bit Selector L${selectorLocation}`));
                     additionalInputWireIndex++;
                     break;
                 default:
-                    bankName = undefined;
                     break;
             }
-            const bankNames = bankName ? [bankName] : [];
             [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankNames);
         });
         return [currentX, svgRowWidth];
