@@ -352,18 +352,7 @@ export default class MemoryBankGenerator {
                         }
                         [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
                     });
-                    let hasConnected = false;
-                    for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
-                        const isConnecting = digit === digitOut;
-                        if (isConnecting) hasConnected = true;
-                        const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
-                        const element = isFirstElementOfNonFirstLocation ? (
-                            isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
-                        ) : (
-                            isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
-                        );
-                        [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
-                    }
+                    [currentX, svgRowWidth] = this.outputRoutingCircuit(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent);
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
                 }
@@ -400,6 +389,22 @@ export default class MemoryBankGenerator {
         this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table');
 
         // console.log(bankCountMessage);
+    }
+
+    outputRoutingCircuit(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent) {
+        let hasConnected = false;
+        for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
+            const isConnecting = digit === digitOut;
+            if (isConnecting) hasConnected = true;
+            const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
+            const element = isFirstElementOfNonFirstLocation ? (
+                isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
+            ) : (
+                isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
+            );
+            [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
+        }
+        return [currentX, svgRowWidth];
     }
 
     generateBankCountDisplay(inputLayerCount, outputWireCount) {
