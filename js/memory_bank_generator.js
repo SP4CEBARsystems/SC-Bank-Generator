@@ -1,5 +1,6 @@
 import { initConsoleListener, runUserFunction } from "./code_sandbox.js";
-import { newCodeBlock, newContainer, newSVGImage, newSVGText } from "./dom_manipulator.js";
+import DataType from "./data_type.js";
+import { newCodeBlock, newContainer, newElement, newSVGImage, newSVGText, newTableRow } from "./dom_manipulator.js";
 import ElapsedTimer from "./ElapsedTimer.js";
 import ExtendedMath from "./extended_math.js";
 import TypeValue from "./type_value.js";
@@ -394,6 +395,8 @@ export default class MemoryBankGenerator {
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
         this.generateBankCountDisplay(inputLayerCount, outputWireCount);
+        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table');
+        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table');
 
         // console.log(bankCountMessage);
     }
@@ -407,6 +410,56 @@ export default class MemoryBankGenerator {
             bankCountElement.textContent = bankCountMessage;
         }
     }
+
+    /**
+     * 
+     * @param {string[]} types 
+     * @param {string} elementId 
+     * @returns 
+     */
+    generateTypeTableDisplay(types, elementId){
+        const TypeTableElement = document.getElementById(elementId);
+        if (!TypeTableElement) return;
+        const encodedTypes = types.map(type => new DataType(type));
+        const sizes = encodedTypes.map(type => type.getSize());
+        const totalSize = sizes.reduce((acc, num) => acc + num, 0);
+
+        const tableRoot = newContainer('table', 'data-type-table', TypeTableElement);
+        newTableRow(tableRoot, [
+            'bit',
+            'parameter',
+            'function',
+            'magnitude',
+        ]);
+        for (let index = 0, dataTypeOffset = 0, typeIndex = 0; index < totalSize; index++, dataTypeOffset++) {
+            if (dataTypeOffset >= sizes[typeIndex]){
+                dataTypeOffset = 0;
+                typeIndex++;
+            }
+            const activeDataType = encodedTypes[typeIndex];
+            newTableRow(tableRoot, [
+                `${index}`,
+                `${typeIndex}`,
+                `value`,
+                `${2**dataTypeOffset}`,
+            ]);
+        }
+
+        // const columnCount = 5;
+        // const collumnElements = Array.from({ length: columnCount }, () => newContainer('tr', '', tableRoot));
+        // ['Input Types', 'Output Types'].map(text => newElement('th', text, '', collumnElements[0]));
+        // types.map(type => newElement('td', type.getFullName(), '', collumnElements[1]));
+        // types.map(type => newElement('td', type.getSize(), '', collumnElements[2]));
+
+        // const tableData = [
+        //     [['input types', 4], ['output types', 2]],
+        //     [...(inputTypes.map(['input types', 4])), ['output types', 2]],
+        // ]
+        // const table = {
+        //     inputTypes: inputTypes.map(type => type.getSize()),
+        //     outputTypes: outputTypes.map(type => type.getSize()),
+        // }
+    }
     
     generateBankName(location, input, digit) {
         return `Bank L${location}-I${input}-D${digit}`;
@@ -417,3 +470,4 @@ export default class MemoryBankGenerator {
         // `${this.numberOfLocations} * ${inputLayerCount} * ${outputWireCount}`
     }
 }
+

@@ -50,6 +50,43 @@ export default class DataType {
         return prefix + this.baseType + suffix;
     }
 
+    getFullName(){
+        if (this.baseType === null) return 'null';
+        const prefix = !this.isSigned ? 'unsigned' : this.isSignedTwosComplement ? "two's complement signed" : 'sign magnitude signed';
+        return `${prefix} ${this.getBaseTypeFullName()}`;
+    }
+
+    getFullNameWithSize(){
+        const suffix = `of size ${this.getSize()}`;
+        return `${this.getFullName()} ${suffix}`;
+    }
+
+    getBaseSize(){
+        return this.getSize() - this.getSignSize();
+    }
+
+    getSignSize(){
+        return this.isSigned ? 1 : 0;
+    }
+
+    getBaseTypeFullName() {
+        switch (this.baseType) {
+            case 'bit': case 'flag': case 'nibble': case 'byte':
+                return this.baseType;
+            case 'bool': case 'boolean':
+                return 'boolean value'
+            case 'int':
+                return 'integer'
+            case 'float':
+                return 'floating point number'
+            case 'double':
+                return 'double precision floating point number'
+            case '': case undefined: case null:
+            default:
+                return 'unknown type'
+        }
+    }
+
     /**
      * 
      * @param {*} size 

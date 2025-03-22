@@ -33,7 +33,7 @@ export function newCodeBlock(title, contents) {
  * @returns the created element
  */
 export function newContainer(type, className, parentName) {
-	if (type === 'script') return null;
+	// if (type === 'script') return null;
 	let p = document.createElement(type);
 	p.className = className;
 	parentName.appendChild(p);
@@ -132,4 +132,14 @@ export function assignCopyButtons() {
         const code = element.nextElementSibling?.innerText ?? '';
         element.addEventListener('click', () => copyTextToClipboard(code));
     });
+}
+
+/**
+ * 
+ * @param {HTMLElement} tableRoot 
+ * @param {string[]} tableData 
+ */
+export function newTableRow(tableRoot, tableData) {
+    const tableRow = newContainer('tr', '', tableRoot);
+    tableData.map(text => newElement('td', text, '', tableRow));
 }
