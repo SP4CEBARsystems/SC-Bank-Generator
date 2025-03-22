@@ -303,21 +303,7 @@ export default class MemoryBankGenerator {
         const totalInputSize = this.inputTypes.map(TypeValue.sizeOf).reduce(sum);
         const inputWireCount = Math.ceil(totalInputSize / 4);
         const outputWireCount = Math.ceil(this.outputTypes.map(TypeValue.sizeOf).reduce(sum) / 4);
-        const process = [];
-        if (inputWireCount <= 0) {
-        } else if (inputWireCount <= 1) {
-            process.push('bank_digit_single.jpg');
-        } else if (inputWireCount <= 2) {
-            process.push('bank_digit.jpg');
-        } else {
-            const additionalInputWireCount = inputWireCount - 2;
-            const amountOfSelectors = Math.floor(additionalInputWireCount / 2);
-            const hasUnevenInputWireCount = additionalInputWireCount % 2 != 0;
-            process.push('bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg'));
-            if (hasUnevenInputWireCount) {
-                process.push('bank_selector_4-bit.jpg');
-            }
-        }
+        const process = this.createCircuitTemplate(inputWireCount);
         let svgWidth = 0;
         let svgHeight = 0;
         const SingleBankInputSize = 8;
@@ -367,6 +353,25 @@ export default class MemoryBankGenerator {
         this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table');
 
         // console.log(bankCountMessage);
+    }
+
+    createCircuitTemplate(inputWireCount) {
+        const process = [];
+        if (inputWireCount <= 0) {
+        } else if (inputWireCount <= 1) {
+            process.push('bank_digit_single.jpg');
+        } else if (inputWireCount <= 2) {
+            process.push('bank_digit.jpg');
+        } else {
+            const additionalInputWireCount = inputWireCount - 2;
+            const amountOfSelectors = Math.floor(additionalInputWireCount / 2);
+            const hasUnevenInputWireCount = additionalInputWireCount % 2 != 0;
+            process.push('bank_digit.jpg', ...Array(amountOfSelectors).fill('bank_selector_8-bit.jpg'));
+            if (hasUnevenInputWireCount) {
+                process.push('bank_selector_4-bit.jpg');
+            }
+        }
+        return process;
     }
 
     romCircuitPart(process, input, location, digit, currentX, svgRowWidth, digitYOffset, height, parent) {
