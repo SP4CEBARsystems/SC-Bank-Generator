@@ -288,14 +288,6 @@ export default class MemoryBankGenerator {
          * @param {string=} nameText
          * @returns 
          */
-        const drawCircuitCell = (element, currentX, digitYOffset, height, parent, svgWidth, nameText) => {
-            const width = this.getWidth(element);
-            newSVGImage(currentX, digitYOffset, width, height, element, parent);
-            if(nameText !== undefined) newSVGText(currentX, digitYOffset, nameText, parent);
-            currentX += width;
-            svgWidth += width;
-            return [currentX, svgWidth];
-        }
         const parent = /** @type {SVGElement} */ document.getElementById('reference-circuit');
         if (parent === null) return;
         const sum = (accumulator, value) => accumulator + value;
@@ -324,45 +316,8 @@ export default class MemoryBankGenerator {
         for (let location = 0; location < this.numberOfLocations; location++) {
             for (let input = 0; input < inputLayerCount; input++) {
                 for (let digit = 0; digit < outputWireCount; digit++) {
-                    const height = 127;
-                    const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
-                    let currentX = 0;
-                    let svgRowWidth = 0;
-                    let additionalInputWireIndex = 0;
-                    process.forEach((element) => {
-                        const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
-                        let bankName;
-                        switch (element) {
-                            case 'bank_digit.jpg':
-                            case 'bank_digit_single.jpg':
-                                bankName = this.generateBankName(location, input, digit);
-                                break;
-                            case 'bank_selector_4-bit.jpg':
-                                bankName = `4-bit Multiplexer L${selectorLocation}`;
-                                additionalInputWireIndex++;
-                                break;
-                            case 'bank_selector_8-bit.jpg':
-                                bankName = `8-bit Selector L${selectorLocation}`;
-                                additionalInputWireIndex++;
-                                break;
-                            default:
-                                bankName = undefined
-                                break;
-                        }
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
-                    });
-                    let hasConnected = false;
-                    for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
-                        const isConnecting = digit === digitOut;
-                        if (isConnecting) hasConnected = true;
-                        const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
-                        const element = isFirstElementOfNonFirstLocation ? (
-                            isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
-                        ) : (
-                            isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
-                        );
-                        [currentX, svgRowWidth] = drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth);
-                    }
+                    var { currentX, svgRowWidth, digitYOffset, height } = this.generateRomCircuitPart(location, inputLayerCount, input, outputWireCount, digit, process, parent);
+                    [currentX, svgRowWidth] = this.generateOutputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent);
                     svgWidth = Math.max(svgWidth, svgRowWidth);
                     svgHeight += height;
                 }
@@ -395,10 +350,66 @@ export default class MemoryBankGenerator {
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
         this.generateBankCountDisplay(inputLayerCount, outputWireCount);
-        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table');
-        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table');
+        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table', 'I');
+        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table', 'O');
 
         // console.log(bankCountMessage);
+    }
+
+    drawCircuitCell2(element, currentX, digitYOffset, height, parent, nameText, svgWidth) {
+        const width = this.getWidth(element);
+        newSVGImage(currentX, digitYOffset, width, height, element, parent);
+        if (nameText !== undefined) newSVGText(currentX, digitYOffset, nameText, parent);
+        currentX += width;
+        svgWidth += width;
+        return [currentX, svgWidth];
+    }
+
+    generateOutputRoutingCircuitPart(outputWireCount, digit, input, location, currentX, svgRowWidth, digitYOffset, height, parent) {
+        let hasConnected = false;
+        for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
+            const isConnecting = digit === digitOut;
+            if (isConnecting) hasConnected = true;
+            const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
+            const element = isFirstElementOfNonFirstLocation ? (
+                isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
+            ) : (
+                isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
+            );
+            [currentX, svgRowWidth] = this.drawCircuitCell2(element, currentX, digitYOffset, height, parent, svgRowWidth);
+        }
+        return [currentX, svgRowWidth];
+    }
+
+    generateRomCircuitPart(location, inputLayerCount, input, outputWireCount, digit, process, parent) {
+        const height = 127;
+        const digitYOffset = ((location * inputLayerCount + input) * outputWireCount + digit) * height;
+        let currentX = 0;
+        let svgRowWidth = 0;
+        let additionalInputWireIndex = 0;
+        process.forEach((element) => {
+            const selectorLocation = Math.floor((input / 256 ** additionalInputWireIndex) % 256);
+            let bankName;
+            switch (element) {
+                case 'bank_digit.jpg':
+                case 'bank_digit_single.jpg':
+                    bankName = this.generateBankName(location, input, digit);
+                    break;
+                case 'bank_selector_4-bit.jpg':
+                    bankName = `4-bit Multiplexer L${selectorLocation}`;
+                    additionalInputWireIndex++;
+                    break;
+                case 'bank_selector_8-bit.jpg':
+                    bankName = `8-bit Selector L${selectorLocation}`;
+                    additionalInputWireIndex++;
+                    break;
+                default:
+                    bankName = undefined;
+                    break;
+            }
+            [currentX, svgRowWidth] = this.drawCircuitCell2(element, currentX, digitYOffset, height, parent, svgRowWidth, bankName);
+        });
+        return { currentX, svgRowWidth, digitYOffset, height };
     }
 
     generateBankCountDisplay(inputLayerCount, outputWireCount) {
