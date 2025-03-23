@@ -496,8 +496,8 @@ export default class MemoryBankGenerator {
             'parameter',
             'parameter name',
             'parameter type',
-            'wire',
             'bit',
+            'wire',
             'function',
             'magnitude',
         ], 'tableHeader', true);
@@ -520,8 +520,8 @@ export default class MemoryBankGenerator {
                 isFirstBitParameter ? `${typeIndex}` : '',
                 isFirstBitParameter ? `${parameterNames[typeIndex]}` : '',
                 isFirstBitParameter ? `${currentDataType.getFullNameWithSize()}` : '',
-                `${wireNamePrefix}${Math.floor(index / 4)}`,
                 `${index}`,
+                `${wireNamePrefix}${Math.floor(index / 4)}`,
                 currectSection.name,
                 `${2**segmentOffset}`,
             ], `row${index}${isFirstBitParameter ? ' new-table-section' : ''}`, false, true);
