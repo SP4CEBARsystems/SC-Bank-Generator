@@ -69,7 +69,7 @@ export default class MemoryBankGenerator {
         console.log('bankInput', bankInput);
         this.elapsedTimer.start();
         this.dangerousUserCode = (/** @type {HTMLInputElement} */ document.getElementById('codeInput'))?.value.trim();
-        const matchInputParameters = /(?<=^\(\[).*(?=\])/m;
+        const matchInputParameters = /(?<=^\(\[).*(?=\][,|\)])/m;
         const matchOutputParameters = /(?<=return \[).*(?=\])/m;
         const matchCommaSeparator = /, */gm;
         this.inputParameterNames = ExtendedMath.matchAndSplitFirst(this.dangerousUserCode, matchInputParameters, matchCommaSeparator);
