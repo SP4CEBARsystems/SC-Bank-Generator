@@ -141,6 +141,22 @@ export const codePresets = [
         ['6', '1'],
     ),
     new CodePreset(
+        standardCode.shiftRegisterFsm,
+        '8-bit Shift Register FSM',
+        '',
+        'FSM',
+        ['8'],
+        ['8'],
+    ),
+    // new CodePreset(
+    //     standardCode.shiftRegisterFsm2,
+    //     '8-bit Shift Register FSM',
+    //     '',
+    //     'FSM',
+    //     ['2', '2', '2', '2'],
+    //     ['2', '2', '2', '2'],
+    // ),
+    new CodePreset(
         standardCode.cpuFsm,
         '2-bit CPU FSM',
         'with instructions: halt, load, subtract, branch if not zero, and a program to decrement until zero is reached. Given the small instruction set (2-bit gives only four different instructions) you should adjust it per program. Inspired by The Little Man Computer (Online Demo)',

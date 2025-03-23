@@ -57,6 +57,21 @@ export default class standardCode {
         }
     )
 
+    static shiftRegisterFsm = new Code(
+        ([x], bankPosition, [bitShiftLeftAmount] = [2]) => {
+            return [x << bitShiftLeftAmount];
+        }
+    )
+
+    static shiftRegisterFsm2 = new Code(
+        ([...registers]) => {
+            for (let index = 1; index < registers.length; index++) {
+                registers[index] = registers[index - 1];
+            }
+            return [...registers];
+        }
+    )
+
     static counterFsm = new Code(
         ([position, isMoving, isDecrementing], bankPosition, [minPosition, maxPosition, isOverflowEnabled] = [0, 15, 1]) => {
             const [underflowValue, overflowValue] = isOverflowEnabled ? [maxPosition, minPosition] : [position, position];
