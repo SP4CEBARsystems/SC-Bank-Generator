@@ -474,6 +474,7 @@ export default class MemoryBankGenerator {
         const tableRoot = newContainer('table', 'data-type-table', TypeTableElement);
         newTableRow(tableRoot, [
             'parameter',
+            'parameter type',
             'wire',
             'bit',
             'function',
@@ -496,6 +497,7 @@ export default class MemoryBankGenerator {
             const isFirstBitParameter = dataTypeOffset === 0;
             const rowCells = newTableRow(tableRoot, [
                 isFirstBitParameter ? `${typeIndex}` : '',
+                isFirstBitParameter ? `${currentDataType.getFullNameWithSize()}` : '',
                 `${wireNamePrefix}${Math.floor(index / 4)}`,
                 `${index}`,
                 currectSection.name,
