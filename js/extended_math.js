@@ -164,6 +164,19 @@ export default class ExtendedMath {
      * 
      * @param {string} string 
      * @param {RegExp} regex 
+     * @param {string | RegExp} separator 
+     * @returns {string[]}
+     */
+    static matchAndSplitFirst(string, regex, separator){
+        const match = ExtendedMath.matchFirst(string, regex);
+        if (match === null) return [];
+        return match.split(separator);
+    }
+
+    /**
+     * 
+     * @param {string} string 
+     * @param {RegExp} regex 
      * @returns {number|null}
      */
     static matchFirstAsInt(string, regex){

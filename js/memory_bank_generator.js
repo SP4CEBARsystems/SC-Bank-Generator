@@ -22,6 +22,18 @@ export default class MemoryBankGenerator {
     generatedData = [];
 
     elapsedTimer;
+
+    dangerousUserCode = '';
+
+    /**
+     * @type {string[]}
+     */
+    inputParameterNames = [];
+    
+    /**
+     * @type {string[]}
+     */
+    outputParameterNames = [];
     
     // * @param {(bankIndex:number[], bankPosition?:number) => number[]} generatorCallback 
     /**
@@ -56,7 +68,14 @@ export default class MemoryBankGenerator {
         }
         console.log('bankInput', bankInput);
         this.elapsedTimer.start();
-        runUserFunction(bankInput);
+        this.dangerousUserCode = (/** @type {HTMLInputElement} */ document.getElementById('codeInput'))?.value.trim();
+        const matchInputParameters = /(?<=^\(\[).*(?=\])/m;
+        const matchOutputParameters = /(?<=return \[).*(?=\])/m;
+        const matchCommaSeparator = /, */gm;
+        this.inputParameterNames = ExtendedMath.matchAndSplitFirst(this.dangerousUserCode, matchInputParameters, matchCommaSeparator);
+        this.outputParameterNames = ExtendedMath.matchAndSplitFirst(this.dangerousUserCode, matchOutputParameters, matchCommaSeparator);
+        // this.dangerousUserCode?.find();
+        runUserFunction(bankInput, this.dangerousUserCode);
     }
 
     processOutput(data){
@@ -321,8 +340,8 @@ export default class MemoryBankGenerator {
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
         this.generateBankCountDisplay(inputLayerCount, outputWireCount);
-        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table', 'I');
-        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table', 'O');
+        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table', 'I', this.inputParameterNames);
+        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table', 'O', this.outputParameterNames);
 
         // console.log(bankCountMessage);
     }
@@ -461,9 +480,10 @@ export default class MemoryBankGenerator {
      * @param {string[]} types 
      * @param {string} elementId 
      * @param {string} wireNamePrefix 
+     * @param {string[]} parameterNames 
      * @returns 
      */
-    generateTypeTableDisplay(types, elementId, wireNamePrefix = ''){
+    generateTypeTableDisplay(types, elementId, wireNamePrefix = '', parameterNames){
         const TypeTableElement = document.getElementById(elementId);
         if (!TypeTableElement) return;
         TypeTableElement.innerHTML = '';
@@ -474,6 +494,7 @@ export default class MemoryBankGenerator {
         const tableRoot = newContainer('table', 'data-type-table', TypeTableElement);
         newTableRow(tableRoot, [
             'parameter',
+            'parameter name',
             'parameter type',
             'wire',
             'bit',
@@ -497,6 +518,7 @@ export default class MemoryBankGenerator {
             const isFirstBitParameter = dataTypeOffset === 0;
             const rowCells = newTableRow(tableRoot, [
                 isFirstBitParameter ? `${typeIndex}` : '',
+                isFirstBitParameter ? `${parameterNames[typeIndex]}` : '',
                 isFirstBitParameter ? `${currentDataType.getFullNameWithSize()}` : '',
                 `${wireNamePrefix}${Math.floor(index / 4)}`,
                 `${index}`,

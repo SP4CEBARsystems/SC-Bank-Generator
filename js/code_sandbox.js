@@ -49,8 +49,7 @@ export function initConsoleListener() {
 //     });
 // }
 
-export function runUserFunction(inputArray) {
-    const userCode = document.getElementById('codeInput')?.value.trim();
+export function runUserFunction(inputArray, userCode) {
     const arg1 = 4;
     const arg2 = 5;
     const iframe = document.getElementById('sandbox');
