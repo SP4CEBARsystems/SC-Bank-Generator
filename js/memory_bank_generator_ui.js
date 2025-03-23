@@ -29,6 +29,8 @@ export default class MemoryBankGeneratorUI {
 
     presetDescriptionElement = document.getElementById('preset-description');
 
+    presetTypeElement = document.getElementById('preset-type');
+
     recursiveCopyButton = document.getElementById('recursive-copy-button');
 
     generator
@@ -118,6 +120,7 @@ export default class MemoryBankGeneratorUI {
             this.inputSizesInputElement === null ||
             this.outputSizesInputElement === null ||
             this.presetNameElement === null ||
+            this.presetTypeElement === null ||
             this.presetDescriptionElement === null
         ) return;
         this.amountInputElement.value = preset.locations.toString();
@@ -126,5 +129,6 @@ export default class MemoryBankGeneratorUI {
         this.inputSizesInputElement.value = preset.inputTypes.toString();
         this.presetNameElement.textContent = preset.name;
         this.presetDescriptionElement.textContent = preset.description;
+        this.presetTypeElement.textContent = `Type: ${preset.type}`;
     }
 }
