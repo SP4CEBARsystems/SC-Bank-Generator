@@ -495,9 +495,9 @@ export default class MemoryBankGenerator {
             const currectSection = segments[segmentIndex];
             const isFirstBitParameter = dataTypeOffset === 0;
             const rowCells = newTableRow(tableRoot, [
-                isFirstBitParameter ? `${typeIndex + 1}` : '',
-                `${wireNamePrefix}${Math.floor(index / 4) + 1}`,
-                `${index + 1}`,
+                isFirstBitParameter ? `${typeIndex}` : '',
+                `${wireNamePrefix}${Math.floor(index / 4)}`,
+                `${index}`,
                 currectSection.name,
                 `${2**segmentOffset}`,
             ], `row${index}${isFirstBitParameter ? ' new-table-section' : ''}`, false, true);
