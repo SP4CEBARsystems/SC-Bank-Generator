@@ -128,7 +128,7 @@ export default class MemoryBankGeneratorUI {
         this.outputSizesInputElement.value = preset.outputTypes.toString();
         this.inputSizesInputElement.value = preset.inputTypes.toString();
         this.presetNameElement.textContent = preset.name;
-        this.presetDescriptionElement.textContent = preset.description;
+        this.presetDescriptionElement.textContent = `${preset.description} ${preset.type === 'FSM' ? 'Note: this is an FSM (Finite State Machine). To use it, you should connect the output of the circuit to its input, read the documentation for more details.' : ''}`;
         this.presetTypeElement.textContent = `Type: ${preset.type}`;
     }
 }
