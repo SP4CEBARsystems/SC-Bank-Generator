@@ -126,7 +126,7 @@ export default class standardCode {
                     // case 'store': // (aka STA)
                     //     // can be implemented with additional ROMs to manage the clock and writing-data inputs of the memory banks
                     //     // To write it in this architecture: you need to simulate this program in Survivalcraft with a different programData array
-                    //     // The current design has a lot of overlap in data as each combination of parameters has a state, it may be more efficient to split it up into aset of SFMs working together
+                    //     // The current design has a lot of overlap in data as each combination of parameters has a state, it may be more efficient to split it up into aset of FSMs working together
                     //     isWriteMode = 1;
                     //     writeValue = accumulator;
                     //     break;
