@@ -1,4 +1,3 @@
-[Launch Tool](https://sp4cebarsystems.github.io/SC-Bank-Generator/)
 # Documentation
 
 - - -
@@ -16,7 +15,7 @@
 
 ## Description
 
-This tool allows you to easily program the data for [memory bank](https://survivalcraftgame.fandom.com/wiki/Memory_Bank) systems in [Survivalcraft](https://en.wikipedia.org/wiki/Survivalcraft). It supports three different use cases: ROM, Selector ROM, and FSM.
+[This online tool](https://sp4cebarsystems.github.io/SC-Bank-Generator/) allows easy programming and data generation for [memory bank](https://survivalcraftgame.fandom.com/wiki/Memory_Bank) systems in [Survivalcraft](https://en.wikipedia.org/wiki/Survivalcraft). It supports three different use cases: ROM, Selector ROM, and FSM.
 
 *   **ROM: [Read only Memory](https://en.wikipedia.org/wiki/Read-only_memory)**  
     for any input value coming in, one programmed output value is coming out. This can be used to make calculators or displays. This is the simplest, and likely most common, of the three.
