@@ -1,5 +1,6 @@
 import ExtendedMath from "./extended_math.js"
 import Segment from "./segment.js"
+import Word from "./word.js"
 
 export default class DataType {
     size
@@ -31,6 +32,23 @@ export default class DataType {
         this.exponentialOffset = ExtendedMath.matchFirstAsInt(dataType, /(?<=_o)\d+/);
         this.floatExponentSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_e)\d+/);
         this.floatMantissaSize = ExtendedMath.matchFirstAsInt(dataType, /(?<=_m)\d+/);
+        this.rectifyFloatParameters();
+    }
+
+    rectifyFloatParameters() {
+        if (this.floatExponentSize === null && this.floatMantissaSize !== null && this.size !== null) {
+            this.floatExponentSize = this.size - (this.getSignSize() + this.floatMantissaSize);
+        } else if (this.floatExponentSize !== null && this.floatMantissaSize === null && this.size !== null) {
+            this.floatMantissaSize = this.size - (this.getSignSize() + this.floatExponentSize);
+        } else if (this.floatExponentSize !== null && this.floatMantissaSize !== null || this.size === null) {
+            this.size = this.getFloatSize();
+        } else {
+            this.size = this.getFloatSize();
+        }
+    }
+
+    getFloatSize() {
+        return this.getSignSize() + (this.floatExponentSize ?? 3) + (this.floatMantissaSize ?? 4);
     }
 
     getSize(){
@@ -192,10 +210,12 @@ export default class DataType {
 
     
     /**
-     * 
-     * @param {number} inputvalue 
+     * Encodes a number according to this DataType object.
+     * @param {number} inputValue the numerical value to be encoded to data
+     * @returns {number} the binary-encoded representation in the object's data type
      */
-    encode(inputvalue) {
+    encode(inputValue) {
+        // inputValue *= 2 ** (this.exponentialOffset ?? 0);
         const size = this.getSize();
         switch (this.baseType) {
             case 'int':
@@ -203,8 +223,8 @@ export default class DataType {
                     if (this.isSignedTwosComplement) {                        
                         //uses 2s complement
                         const signValue = 1 << (size - 1);
-                        const isNegative = inputvalue < 0;
-                        const value = ExtendedMath.toWord(Math.abs(inputvalue), size-1);
+                        const isNegative = inputValue < 0;
+                        const value = ExtendedMath.toWord(Math.abs(inputValue), size-1);
                         if (isNegative) {
                             return signValue * 2 - value;
                         } else {
@@ -212,8 +232,8 @@ export default class DataType {
                         }
                     } else {
                         const signValue = 1 << (size - 1);
-                        const isNegative = inputvalue < 0;
-                        const value = ExtendedMath.toWord(Math.abs(inputvalue), size-1);
+                        const isNegative = inputValue < 0;
+                        const value = ExtendedMath.toWord(Math.abs(inputValue), size-1);
                         if (isNegative) {
                             return signValue | value;
                         } else {
@@ -221,46 +241,59 @@ export default class DataType {
                         }
                     }
                 } else {
-                    return ExtendedMath.toWord(Math.abs(inputvalue), size);
+                    return ExtendedMath.toWord(Math.abs(inputValue), size);
                 }
             case 'byte': case 'nibble': case 'bit': case 'flag': case 'boolean': case 'bool':
-                return ExtendedMath.toWord(Math.abs(inputvalue), size);
+                return ExtendedMath.toWord(Math.abs(inputValue), size);
             case 'float': case 'double':
-                return ExtendedMath.toWord(Math.abs(inputvalue), size)
+                if (this.floatExponentSize === null || this.floatMantissaSize === null) {
+                    return ExtendedMath.toWord(Math.abs(inputValue), size)
+                }
+                const signBits = new Word(this.getSignSize(),
+                    inputValue < 0 ? 1 : 0,
+                );
+                const exponentBits = new Word(this.floatExponentSize,
+                    Math.log2(inputValue)
+                );
+                const mantissaBits = new Word(this.floatMantissaSize,
+                    inputValue / 2 ** exponentBits.value
+                );
+                return Word.mergeWords(signBits, exponentBits, mantissaBits).value;
             default:
-                return ExtendedMath.toWord(Math.abs(inputvalue), size);
+                return ExtendedMath.toWord(Math.abs(inputValue), size);
         }
     }
 
     /**
-     * 
-     * @param {number} inputValue
-     * @returns {number}
+     * Decodes data according to this DataType object.
+     * @param {number} inputData the binary-encoded representation in the object's data type to be decoded to a value
+     * @returns {number} the numerical value
      */
-    decode(inputValue) {
+    decode(inputData) {
+        // before returning, this needs to be applied in reverse: inputValue *= 2 ** (this.exponentialOffset ?? 0);
         const size = this.getSize();
         switch (this.baseType) {
             case 'int':
                 if (this.isSigned) {
                     if (this.isSignedTwosComplement) {
                         //uses 2s complement
-                        const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
-                        const sign = -ExtendedMath.bitSelectKeepOffset(inputValue, size-1, 1);
+                        const value = ExtendedMath.bitSelect(inputData, 0, size-1);
+                        const sign = -ExtendedMath.bitSelectKeepOffset(inputData, size-1, 1);
                         return value + sign;
                     } else {
-                        const value = ExtendedMath.bitSelect(inputValue, 0, size-1);
-                        const sign = ExtendedMath.bitSelect(inputValue, size-1, 1) != 0 ? -1 : 1;
+                        const value = ExtendedMath.bitSelect(inputData, 0, size-1);
+                        const sign = ExtendedMath.bitSelect(inputData, size-1, 1) != 0 ? -1 : 1;
                         return value * sign;
                     }
                 } else {
-                    return ExtendedMath.bitSelect(inputValue, 0, size);
+                    return ExtendedMath.bitSelect(inputData, 0, size);
                 }
             case 'float':
-                return ExtendedMath.bitSelect(inputValue, 0, size);
+                return ExtendedMath.bitSelect(inputData, 0, size);
             case 'byte': case 'nibble': case 'bit': case 'flag': case 'boolean': case 'bool':
-                return ExtendedMath.bitSelect(inputValue, 0, size);
+                return ExtendedMath.bitSelect(inputData, 0, size);
             default:
-                return ExtendedMath.bitSelect(inputValue, 0, size);;
+                return ExtendedMath.bitSelect(inputData, 0, size);;
         }
     }
 }
