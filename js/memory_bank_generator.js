@@ -215,7 +215,7 @@ export default class MemoryBankGenerator {
             return 0;
         }
         const encodedOutput = TypeValue.arrayFromValues(outputTypes, output).map(element => element.value);
-        const out = ExtendedMath.combineOutput(encodedOutput.map((value, index) => new Word(outputSizes[index], value)));
+        const out = Word.combineOutput(encodedOutput.map((value, index) => new Word(outputSizes[index], value)));
         return out;
     }
 

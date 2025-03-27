@@ -53,17 +53,17 @@ export default class ExtendedMath {
     }
 
     /**
-     * 
-     * @param {number} value 
+     * Enccodes a value to a binary word of a specific length in bits
+     * @param {number} value to be encoded
      * @param {number} length in bits
-     * @returns 
+     * @returns {number} encoded to a word
      */
     static toWord(value, length) {
         return Math.floor(value) & ExtendedMath.createBitmask(length);
     }
 
     /**
-     * a bitmask of the specified length
+     * a high bit bitmask of the specified length
      * @param {number} length in bits
      * @returns {number} a bitmask
      */
@@ -84,20 +84,6 @@ export default class ExtendedMath {
             bitOffset += subWordSize;
             return value;
         });
-    }
-
-    /**
-     * 
-     * @param {Word[]} words 
-     * @returns 
-     */
-    static combineOutput(words) {
-        let bitOffset = 0;
-        return words.reduce((previous, word) => {
-            const value = previous | (word.value & ExtendedMath.createBitmask(word.bitSize)) << bitOffset;
-            bitOffset += word.bitSize;
-            return value;
-        }, 0);
     }
 
     static getBaseLog(base, value) {
@@ -195,10 +181,10 @@ export default class ExtendedMath {
         return ExtendedMath.matchFirst(string, regex) !== null;
     }
 
-    /**
-     * use arr1.flat() instead
-     * @param {any[]} data 
-     */
+    // /**
+    //  * use arr1.flat() instead
+    //  * @param {any[]} data 
+    //  */
     // static flattenArray(data) {
     //     if (!Array.isArray(data)) {
     //         return data;
