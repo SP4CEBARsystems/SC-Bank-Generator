@@ -16,7 +16,7 @@
  * @param {string} codeBlock 
  */
 export function copyTextToClipboard(codeBlock) {
-    navigator.clipboard.writeText(codeBlock)
+    return navigator.clipboard.writeText(codeBlock)
         .catch(err => console.error("Failed to copy:", err));
 }
 
@@ -25,7 +25,7 @@ export function copyTextToClipboard(codeBlock) {
  * @param {string} codeBlock 
  */
 export function copyTextToClipboardAsOneLine(codeBlock) {
-    copyTextToClipboard(removeLineBreaks(codeBlock));
+    return copyTextToClipboard(removeLineBreaks(codeBlock));
 }
 
 /**

@@ -15,7 +15,7 @@ export function newCodeBlock(title, contents) {
     const titleElement = newElement('h3', title, 'code-block', divElement);
     const preElement = newContainer('pre', 'code-block-root', divElement);
     if (preElement === null) return;
-    const buttonElement = newButton('Copy', 'copy-btn', preElement, copyTextToClipboardAsOneLine, [contents]);
+    const buttonElement = newCopyAsOneLineButton(preElement, contents);
     const codeElement = newElement('code', contents, 'code-block', preElement);
     // parent.innerHTML += `
     // <pre class="code-block-root">
@@ -91,11 +91,36 @@ export function newElement(type, elementText, className, parentName) {
 	return newElement;
 }
 
-export function newButton(elementText, className, parentName, callback, callbackParameters) {
+/**
+ * 
+ * @param {string} elementText 
+ * @param {string} className 
+ * @param {HTMLElement} parentName 
+ * @param {(...any) => Promise<void>} callback 
+ * @param {any[]} callbackParameters 
+ * @param {string=} elementClickedText 
+ * @returns {HTMLElement | null}
+ */
+export function newButton(elementText, className, parentName, callback, callbackParameters, elementClickedText) {
 	const buttonElement = newElement("button", elementText, className, parentName);
-    if (buttonElement === null) return buttonElement;
-	buttonElement.onclick = function () { callback(...callbackParameters); };
+    if (buttonElement === null) return null;
+	buttonElement.onclick = function() {
+        callback(...callbackParameters)
+        .then(() => {
+            if (elementClickedText !== undefined) buttonElement.textContent = elementClickedText;
+        });
+    };
 	return buttonElement;
+}
+
+/**
+ * 
+ * @param {HTMLElement} preElement 
+ * @param {any} contents 
+ * @returns 
+ */
+export function newCopyAsOneLineButton(preElement, contents) {
+	return newButton('Copy', 'copy-btn', preElement, copyTextToClipboardAsOneLine, [contents], 'Copied');
 }
 
 export function assignCodeBlockCopyButtons() {
