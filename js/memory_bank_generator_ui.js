@@ -1,6 +1,6 @@
 import CodePreset from "./code presets/CodePreset.js";
 import { codePresets } from "./code presets/codePresets.js";
-import { copyTextArrayToClipboard } from "./copying.js";
+import { copyTextArrayToClipboard, removeLineBreaks } from "./copying.js";
 import { newButton } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
@@ -33,6 +33,11 @@ export default class MemoryBankGeneratorUI {
 
     recursiveCopyButton = document.getElementById('recursive-copy-button');
 
+    slowerRecursiveCopyButton = document.getElementById('slower-recursive-copy-button');
+
+    /**
+     * @type {MemoryBankGenerator}
+     */
     generator
 
     constructor(generator) {
@@ -46,23 +51,25 @@ export default class MemoryBankGeneratorUI {
         if (this.recursiveCopyButton) {
             this.recursiveCopyButton.onclick = this.recursiveCopy.bind(this);
         }
+        if (this.slowerRecursiveCopyButton) {
+            this.slowerRecursiveCopyButton.onclick = this.recursiveCopySlower.bind(this);
+        }
         const presetSelector = document.getElementById("preset-selector");
         if(!presetSelector) return;
         // this.loadPreset.bind(this);
         codePresets.forEach((preset) => {
-            let classNames;
+            let classNames = 'preset-button ';
             switch (preset.type) {
                 case 'ROM':
-                    classNames = 'blue';
+                    classNames += 'blue';
                     break;
                 case 'Selector ROM':
-                    classNames = 'red';
+                    classNames += 'red';
                     break;
                 case 'FSM':
-                    classNames = 'green';
+                    classNames += 'green';
                     break;
                 default:
-                    classNames = '';
                     break;
             }
             newButton(preset.name, classNames, presetSelector, this.loadPreset.bind(this), [preset]);
@@ -102,33 +109,60 @@ export default class MemoryBankGeneratorUI {
         }
     }
 
-    recursiveCopy() {
+    /**
+     * 
+     * @param {MouseEvent} event 
+     * @param {boolean} hasSlowerMode 
+     */
+    recursiveCopy(event, hasSlowerMode) {
         const flattenedBankData = this.generator.generatedData.flat(2);
-        copyTextArrayToClipboard(flattenedBankData, false)
-            .then(() => console.log('successful copy'))
-            .catch((error)=>console.error(error))
+        const readyBankData = flattenedBankData.map(removeLineBreaks);
+        if (event.target === null) return;
+
+        const targetElement = /** @type {HTMLElement} */ (event.target);
+        targetElement.textContent = 'Copying...'
+        copyTextArrayToClipboard(readyBankData, hasSlowerMode)
+            .then(() => {
+                console.log('successful copy');
+                targetElement.textContent = 'Copied';
+            })
+            .catch((error)=>{
+                console.error(error);
+                targetElement.textContent = 'Failed to copy'
+            })
+    }
+
+    recursiveCopySlower(event) {
+        this.recursiveCopy.bind(this)(event, true);
     }
 
     /**
      * 
      * @param {CodePreset} preset 
+     * @returns {Promise<void>}
      */
     loadPreset(preset) {
-        if (
-            this.codeInputElement === null ||
-            this.amountInputElement === null ||
-            this.inputSizesInputElement === null ||
-            this.outputSizesInputElement === null ||
-            this.presetNameElement === null ||
-            this.presetTypeElement === null ||
-            this.presetDescriptionElement === null
-        ) return;
-        this.amountInputElement.value = preset.locations.toString();
-        this.codeInputElement.value = preset.codeString;
-        this.outputSizesInputElement.value = preset.outputTypes.toString();
-        this.inputSizesInputElement.value = preset.inputTypes.toString();
-        this.presetNameElement.textContent = preset.name;
-        this.presetDescriptionElement.textContent = `${preset.description} ${preset.type === 'FSM' ? 'Note: this is an FSM (Finite State Machine). To use it, you should connect the output of the circuit to its input, read the documentation for more details.' : ''}`;
-        this.presetTypeElement.textContent = `Type: ${preset.type}`;
+        return new Promise((resolve, reject) => {
+            if (
+                this.codeInputElement === null ||
+                this.amountInputElement === null ||
+                this.inputSizesInputElement === null ||
+                this.outputSizesInputElement === null ||
+                this.presetNameElement === null ||
+                this.presetTypeElement === null ||
+                this.presetDescriptionElement === null
+            ) {
+                reject();
+                return;
+            }
+            this.amountInputElement.value = preset.locations.toString();
+            this.codeInputElement.value = preset.codeString;
+            this.outputSizesInputElement.value = preset.outputTypes.toString();
+            this.inputSizesInputElement.value = preset.inputTypes.toString();
+            this.presetNameElement.textContent = preset.name;
+            this.presetDescriptionElement.textContent = `${preset.description} ${preset.type === 'FSM' ? 'Note: this is an FSM (Finite State Machine). To use it, you should connect the output of the circuit to its input, read the documentation for more details.' : ''}`;
+            this.presetTypeElement.textContent = `Type: ${preset.type}`;
+            resolve();
+        });
     }
 }

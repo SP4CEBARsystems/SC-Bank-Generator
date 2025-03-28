@@ -46,7 +46,7 @@
 			<div>
 				<textarea id="codeInput" name="codeInput" cols="50" rows="20" wrap="off" placeholder="([x, y]) => {return [x + y];}"></textarea>
 			</div>
-			<button>Generate</button>
+			<button id="generate-button">Generate</button>
 			<div class="initially-hidden">
 				<p id="bank-statistics"></p>
 				<p>Elapsed: <span id="elapsed-time-display">N/A</span></p>
@@ -57,7 +57,8 @@
 		<section class="initially-hidden">
 			<hr />
 			<h2>Generated Data</h2>
-			<button id="recursive-copy-button">Copy All data</button>
+			<button id="recursive-copy-button">Copy all (for Gboard and clipboard-stack)</button>
+			<button id="slower-recursive-copy-button">Copy all slowly (for windows+v)</button>
 			<p>Copying all data requires my <a href="https://github.com/SP4CEBARsystems/clipboard-stack" target="_blank" rel="noopener noreferrer">Clipboard Stack</a> macro. Or other software that can track fast clipboard changes like Google's GBoard app (Windows + V is too slow to keep up).</p>
 			<div id="bank-data-output"></div>
 		</section>

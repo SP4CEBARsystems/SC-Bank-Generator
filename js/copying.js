@@ -16,8 +16,25 @@
  * @param {string} codeBlock 
  */
 export function copyTextToClipboard(codeBlock) {
-    navigator.clipboard.writeText(codeBlock)
+    return navigator.clipboard.writeText(codeBlock)
         .catch(err => console.error("Failed to copy:", err));
+}
+
+/**
+ * 
+ * @param {string} codeBlock 
+ */
+export function copyTextToClipboardAsOneLine(codeBlock) {
+    return copyTextToClipboard(removeLineBreaks(codeBlock));
+}
+
+/**
+ * Removes line breaks from the given string
+ * @param {string} inputString to remove line breaks form
+ * @returns {string} the inputted string without line breaks
+ */
+export function removeLineBreaks(inputString) {
+    return inputString.replaceAll(/(?:\r\n|\r|\n)/g, '');
 }
 
 /**

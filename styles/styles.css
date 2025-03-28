@@ -28,6 +28,13 @@ textarea {
     border-color: #aaa;
 }
 
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
 button.copy-btn {
     position: absolute;
     top: 5px;
@@ -36,8 +43,24 @@ button.copy-btn {
     color: white;
     border: none;
     padding: 5px 10px;
-    cursor: pointer;
     border-radius: 3px;
+}
+
+button.preset-button {
+    padding: 10px;
+}
+
+button:hover {
+    background: #003e80;
+}
+
+#preset-selector {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    button {
+        border-radius: 0;
+        margin: 2px;
+    }
 }
 
 .white {
@@ -71,8 +94,22 @@ math {
 
 .generator-input-params{
     display: grid;
-    grid-template-columns: 300px 200px;
+    grid-template-columns: 60% 40%;
     row-gap: 10px;
+}
+
+#codeInput {
+    width: 100%;
+}
+
+#generate-button {
+    width: 90%;
+    margin: 10px 5%;
+}
+
+hr {
+    margin-top: 150px;
+    margin-bottom: 30px;
 }
 
 .inline {
@@ -80,25 +117,25 @@ math {
 }
 
 .blue {
-    background-color: #004;
+    background-color: #445;
     color: white;
     border-color: black;
 }
 
 .red {
-    background-color: #400;
+    background-color: #544;
     color: white;
     border-color: black;
 }
 
 .green {
-    background-color: #040;
+    background-color: #454;
     color: white;
     border-color: black;
 }
 
 .data-type-table {
-    table {
+    /* table { */
         border-spacing: 0; 
         /* Removes any default spacing between cells */
         border-collapse: collapse;
@@ -106,7 +143,8 @@ math {
         width: 100%;
         /* Optional: Makes the table fill the container */
         /* color: red; */
-    }
+        background-color: #111;
+    /* } */
 
     /* tr {
         border-spacing: 0;
