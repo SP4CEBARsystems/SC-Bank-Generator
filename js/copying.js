@@ -25,7 +25,16 @@ export function copyTextToClipboard(codeBlock) {
  * @param {string} codeBlock 
  */
 export function copyTextToClipboardAsOneLine(codeBlock) {
-    copyTextToClipboard(codeBlock.replaceAll(/(?:\r\n|\r|\n)/g, ''));
+    copyTextToClipboard(removeLineBreaks(codeBlock));
+}
+
+/**
+ * Removes line breaks from the given string
+ * @param {string} inputString to remove line breaks form
+ * @returns {string} the inputted string without line breaks
+ */
+export function removeLineBreaks(inputString) {
+    return inputString.replaceAll(/(?:\r\n|\r|\n)/g, '');
 }
 
 /**
