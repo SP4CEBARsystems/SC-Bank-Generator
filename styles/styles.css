@@ -28,6 +28,13 @@ textarea {
     border-color: #aaa;
 }
 
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
 button.copy-btn {
     position: absolute;
     top: 5px;
@@ -36,8 +43,24 @@ button.copy-btn {
     color: white;
     border: none;
     padding: 5px 10px;
-    cursor: pointer;
     border-radius: 3px;
+}
+
+button.preset-button {
+    padding: 10px;
+}
+
+button:hover {
+    background: #003e80;
+}
+
+#preset-selector {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    button {
+        border-radius: 0;
+        margin: 2px;
+    }
 }
 
 .white {
