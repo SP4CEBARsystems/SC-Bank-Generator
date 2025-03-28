@@ -33,6 +33,8 @@ export default class MemoryBankGeneratorUI {
 
     recursiveCopyButton = document.getElementById('recursive-copy-button');
 
+    slowerRecursiveCopyButton = document.getElementById('slower-recursive-copy-button');
+
     /**
      * @type {MemoryBankGenerator}
      */
@@ -48,6 +50,9 @@ export default class MemoryBankGeneratorUI {
         }
         if (this.recursiveCopyButton) {
             this.recursiveCopyButton.onclick = this.recursiveCopy.bind(this);
+        }
+        if (this.slowerRecursiveCopyButton) {
+            this.slowerRecursiveCopyButton.onclick = this.recursiveCopySlower.bind(this);
         }
         const presetSelector = document.getElementById("preset-selector");
         if(!presetSelector) return;
@@ -104,15 +109,31 @@ export default class MemoryBankGeneratorUI {
         }
     }
 
-    recursiveCopy(event) {
+    /**
+     * 
+     * @param {MouseEvent} event 
+     * @param {boolean} hasSlowerMode 
+     */
+    recursiveCopy(event, hasSlowerMode) {
         const flattenedBankData = this.generator.generatedData.flat(2);
         const readyBankData = flattenedBankData.map(removeLineBreaks);
-        copyTextArrayToClipboard(readyBankData, false)
+        if (event.target === null) return;
+
+        const targetElement = /** @type {HTMLElement} */ (event.target);
+        targetElement.textContent = 'Copying...'
+        copyTextArrayToClipboard(readyBankData, hasSlowerMode)
             .then(() => {
                 console.log('successful copy');
-                event.target.textContent = 'Copied';
+                targetElement.textContent = 'Copied';
             })
-            .catch((error)=>console.error(error))
+            .catch((error)=>{
+                console.error(error);
+                targetElement.textContent = 'Failed to copy'
+            })
+    }
+
+    recursiveCopySlower(event) {
+        this.recursiveCopy.bind(this)(event, true);
     }
 
     /**
