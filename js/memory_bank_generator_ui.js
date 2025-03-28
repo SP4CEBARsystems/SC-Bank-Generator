@@ -104,11 +104,14 @@ export default class MemoryBankGeneratorUI {
         }
     }
 
-    recursiveCopy() {
+    recursiveCopy(event) {
         const flattenedBankData = this.generator.generatedData.flat(2);
         const readyBankData = flattenedBankData.map(removeLineBreaks);
         copyTextArrayToClipboard(readyBankData, false)
-            .then(() => console.log('successful copy'))
+            .then(() => {
+                console.log('successful copy');
+                event.target.textContent = 'Copied';
+            })
             .catch((error)=>console.error(error))
     }
 
