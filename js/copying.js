@@ -21,6 +21,14 @@ export function copyTextToClipboard(codeBlock) {
 }
 
 /**
+ * 
+ * @param {string} codeBlock 
+ */
+export function copyTextToClipboardAsOneLine(codeBlock) {
+    copyTextToClipboard(codeBlock.replaceAll(/(?:\r\n|\r|\n)/g, ''));
+}
+
+/**
  * loads a text file asynchronously
  * @param {string[]} codeBlocks the path to the file to be loaded
  * @returns {Promise<void>} a promise for the string encoded into the text file

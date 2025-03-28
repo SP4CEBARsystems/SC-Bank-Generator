@@ -1,4 +1,4 @@
-import { copyTextToClipboard } from "./copying.js";
+import { copyTextToClipboard, copyTextToClipboardAsOneLine } from "./copying.js";
 
 /**
  * 
@@ -15,7 +15,7 @@ export function newCodeBlock(title, contents) {
     const titleElement = newElement('h3', title, 'code-block', divElement);
     const preElement = newContainer('pre', 'code-block-root', divElement);
     if (preElement === null) return;
-    const buttonElement = newButton('Copy', 'copy-btn', preElement, copyTextToClipboard, [contents]);
+    const buttonElement = newButton('Copy', 'copy-btn', preElement, copyTextToClipboardAsOneLine, [contents]);
     const codeElement = newElement('code', contents, 'code-block', preElement);
     // parent.innerHTML += `
     // <pre class="code-block-root">
