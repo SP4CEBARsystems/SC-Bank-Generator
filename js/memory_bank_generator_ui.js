@@ -115,23 +115,30 @@ export default class MemoryBankGeneratorUI {
     /**
      * 
      * @param {CodePreset} preset 
+     * @returns {Promise<void>}
      */
     loadPreset(preset) {
-        if (
-            this.codeInputElement === null ||
-            this.amountInputElement === null ||
-            this.inputSizesInputElement === null ||
-            this.outputSizesInputElement === null ||
-            this.presetNameElement === null ||
-            this.presetTypeElement === null ||
-            this.presetDescriptionElement === null
-        ) return;
-        this.amountInputElement.value = preset.locations.toString();
-        this.codeInputElement.value = preset.codeString;
-        this.outputSizesInputElement.value = preset.outputTypes.toString();
-        this.inputSizesInputElement.value = preset.inputTypes.toString();
-        this.presetNameElement.textContent = preset.name;
-        this.presetDescriptionElement.textContent = `${preset.description} ${preset.type === 'FSM' ? 'Note: this is an FSM (Finite State Machine). To use it, you should connect the output of the circuit to its input, read the documentation for more details.' : ''}`;
-        this.presetTypeElement.textContent = `Type: ${preset.type}`;
+        return new Promise((resolve, reject) => {
+            if (
+                this.codeInputElement === null ||
+                this.amountInputElement === null ||
+                this.inputSizesInputElement === null ||
+                this.outputSizesInputElement === null ||
+                this.presetNameElement === null ||
+                this.presetTypeElement === null ||
+                this.presetDescriptionElement === null
+            ) {
+                reject();
+                return;
+            }
+            this.amountInputElement.value = preset.locations.toString();
+            this.codeInputElement.value = preset.codeString;
+            this.outputSizesInputElement.value = preset.outputTypes.toString();
+            this.inputSizesInputElement.value = preset.inputTypes.toString();
+            this.presetNameElement.textContent = preset.name;
+            this.presetDescriptionElement.textContent = `${preset.description} ${preset.type === 'FSM' ? 'Note: this is an FSM (Finite State Machine). To use it, you should connect the output of the circuit to its input, read the documentation for more details.' : ''}`;
+            this.presetTypeElement.textContent = `Type: ${preset.type}`;
+            resolve();
+        });
     }
 }

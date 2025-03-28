@@ -1,6 +1,3 @@
-import { copyTextToClipboard } from "./copying.js";
-import { createCopyButtons, newButton } from "./dom_manipulator.js";
-
 export function init_code_sandbox() {
     // Listen for messages from the iframe
     // initConsoleListener();
