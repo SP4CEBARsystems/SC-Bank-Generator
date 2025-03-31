@@ -282,6 +282,7 @@ export default class MemoryBankGenerator {
         switch (imageName) {
             case 'bank_empty.jpg':
             case 'bank_wires.jpg':
+            case 'bank_wire.jpg':
             case 'bank_wires_crossing.jpg':
             case 'bank_digit.jpg':
             case 'bank_digit_single.jpg':
@@ -397,6 +398,7 @@ export default class MemoryBankGenerator {
                 case 'bank_digit_single.jpg':
                     wireElement = 'bank_wire.jpg';
                     wireNames.push(new NamedVector(`${wireNamePrefix}${wireIndex++}`, 70));
+                    break;
                 case 'bank_digit.jpg':
                 case 'bank_selector_8-bit.jpg':
                     wireElement = 'bank_wires.jpg';
