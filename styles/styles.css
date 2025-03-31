@@ -78,13 +78,13 @@ nav {
         object-fit: contain;
         height: auto;
     }
-    .nav-icon {
-
+    .selected {
+        background-color: red;
     }
 }
 
 header hr {
-    margin-top: 50px;
+    margin-top: 10px;
     margin-bottom: 50px;
 }
 
@@ -111,7 +111,13 @@ pixelart {
     background-size: cover;
     image-rendering: pixelated;
     /* background-attachment: fixed; */
+    
 }
+
+/* .sp4cebank-image.selected {
+    background-image: linear-gradient(to right, black, transparent, black), url("/assets/sp4cebar_memory_bank.png"), ;
+    background-color: red;
+} */
 
 #preset-selector {
     display: grid;
