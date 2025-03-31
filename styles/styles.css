@@ -54,6 +54,65 @@ button:hover {
     background: #003e80;
 }
 
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100px;
+    /* margin-bottom: 50px; */
+    /* background-color: #111; */
+    a {
+        background-color: #003e80;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* padding: 10px; */
+        /* flex: 1; */
+        /* margin: 0 10px; */
+        /* margin-inline: auto; */
+        /* align-self: center; */
+        border-radius: 5%;
+    }
+    img {
+        object-fit: contain;
+        height: auto;
+    }
+    .nav-icon {
+
+    }
+}
+
+header hr {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+pixelart {
+    image-rendering: pixelated;
+}
+
+.sp4cebar-image {
+    background-image: url("/assets/sp4cebar logo 100x100.jpg");
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-attachment: fixed; */
+}
+.sp4cebank-image {
+    background-image: url("/assets/sp4cebar_memory_bank.png");
+    width: 100px;
+    height: 100px;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    image-rendering: pixelated;
+    /* background-attachment: fixed; */
+}
+
 #preset-selector {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
