@@ -4,6 +4,8 @@ body {
     font-family: sans-serif;
     max-width: 800px;
     margin-inline: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 header {
