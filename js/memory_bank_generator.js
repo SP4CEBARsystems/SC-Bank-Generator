@@ -468,7 +468,7 @@ export default class MemoryBankGenerator {
             if (isConnecting) hasConnected = true;
             const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
             const element = isFirstElementOfNonFirstLocation ? (
-                isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
+                isConnecting ? 'output_horizontal.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
             ) : (
                 isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
             );
