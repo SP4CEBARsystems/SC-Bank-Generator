@@ -100,6 +100,10 @@ math {
 
 #codeInput {
     width: 100%;
+    border: 0;
+    padding: 0;
+    resize: vertical;
+    min-height:200px;
 }
 
 #generate-button {
