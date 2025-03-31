@@ -74,16 +74,17 @@ nav {
         /* align-self: center; */
         border-radius: 5%;
     }
-    img {
-        object-fit: contain;
-        height: auto;
-        width: 100px;
-        height: 100px;
-        border-radius: 5%;
-    }
     .selected {
         background-color: red;
     }
+}
+
+nav img {
+    object-fit: contain;
+    height: auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 5%;
 }
 
 header hr {
