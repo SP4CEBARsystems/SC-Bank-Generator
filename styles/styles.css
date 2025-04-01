@@ -64,7 +64,7 @@ nav {
     /* margin-bottom: 50px; */
     /* background-color: #111; */
     a {
-        background-color: #003e80;
+        background-color: transparent;
         color: white;
         display: flex;
         align-items: center;
@@ -75,9 +75,12 @@ nav {
         /* margin-inline: auto; */
         /* align-self: center; */
         border-radius: 5%;
+        /* z-index: 1; */
     }
     .selected {
-        background-color: red;
+        /* background-color: rgba(255, 0, 0, 0.5); */
+        background-image: radial-gradient(rgba(255, 255, 255, 0) 30%, rgb(0, 101, 129));
+        /* #003e80 */
     }
 }
 
@@ -87,6 +90,7 @@ nav img {
     width: 100px;
     height: 100px;
     border-radius: 5%;
+    z-index: -1;
 }
 
 header hr {
