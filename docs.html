@@ -121,9 +121,20 @@ output sizes: 5</pre>
 							<pre>
 locations: 1
 input sizes: 4, 4
-output sizes: INT_5</pre>
+output sizes: 4, 1</pre>
 							<pre class="code-block-root has-copy-btn"><code class="code-block">([x, y]) => {
 	return [x - y];
+}</code></pre>
+						</li>
+						<li>
+							<h4>Subtraction Without Using Types (Sign-Magnitude-Integer Representation)</h4>
+							<pre>
+locations: 1
+input sizes: 4, 4
+output sizes: INT_5</pre>
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x, y]) => {
+	const value = x - y;
+	return [Math.abs(value), (value < 0) ? 1:0];
 }</code></pre>
 						</li>
 					</ol>

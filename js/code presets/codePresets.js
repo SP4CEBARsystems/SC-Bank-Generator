@@ -14,14 +14,6 @@ export const codePresets = [
         ['5'],
     ),
     new CodePreset(
-        standardCode.manualSubtraction,
-        'Manual Subtraction',
-        '',
-        'ROM',
-        ['4', '4'],
-        ['4', '1'],
-    ),
-    new CodePreset(
         standardCode.subtraction,
         'Subtraction',
         '',

@@ -7,13 +7,6 @@ export default class standardCode {
         }
     )
 
-    static manualSubtraction = new Code(
-        ([x, y]) => {
-            const value = x - y;
-            return [Math.abs(value), (value < 0) ? 1:0];
-        }
-    )
-
     static subtraction = new Code(
         ([x, y]) => {
             return [x - y];
