@@ -415,6 +415,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
 				bits)<br>
 				<h4>Unsigned Integer Examples</h4>
+				<div class="horizontal-scroll">
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -477,6 +478,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>0 to 18,446,744,073,709,551,615</td>
 					</tr>
 				</table>
+				</div>
 
 				<!-- <ul>
 					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
@@ -489,6 +491,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				</ul> -->
 
 				<h4>Other Unsigned Integer Forms</h4>
+				<div class="horizontal-scroll">
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -539,6 +542,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>0 to 1</td>
 					</tr>
 				</table>
+				</div>
 
 				<!-- <ul>
 					<li>[n]: same as "U_INT_[n]" (where "[n]" is any number), for example: "8" is the same as "U_INT_8"
@@ -567,6 +571,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				representing the size in
 				bits)<br>
 				<h4>2s Complement Signed Integer Examples</h4>
+				<div class="horizontal-scroll">
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -629,6 +634,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
 					</tr>
 				</table>
+				</div>
 
 				<h4>Sign-Magnitude Signed Integers</h4>
 				The tool also supports the <a
@@ -642,6 +648,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				negative number.
 
 				<h4>Sign-Magnitude Signed Integer Examples</h4>
+				<div class="horizontal-scroll">
 				<table border="1">
 					<tr>
 						<th>Type</th>
@@ -704,6 +711,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>-9,223,372,036,854,775,807 to +9,223,372,036,854,775,807</td>
 					</tr>
 				</table>
+				</div>
 
 				<!-- <ul>
 					<li>"INT_1" is an 1-bit whole number ranging from -1 to 0 (why would you need a signed 1-bit integer?)</li>
@@ -756,7 +764,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				href="https://survivalcraftgame.fandom.com/wiki/Memory_Bank">SurvivalCraft memory bank</a> has an 8-bit
 			address input and a 4-bit output.
 			The amount of memory banks required is:
-
+			<div class="horizontal-scroll">
 			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 				<mrow>
 					<mi>banks</mi>
@@ -790,10 +798,12 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 					</msup>
 				</mrow>
 			</math>
+			</div>
+
 			This calculation should be shown automatically each time data is generated.<br>
 			As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need
 			256 banks:
-
+			<div class="horizontal-scroll">
 			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 				<mrow>
 					<mi>(1)</mi>
@@ -827,6 +837,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				<mo>=</mo>
 				<mi>256</mi>
 			</math>
+			</div>
+
 			</p>
 		</section>
 		<hr>
