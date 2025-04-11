@@ -765,13 +765,14 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 		<section id="bank-names">
 			<h2>Bank Names</h2>
 			<p>
-				Each memory bank has a code-name, these are shown above the data for banks and on the generated circuit. In these names the L, I, and D stand for Location, Input, and Digit respectively.
+				Each memory bank has a code-name like "Bank L0-I0-D0" for the first bank. These names are shown above each bank's generated data and above each bank in the generated circuit. In these names the L, I, and D stand for Location, Input, and Digit respectively.
 				Here is an overview:
 			</p>
 			<div class="horizontal-scroll">
 				<table border="1">
 					<tbody>
 						<tr>
+							<th>Letter</th>
 							<th>Parameter</th>
 							<th>Function</th>
 							<th>If the value was 0</th>
@@ -779,6 +780,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 							<th>If the value was 2</th>
 						</tr>
 						<tr>
+							<td>L</td>
 							<td>location</td>
 							<td>the set of banks it is part of</td>
 							<td>first set</td>
@@ -786,6 +788,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 							<td>third set</td>
 						</tr>
 						<tr>
+							<td>I</td>
 							<td>input</td>
 							<td>responsible for handling a set of 256 input values</td>
 							<td>input values 0 to 255</td>
@@ -793,6 +796,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 							<td>input values 512 to 767</td>
 						</tr>
 						<tr>
+							<td>D</td>
 							<td>digit</td>
 							<td>to generate a set of four bits of the output</td>
 							<td>output bits 0 to 3</td>
