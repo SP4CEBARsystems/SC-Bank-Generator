@@ -8,6 +8,22 @@ body {
     padding-right: 10px;
 }
 
+a:link {
+  color: lightblue;
+}
+
+a:visited {
+  color: pink;
+}
+
+a:hover {
+  color: blue;
+}
+
+a:active {
+  color: blue;
+}
+
 header {
     margin-bottom: 50px;
 }
