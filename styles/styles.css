@@ -83,7 +83,8 @@ nav {
         /* background-color: transparent; */
         /* background-color: rgb(128, 0, 0); */
         background: linear-gradient(to bottom right, blue, rgb(30, 30, 30));
-        color: white;
+        color: white !important;
+        text-decoration: none;
         display: flex;
         align-items: center;
         justify-content: center;
