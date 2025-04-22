@@ -11,35 +11,45 @@
 </head>
 <body>
 	<header>
-		<img src="assets/sp4cebar_memory_bank.png" alt="sp4cebar memory bank logo" class="inline">
-		<h1 class="inline">Memory Bank Generator</h1>
-		<h2>For Survicalcraft</h2>
 		<nav>
-			<ul>
-				<li><b><a href="./docs.html">Click here to read the Documentation</a></b></li>
-				<li><a href="https://sp4cebar.com/">Home</a></li>
-			</ul>
+			<a href="https://sp4cebar.com/" class="sp4cebar-image">
+				<img src="./assets/sp4cebar logo 200x200.jpg" alt="sp4cebar logo">
+			</a>
+			<a href="./index.html" class="sp4cebank-image selected">
+				<img src="./assets/sp4cebar_memory_bank.png" alt="sp4cebar memory bank logo">
+			</a>
+			<a href="./docs.html">Docs</a>
 		</nav>
+		<hr/>
+		<h1 class="inline">Memory Bank Generator For Survivalcraft</h1>
+		<p>
+			This tool allows you to easily program the data for <a href="https://survivalcraftgame.fandom.com/wiki/Memory_Bank" target="_blank" rel="noopener noreferrer">memory bank</a> systems in <a href="https://en.wikipedia.org/wiki/Survivalcraft" target="_blank" rel="noopener noreferrer">Survivalcraft</a>.
+		</p>
 	</header>
 	<main>
 		<hr/>
 		<section>
 			<h2>Presets</h2>
+			<p>Click on one of the presets below to load its code and parameters.</p>
 			<div id="preset-selector">
 			</div>
-			<h3 id="preset-name"></h3>
-			<p id="preset-description"></p>
-			<p id="preset-type"></p>
 		</section>
    <hr />
 		<section>
 			<h2>Code</h2>
+			<h3 id="preset-name"></h3>
+			<p id="preset-description"></p>
+			<p id="preset-type"></p>
+			<p>
+				Here you can type <a href="./docs.html#code" target="_blank" rel="noopener noreferrer">code</a> and <a href="./docs.html#types" target="_blank" rel="noopener noreferrer">parameters</a>.
+				Click "generate" to generate memory bank data, a representation of the circuit to build in Survivalcraft, and an overview table of the inputs and outputs of the circuit.
+			</p>
 			<div class="space-Below generator-input-params">
-				<label for="amountInput">amount (scales linearly)</label>
+				<label for="amountInput">amount (banks required scales linearly)</label>
 				<input id="amount" name="amountInput" value="1" placeholder="1"></input>
-				<label for="inputSizesInput">input sizes or types (scales exponentially)</label>
+				<label for="inputSizesInput">input sizes or types (banks required scales exponentially)</label>
 				<input id="inputSizes" name="inputSizesInput" value="4, 4" placeholder="4, 4"></input>
-				<label for="outputSizesInput">output sizes or types (scales linearly)</label>
+				<label for="outputSizesInput">output sizes or types (banks required scales linearly)</label>
 				<input id="outputSizes" name="outputSizesInput" value="5" placeholder="8"></input>
 			</div>
 			<label for="codeInput">Code Input</label>
@@ -56,25 +66,41 @@
 		</section>
 		<section class="initially-hidden">
 			<hr />
-			<h2>Generated Data</h2>
-			<button id="recursive-copy-button">Copy all (for Gboard and clipboard-stack)</button>
-			<button id="slower-recursive-copy-button">Copy all slowly (for windows+v)</button>
-			<p>Copying all data requires my <a href="https://github.com/SP4CEBARsystems/clipboard-stack" target="_blank" rel="noopener noreferrer">Clipboard Stack</a> macro. Or other software that can track fast clipboard changes like Google's GBoard app (Windows + V is too slow to keep up).</p>
-			<div id="bank-data-output"></div>
+			<h2>IO Overview</h2>
+			<p>
+				Below is a representation of the inputs and outputs described in the code, these apply to the circuit below. This desribes the system to you so that you can integrate it with other systems in Survivalcraft.
+			</p>
+			<h3>Input</h3>
+			<div id="bank-input-type-table" class="horizontal-scroll"></div>
+			<h3>Output</h3>
+			<div id="bank-output-type-table" class="horizontal-scroll"></div>
 		</section>
 		<section class="initially-hidden">
 			<hr />
 			<h2>Circuit</h2>
-			<svg version="2.0" id="reference-circuit" width="0" height="0"></svg>
+			<p>
+				Below is a representation of the circuit to be built in Survivalcraft to accomodate the generated system. <a href="./docs.html#circuit" target="_blank" rel="noopener noreferrer">Read the docs</a> for more information.
+			</p>
+			<div class="horizontal-scroll">
+				<svg version="2.0" id="reference-circuit" width="0" height="0"></svg>
+			</div>
 			<p>Feel free to simplify the circuit in your own implementation.</p>
 		</section>
 		<section class="initially-hidden">
 			<hr />
-			<h2>IO Overview</h2>
-			<h3>Input</h3>
-			<div id="bank-input-type-table"></div>
-			<h3>Output</h3>
-			<div id="bank-output-type-table"></div>
+			<h2>Generated Data</h2>
+			<p>
+				The data below should be copied and pasted into the Survivalcraft memory banks shown in the circuit above one by one. 
+				The <a href="./docs.html#bank-names" target="_blank" rel="noopener noreferrer">code-names</a> of these banks are also shown on the circuit.
+			</p>
+			<button id="recursive-copy-button">Copy all (for Gboard or Clipboard-Stack)</button>
+			<button id="slower-recursive-copy-button">Copy all slowly (for windows+v)</button>
+			<p>
+				Copying all data at once requires software that can track clipboard changes like my 
+				<a href="https://github.com/SP4CEBARsystems/clipboard-stack" target="_blank" rel="noopener noreferrer">Clipboard-Stack</a>
+				macro, Google's GBoard app or windows' clipboard history (aka windows + V).
+			</p>
+			<div id="bank-data-output"></div>
 		</section>
 		
 		<!-- define symbol in hidden svg document -->

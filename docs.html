@@ -11,13 +11,17 @@
 
 <body>
 	<header>
-		<img src="assets/sp4cebar_memory_bank.png" alt="sp4cebar memory bank logo" class="inline">
-		<h1 class="inline">Documentation</h1>
 		<nav>
-			<ul>
-				<li><a href="./index.html">Generator Home</a></li>
-			</ul>
+			<a href="https://sp4cebar.com/" class="sp4cebar-image">
+				<img src="./assets/sp4cebar logo 200x200.jpg" alt="sp4cebar logo">				
+			</a>
+			<a href="./index.html" class="sp4cebank-image">
+				<img src="./assets/sp4cebar_memory_bank.png" alt="sp4cebar memory bank logo">				
+			</a>
+			<a href="./docs.html" class="selected">Docs</a>
 		</nav>
+		<hr/>
+		<h1 class="inline">Documentation</h1>
 	</header>
 	<main>
 		<hr>
@@ -28,6 +32,7 @@
 				<li><a href="#code">Code</a></li>
 				<li><a href="#examples">Code Examples</a></li>
 				<li><a href="#types">Data Types</a></li>
+				<li><a href="#bank-names">Bank Names</a></li>
 				<li><a href="#data">Data</a></li>
 				<li><a href="#circuit">Generated Circuit</a></li>
 				<li><a href="#errors">Common Errors</a></li>
@@ -63,14 +68,16 @@
 			<h2>Code</h2>
 			<p>
 				<h4>Code Format</h4>
-				Within the code field you can write a <a
-					href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">javascript</a> function.
-				The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">function</a> must take an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array of numbers</a> and an optional number as parameters.
+				Within the <a href="./index.html#codeInput">code field</a> you can write an 
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">anonymous arrow function</a> in
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">javascript</a>.
+				The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">function</a> must take an 
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array of numbers</a> and an optional number as parameters,
 				and it must return an array of numbers.
 				This optional number is the location index when you want many sets of banks with the same inputs each (called Selector ROM on this page) but you wont need it often.
 				The amount of numbers in the input and output arrays and the sizes in <a href="https://en.wikipedia.org/wiki/Bit">bits</a> of each number within the arrays are determined by the "input types" and "output types" text fields.
 				The amount of types within these type fields must match the amount of numbers within their corresponding arrays.
-				<h4>Schematic Format</h4>
+				<h4>Type Format</h4>
 				<pre>(number[], number) => number[]</pre>
 				<h4>Format Example</h4>
 				<pre>([parameter1, parameter2, parameter3, parameter4], locationIndex) => {
@@ -82,12 +89,14 @@
 					types</a> and split over <a href="#data">digits</a>.
 				<h3>Relevant Javascript Documentation</h3>
 				<ul>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">Javascript</a>
-					</li>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">Basic
-							Calculating</a></li>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Math
-							Functions</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">
+						Javascript</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Math">
+						Basic Calculating</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">
+						Math Functions</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator">
+						Conditional (ternary) operator</a> (you will see this be used a lot in the <a href="#examples">examples</a>)</li>
 				</ul>
 			</p>
 		</section>
@@ -113,9 +122,20 @@ output sizes: 5</pre>
 							<pre>
 locations: 1
 input sizes: 4, 4
-output sizes: INT_5</pre>
+output sizes: 4, 1</pre>
 							<pre class="code-block-root has-copy-btn"><code class="code-block">([x, y]) => {
 	return [x - y];
+}</code></pre>
+						</li>
+						<li>
+							<h4>Subtraction Without Using Types (Sign-Magnitude-Integer Representation)</h4>
+							<pre>
+locations: 1
+input sizes: 4, 4
+output sizes: INT_5</pre>
+							<pre class="code-block-root has-copy-btn"><code class="code-block">([x, y]) => {
+	const value = x - y;
+	return [Math.abs(value), (value < 0) ? 1:0];
 }</code></pre>
 						</li>
 					</ol>
@@ -393,13 +413,13 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 		<section id="types">
 			<h2>Data Types</h2>
 			<p>
-				Each value may be split up into multiple smaller parameters of specific sizes in bits. Allowing you to
-				treat them separately.
+				Each value may be split up into multiple smaller parameters of specific sizes in bits. Allowing them to
+				be treated separately.
 				You can use the "input types" and "output types" fields to set the amount of parameters and their types
 				and sizes. This can be done by typing a numbers (sizes in bits) separated by commas, each number is a
-				parameter
+				parameter.
 
-				Instead of a number you may type a datatype, the code supports the following types:
+				Instead of a number you may type a datatype, the code supports the following datatypes:
 			<ol>
 				<h3>
 					<li>Unsigned Integer Types</li>
@@ -411,68 +431,70 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				formatted as "U_INT_[n]" (without the quotes) (where "[n]" is any number representing the size in
 				bits)<br>
 				<h4>Unsigned Integer Examples</h4>
-				<table border="1">
-					<tr>
-						<th>Type</th>
-						<th>Bits</th>
-						<th>Range</th>
-					</tr>
-					<tr>
-						<td>U_INT_1</td>
-						<td>1-bit</td>
-						<td>0 to 1</td>
-					</tr>
-					<tr>
-						<td>U_INT_2</td>
-						<td>2-bit</td>
-						<td>0 to 3</td>
-					</tr>
-					<tr>
-						<td>U_INT_3</td>
-						<td>3-bit</td>
-						<td>0 to 7</td>
-					</tr>
-					<tr>
-						<td>U_INT_4</td>
-						<td>4-bit</td>
-						<td>0 to 15</td>
-					</tr>
-					<tr>
-						<td>U_INT_5</td>
-						<td>5-bit</td>
-						<td>0 to 31</td>
-					</tr>
-					<tr>
-						<td>U_INT_6</td>
-						<td>6-bit</td>
-						<td>0 to 63</td>
-					</tr>
-					<tr>
-						<td>U_INT_7</td>
-						<td>7-bit</td>
-						<td>0 to 127</td>
-					</tr>
-					<tr>
-						<td>U_INT_8</td>
-						<td>8-bit</td>
-						<td>0 to 255</td>
-					</tr>
-					<tr>
-						<td>U_INT_16</td>
-						<td>16-bit</td>
-						<td>0 to 65,535</td>
-					</tr>
-					<tr>
-						<td>U_INT_32</td>
-						<td>32-bit</td>
-						<td>0 to 4,294,967,295</td>
-					</tr>
-					<tr>
-						<td>U_INT_64</td>
-						<td>64-bit</td>
-						<td>0 to 18,446,744,073,709,551,615</td>
-					</tr>
-				</table>
+				<div class="horizontal-scroll">
+					<table border="1">
+						<tr>
+							<th>Type</th>
+							<th>Bits</th>
+							<th>Range</th>
+						</tr>
+						<tr>
+							<td>U_INT_1</td>
+							<td>1-bit</td>
+							<td>0 to 1</td>
+						</tr>
+						<tr>
+							<td>U_INT_2</td>
+							<td>2-bit</td>
+							<td>0 to 3</td>
+						</tr>
+						<tr>
+							<td>U_INT_3</td>
+							<td>3-bit</td>
+							<td>0 to 7</td>
+						</tr>
+						<tr>
+							<td>U_INT_4</td>
+							<td>4-bit</td>
+							<td>0 to 15</td>
+						</tr>
+						<tr>
+							<td>U_INT_5</td>
+							<td>5-bit</td>
+							<td>0 to 31</td>
+						</tr>
+						<tr>
+							<td>U_INT_6</td>
+							<td>6-bit</td>
+							<td>0 to 63</td>
+						</tr>
+						<tr>
+							<td>U_INT_7</td>
+							<td>7-bit</td>
+							<td>0 to 127</td>
+						</tr>
+						<tr>
+							<td>U_INT_8</td>
+							<td>8-bit</td>
+							<td>0 to 255</td>
+						</tr>
+						<tr>
+							<td>U_INT_16</td>
+							<td>16-bit</td>
+							<td>0 to 65,535</td>
+						</tr>
+						<tr>
+							<td>U_INT_32</td>
+							<td>32-bit</td>
+							<td>0 to 4,294,967,295</td>
+						</tr>
+						<tr>
+							<td>U_INT_64</td>
+							<td>64-bit</td>
+							<td>0 to 18,446,744,073,709,551,615</td>
+						</tr>
+					</table>
+				</div>
 
 				<!-- <ul>
 					<li>"U_INT_1" is an 1-bit whole number ranging from 0 to 1</li>
@@ -485,7 +507,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				</ul> -->
 
 				<h4>Other Unsigned Integer Forms</h4>
-				<table border="1">
+				<div class="horizontal-scroll">
+					<table border="1">
 					<tr>
 						<th>Type</th>
 						<th>Equivalent To</th>
@@ -534,7 +557,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>1-bit</td>
 						<td>0 to 1</td>
 					</tr>
-				</table>
+					</table>
+				</div>
 
 				<!-- <ul>
 					<li>[n]: same as "U_INT_[n]" (where "[n]" is any number), for example: "8" is the same as "U_INT_8"
@@ -563,7 +587,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				representing the size in
 				bits)<br>
 				<h4>2s Complement Signed Integer Examples</h4>
-				<table border="1">
+				<div class="horizontal-scroll">
+					<table border="1">
 					<tr>
 						<th>Type</th>
 						<th>Bits</th>
@@ -624,7 +649,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>64-bit</td>
 						<td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
 					</tr>
-				</table>
+					</table>
+				</div>
 
 				<h4>Sign-Magnitude Signed Integers</h4>
 				The tool also supports the <a
@@ -638,7 +664,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				negative number.
 
 				<h4>Sign-Magnitude Signed Integer Examples</h4>
-				<table border="1">
+				<div class="horizontal-scroll">
+					<table border="1">
 					<tr>
 						<th>Type</th>
 						<th>Bits</th>
@@ -699,7 +726,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 						<td>64-bit</td>
 						<td>-9,223,372,036,854,775,807 to +9,223,372,036,854,775,807</td>
 					</tr>
-				</table>
+					</table>
+				</div>
 
 				<!-- <ul>
 					<li>"INT_1" is an 1-bit whole number ranging from -1 to 0 (why would you need a signed 1-bit integer?)</li>
@@ -734,6 +762,52 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 			</p>
 		</section>
 		<hr>
+		<section id="bank-names">
+			<h2>Bank Names</h2>
+			<p>
+				Each memory bank has a code-name like "Bank L0-I0-D0" for the first bank. These names are shown above each bank's generated data and above each bank in the generated circuit. In these names the L, I, and D stand for Location, Input, and Digit respectively.
+				Here is an overview:
+			</p>
+			<div class="horizontal-scroll">
+				<table border="1">
+					<tbody>
+						<tr>
+							<th>Letter</th>
+							<th>Parameter</th>
+							<th>Function</th>
+							<th>If the value was 0</th>
+							<th>If the value was 1</th>
+							<th>If the value was 2</th>
+						</tr>
+						<tr>
+							<td>L</td>
+							<td>location</td>
+							<td>Which set of banks this bank is part of</td>
+							<td>first set</td>
+							<td>second set</td>
+							<td>third set</td>
+						</tr>
+						<tr>
+							<td>I</td>
+							<td>input</td>
+							<td>Which set of 256 input values this bank will handle.</td>
+							<td>input values 0 to 255</td>
+							<td>input values 256 to 511</td>
+							<td>input values 512 to 767</td>
+						</tr>
+						<tr>
+							<td>D</td>
+							<td>digit</td>
+							<td>Which set of four bits in the output this bank will generate.</td>
+							<td>output bits 0 to 3</td>
+							<td>output bits 4 to 7</td>
+							<td>output bits 8 to 11</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+		<hr>
 		<section id="data">
 			<h2>Data</h2>
 			<p>
@@ -748,81 +822,85 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 					location</li>
 				Using this makes your ROM a selector ROM (a therm I made up but will be using throughout this site)
 			</ol>
-			When designing a system using this tool consider how many bits you really need as each <a
+			When designing a system using this tool, consider how many bits you really need as each <a
 				href="https://survivalcraftgame.fandom.com/wiki/Memory_Bank">SurvivalCraft memory bank</a> has an 8-bit
 			address input and a 4-bit output.
 			The amount of memory banks required is:
-
-			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-				<mrow>
-					<mi>banks</mi>
-					<mo>=</mo>
-					<mi>Locations</mi>
-					<mo>&#xD7;</mo>
+			<div class="horizontal-scroll">
+				<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 					<mrow>
-						<mi>floor</mi>
-						<mo>(</mo>
-						<mfrac>
-							<mi>OutputSize</mi>
-							<mn>4</mn>
-						</mfrac>
-						<mo>)</mo>
-					</mrow>
-					<mo>&#xD7;</mo>
-					<msup>
-						<mn>2</mn>
+						<mi>banks</mi>
+						<mo>=</mo>
+						<mi>Locations</mi>
+						<mo>&#xD7;</mo>
 						<mrow>
-							<mi>max</mi>
+							<mi>floor</mi>
 							<mo>(</mo>
-							<mn>0</mn>
-							<mo>,</mo>
-							<mrow>
-								<mi>InputSize</mi>
-								<mo>-</mo>
-								<mn>8</mn>
-							</mrow>
+							<mfrac>
+								<mi>OutputSize</mi>
+								<mn>4</mn>
+							</mfrac>
 							<mo>)</mo>
 						</mrow>
-					</msup>
-				</mrow>
-			</math>
+						<mo>&#xD7;</mo>
+						<msup>
+							<mn>2</mn>
+							<mrow>
+								<mi>max</mi>
+								<mo>(</mo>
+								<mn>0</mn>
+								<mo>,</mo>
+								<mrow>
+									<mi>InputSize</mi>
+									<mo>-</mo>
+									<mn>8</mn>
+								</mrow>
+								<mo>)</mo>
+							</mrow>
+						</msup>
+					</mrow>
+				</math>
+			</div>
+
 			This calculation should be shown automatically each time data is generated.<br>
 			As you can see the input size scales exponentially: for one 4-bit-output-and-16-bit-input system you need
 			256 banks:
-
-			<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-				<mrow>
-					<mi>(1)</mi>
-					<mo>&#xD7;</mo>
+			<div class="horizontal-scroll">
+				<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 					<mrow>
-						<mi>floor</mi>
-						<mo>(</mo>
-						<mfrac>
-							<mi>(4)</mi>
-							<mn>4</mn>
-						</mfrac>
-						<mo>)</mo>
-					</mrow>
-					<mo>&#xD7;</mo>
-					<msup>
-						<mn>2</mn>
+						<mi>(1)</mi>
+						<mo>&#xD7;</mo>
 						<mrow>
-							<mi>max</mi>
+							<mi>floor</mi>
 							<mo>(</mo>
-							<mn>0</mn>
-							<mo>,</mo>
-							<mrow>
-								<mi>(16)</mi>
-								<mo>-</mo>
-								<mn>8</mn>
-							</mrow>
+							<mfrac>
+								<mi>(4)</mi>
+								<mn>4</mn>
+							</mfrac>
 							<mo>)</mo>
 						</mrow>
-					</msup>
-				</mrow>
-				<mo>=</mo>
-				<mi>256</mi>
-			</math>
+						<mo>&#xD7;</mo>
+						<msup>
+							<mn>2</mn>
+							<mrow>
+								<mi>max</mi>
+								<mo>(</mo>
+								<mn>0</mn>
+								<mo>,</mo>
+								<mrow>
+									<mi>(16)</mi>
+									<mo>-</mo>
+									<mn>8</mn>
+								</mrow>
+								<mo>)</mo>
+							</mrow>
+						</msup>
+					</mrow>
+					<mo>=</mo>
+					<mi>256</mi>
+				</math>
+			</div>
+
 			</p>
 		</section>
 		<hr>
@@ -841,8 +919,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 		<section id="errors">
 			<h2>Common Errors</h2>
 			<p>
-				There are way too few error messages, if the code doesn't work, please replace the code with one of the
-				<a href="#examples">example programs</a>.
+				There are few error messages, shown to you. If the code you wrote in the code input field does not work, you could open your browsers web debugger to view if the site throws any errors in the console. Instead you could also replace the code with one of the
+				<a href="#examples">example programs</a> to figure out which parts of your code work and which do not.
 			</p>
 		</section>
 		<hr>
@@ -854,7 +932,7 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				it, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">develop</a> it
 				and make a <a
 					href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">pull
-					request</a>. If I see it, it works, and I like it I will add it to this project.
+					request</a>. If I see it, it works, and I like it, I will add it to this project.
 			</p>
 		</section>
 	</main>

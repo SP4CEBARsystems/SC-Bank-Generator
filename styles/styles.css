@@ -4,6 +4,24 @@ body {
     font-family: sans-serif;
     max-width: 800px;
     margin-inline: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+a:link {
+  color: lightblue;
+}
+
+a:visited {
+  color: pink;
+}
+
+a:hover {
+  color: blue;
+}
+
+a:active {
+  color: blue;
 }
 
 header {
@@ -54,6 +72,85 @@ button:hover {
     background: #003e80;
 }
 
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100px;
+    /* margin-bottom: 50px; */
+    /* background-color: #111; */
+    a {
+        /* background-color: transparent; */
+        /* background-color: rgb(128, 0, 0); */
+        background: linear-gradient(to bottom right, blue, rgb(30, 30, 30));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* padding: 10px; */
+        /* flex: 1; */
+        /* margin: 0 10px; */
+        /* margin-inline: auto; */
+        /* align-self: center; */
+        border-radius: 10%;
+        z-index: 1;
+        aspect-ratio: 1;
+        font-size: large;
+    }
+    .selected {
+        /* #003e80 */
+        /* background-color: rgba(255, 0, 0, 0.5); */
+        /* background-image: radial-gradient(rgba(255, 255, 255, 0) 30%, rgb(0, 101, 129)); */
+        filter: drop-shadow(0 0 0.5rem gray);
+        z-index: 1;
+    }
+}
+
+nav img {
+    object-fit: contain;
+    height: auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 10%;
+    z-index: -1;
+}
+
+header hr {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+pixelart {
+    image-rendering: pixelated;
+}
+
+.sp4cebar-image {
+    /* background-image: url("/assets/sp4cebar logo 100x100.jpg"); */
+    border-radius: 50%;
+    /* width: 100px;
+    height: 100px; */
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-attachment: fixed; */
+}
+.sp4cebank-image {
+    /* background-image: url("/assets/sp4cebar_memory_bank.png"); */
+    /* width: 100px;
+    height: 100px; */
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    image-rendering: pixelated;
+    /* background-attachment: fixed; */
+    
+}
+
+/* .sp4cebank-image.selected {
+    background-image: linear-gradient(to right, black, transparent, black), url("/assets/sp4cebar_memory_bank.png"), ;
+    background-color: red;
+} */
+
 #preset-selector {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
@@ -100,6 +197,10 @@ math {
 
 #codeInput {
     width: 100%;
+    border: 0;
+    padding: 0;
+    resize: vertical;
+    min-height:200px;
 }
 
 #generate-button {
@@ -174,4 +275,8 @@ hr {
         border-bottom: 0px;
         border-left: 0px;
     } */
+}
+
+.horizontal-scroll {
+    overflow: auto;
 }

@@ -282,6 +282,7 @@ export default class MemoryBankGenerator {
         switch (imageName) {
             case 'bank_empty.jpg':
             case 'bank_wires.jpg':
+            case 'bank_wire.jpg':
             case 'bank_wires_crossing.jpg':
             case 'bank_digit.jpg':
             case 'bank_digit_single.jpg':
@@ -340,8 +341,8 @@ export default class MemoryBankGenerator {
         parent.setAttribute("width", `${svgWidth}px`);
         parent.setAttribute("height", `${svgHeight}px`);
         this.generateBankCountDisplay(inputLayerCount, outputWireCount);
-        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table', 'I', this.inputParameterNames);
-        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table', 'O', this.outputParameterNames);
+        this.generateTypeTableDisplay(this.inputTypes, 'bank-input-type-table', 'input ', this.inputParameterNames);
+        this.generateTypeTableDisplay(this.outputTypes, 'bank-output-type-table', 'output ', this.outputParameterNames);
 
         // console.log(bankCountMessage);
     }
@@ -389,21 +390,23 @@ export default class MemoryBankGenerator {
 
     generateEmptyCircuitRow(process, currentX, svgRowWidth, digitYOffset, height, parent) {
         let wireIndex = 0;
+        const wireNamePrefix = 'input ';
         process.forEach((element) => {
             let wireElement;
             const wireNames = [];
             switch (element) {
                 case 'bank_digit_single.jpg':
                     wireElement = 'bank_wire.jpg';
-                    wireNames.push(new NamedVector(`I${wireIndex++}`, 70));
+                    wireNames.push(new NamedVector(`${wireNamePrefix}${wireIndex++}`, 70));
+                    break;
                 case 'bank_digit.jpg':
                 case 'bank_selector_8-bit.jpg':
                     wireElement = 'bank_wires.jpg';
-                    wireNames.push(new NamedVector(`I${wireIndex++}`, 70), new NamedVector(`I${wireIndex++}`, 150));
+                    wireNames.push(new NamedVector(`${wireNamePrefix}${wireIndex++}`, 70), new NamedVector(`${wireNamePrefix}${wireIndex++}`, 150));
                     break;
                 case 'bank_selector_4-bit.jpg':
                     wireElement = `input_vertical.jpg`;
-                    wireNames.push(new NamedVector(`I${wireIndex++}`, 70));
+                    wireNames.push(new NamedVector(`${wireNamePrefix}${wireIndex++}`, 70));
                     break;
                 default:
                     wireElement = 'fsm_empty.jpg'
@@ -440,10 +443,21 @@ export default class MemoryBankGenerator {
         return [currentX, svgRowWidth];
     }
 
+    /**
+     * 
+     * @param {*} outputWireCount 
+     * @param {*} currentX 
+     * @param {*} svgRowWidth 
+     * @param {*} digitYOffset 
+     * @param {*} height 
+     * @param {*} parent 
+     * @returns 
+     */
     generateEmptyOutputRoutingCircuitPart(outputWireCount, currentX, svgRowWidth, digitYOffset, height, parent) {
+        const wireNamePrefix = 'output ';
         for (let digitOut = 0; digitOut < outputWireCount; digitOut++) {
             const element = 'output_vertical.jpg';
-            const wireNames = [new NamedVector(`O${digitOut}`, 70)];
+            const wireNames = [new NamedVector(`${wireNamePrefix}${digitOut}`, 70)];
             [currentX, svgRowWidth] = this.drawCircuitCell(element, currentX, digitYOffset, height, parent, svgRowWidth, wireNames);
         }
         return [currentX, svgRowWidth];
@@ -456,7 +470,7 @@ export default class MemoryBankGenerator {
             if (isConnecting) hasConnected = true;
             const isFirstElementOfNonFirstLocation = (input == 0 && digit == 0) && location != 0;
             const element = isFirstElementOfNonFirstLocation ? (
-                isConnecting ? 'output_capped_collector.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
+                isConnecting ? 'output_horizontal.jpg' : !hasConnected ? 'output_horizontal.jpg' : 'output_capped_vertical.jpg'
             ) : (
                 isConnecting ? 'output_collector.jpg' : !hasConnected ? 'output_crossing.jpg' : 'output_vertical.jpg'
             );
