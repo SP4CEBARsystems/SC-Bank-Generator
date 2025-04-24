@@ -1,7 +1,7 @@
 import CodePreset from "./code presets/CodePreset.js";
 import { codePresets } from "./code presets/codePresets.js";
 import { copyTextArrayToClipboard, removeLineBreaks } from "./copying.js";
-import { newButton } from "./dom_manipulator.js";
+import { newButton, newElement } from "./dom_manipulator.js";
 import ExtendedMath from "./extended_math.js";
 import MemoryBankGenerator from "./memory_bank_generator.js";
 // import {runUserFunction} from "./code_sandbox.js";
@@ -57,23 +57,36 @@ export default class MemoryBankGeneratorUI {
         const presetSelector = document.getElementById("preset-selector");
         if(!presetSelector) return;
         // this.loadPreset.bind(this);
-        codePresets.forEach((preset) => {
-            let classNames = 'preset-button ';
-            switch (preset.type) {
-                case 'ROM':
-                    classNames += 'blue';
-                    break;
-                case 'Selector ROM':
-                    classNames += 'red';
-                    break;
-                case 'FSM':
-                    classNames += 'green';
-                    break;
-                default:
-                    break;
-            }
-            newButton(preset.name, classNames, presetSelector, this.loadPreset.bind(this), [preset]);
-        })
+        const loadingIndicator = presetSelector.querySelector('.loading-indicator');
+        console.log('loadingIndicator', loadingIndicator)
+        loadingIndicator?.remove;
+        if (loadingIndicator) {
+            loadingIndicator.remove();
+            console.log('removed leadingIndicator')
+        }
+        if (codePresets === undefined || codePresets === null) {
+            newElement('p', 'Failed to load presets, please click on "report issue" below this page to write a bug report.', 'error-message', presetSelector);
+        } else if (codePresets.length <= 0) {
+            newElement('p', 'No presets are available, please click on "report issue" below this page to write a bug report.', 'error-message', presetSelector);
+        } else {
+            codePresets.forEach((preset) => {
+                let classNames = 'preset-button ';
+                switch (preset.type) {
+                    case 'ROM':
+                        classNames += 'blue';
+                        break;
+                    case 'Selector ROM':
+                        classNames += 'red';
+                        break;
+                    case 'FSM':
+                        classNames += 'green';
+                        break;
+                    default:
+                        break;
+                }
+                newButton(preset.name, classNames, presetSelector, this.loadPreset.bind(this), [preset]);
+            })
+        }
     }
 
     generate() {
