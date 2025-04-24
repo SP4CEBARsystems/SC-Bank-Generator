@@ -284,3 +284,15 @@ hr {
 .horizontal-scroll {
     overflow: auto;
 }
+
+aside {
+    display: flex;
+    flex-direction: row;
+}
+
+aside a {
+    margin: 0 10px;
+    text-align: center;
+    flex: 1;
+    padding: 30px;
+}
