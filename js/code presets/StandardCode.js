@@ -35,6 +35,12 @@ export default class standardCode {
         }
     )
 
+    static bitMask = new Code(
+        ([x], bankPosition, [bitMask] = [0b1111]) => {
+            return [x & bitMask];
+        }
+    )
+
     static bitMaskAndShift = new Code(
         ([x], bankPosition, [bitShiftLeftAmount, bitShiftRightAmount, bitMask] = [4, 1, 0b1111]) => {
             const masked = x & bitMask;
