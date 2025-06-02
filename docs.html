@@ -30,7 +30,11 @@
 			<ul>
 				<li><a href="#description">Description</a></li>
 				<li><a href="#code">Code</a></li>
+				<li><a href="#location-index">Code</a></li>
 				<li><a href="#examples">Code Examples</a></li>
+				<li><a href="#amount-input">Amount Input</a></li>
+				<li><a href="#input-sizes-input">Input Sizes Input</a></li>
+				<li><a href="#output-sizes-input">Output Sizes Input</a></li>
 				<li><a href="#types">Data Types</a></li>
 				<li><a href="#bank-names">Bank Names</a></li>
 				<li><a href="#data">Data</a></li>
@@ -76,7 +80,7 @@
 				The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">function</a> must take an 
 				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array of numbers</a> and an optional number as parameters,
 				and it must return an array of numbers.
-				This optional number is the location index when you want many sets of banks with the same inputs each (called Selector ROM on this page) but you wont need it often.
+				This optional number is the <a href="#location-index">location index</a> when you want many sets of banks with the same inputs each (called <a href="#description">Selector ROM</a> on this page) but you wont need it often.
 				The amount of numbers in the input and output arrays and the sizes in <a href="https://en.wikipedia.org/wiki/Bit">bits</a> of each number within the arrays are determined by the "input types" and "output types" text fields.
 				The amount of types within these type fields must match the amount of numbers within their corresponding arrays.
 				<h4>Type Format</h4>
@@ -100,6 +104,13 @@
 					<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator">
 						Conditional (ternary) operator</a> (you will see this be used a lot in the <a href="#examples">examples</a>)</li>
 				</ul>
+			</p>
+		</section>
+		<hr>
+		<section id="location-index">
+			<h2>Location Index Parameter</h2>
+			<p>
+				The location index parameter represents the index of the memory bank set within the <a href="#code">code</a>. This parameter is only needed when you want to generate an array of memory banks with altertions depending on its index (this parameter). On this page, this is referred to as a <a href="#description">"Selector ROM"</a>.
 			</p>
 		</section>
 		<hr>
@@ -410,6 +421,30 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 					</ol>
 				</li>
 			</ol>
+		</section>
+		<hr>
+		<section id="amount-input">
+			<h2>Amount Input</h2>
+			<p>
+				The <a href="./index.html#amount">amount input field</a> is a single number that represents the amount of memory bank sets to generate. Usually this should be left as "1" unless you want to generate an array of memory banks with altertions depending on its <a href="./docs.html#location-index">index</a>. On this page, this is referred to as a <a href="#description">"Selector ROM"</a>.
+				Note that the number of banks required scales linearly, <a href="#data">more information here</a>.
+			</p>
+		</section>
+		<hr>
+		<section id="input-sizes-input">
+			<h2>Input Sizes Input</h2>
+			<p>
+				The <a href="./index.html#inputSizes">input sizes input field</a> lets you set the format of the input of your system as a set of segments separated by commas. Each segment can be either be defined by a number, which is its size in bits, or a <a href="#types">data type</a>.
+				Note that the number of banks required scales exponentially, <a href="#data">more information here</a>.
+			</p>
+		</section>
+		<hr>
+		<section id="output-sizes-input">
+			<h2>Output Sizes Input</h2>
+			<p>
+				The <a href="./index.html#outputSizes">output sizes input field</a> lets you set the format of the output of your system as a set of segments separated by commas. Each segment can be either be defined by a number, which is its size in bits, or a <a href="#types">data type</a>.
+				Note that the number of banks required scales linearly, <a href="#data">more information here</a>.
+			</p>
 		</section>
 		<hr>
 		<section id="types">
