@@ -34,6 +34,10 @@ export default class MemoryBankGeneratorUI {
     recursiveCopyButton = document.getElementById('recursive-copy-button');
 
     slowerRecursiveCopyButton = document.getElementById('slower-recursive-copy-button');
+    
+    recursiveCopyButtonDefaultText;
+    
+    slowerRecursiveCopyButtonDefaultText;
 
     /**
      * @type {MemoryBankGenerator}
@@ -41,6 +45,8 @@ export default class MemoryBankGeneratorUI {
     generator
 
     constructor(generator) {
+        this.recursiveCopyButtonDefaultText = this.recursiveCopyButton.textContent;
+        this.slowerRecursiveCopyButtonDefaultText = this.slowerRecursiveCopyButton.textContent;
         this.generator = generator;
         if (this.codeInputElement) {
             this.codeInputElement.textContent = '([x, y]) => {\n    return [x + y];\n}'
@@ -90,6 +96,8 @@ export default class MemoryBankGeneratorUI {
     }
 
     generate() {
+        this.recursiveCopyButton.textContent = this.recursiveCopyButtonDefaultText;
+        this.slowerRecursiveCopyButton.textContent = this.slowerRecursiveCopyButtonDefaultText;
         this.revealHiddenElements();
         // runUserFunction()
         const generator = this.generator;
