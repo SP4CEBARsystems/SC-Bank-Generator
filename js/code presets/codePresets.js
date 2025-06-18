@@ -1,8 +1,6 @@
 import CodePreset from "./CodePreset.js";
 import standardCode from "./StandardCode.js";
 
-const fsmSuffix = "Note that for an FSM to work you should connect the output of a memory bank system to its (location) input"
-
 /**
  * @type {CodePreset[]}
  */
@@ -135,7 +133,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.incrementCounterFsm,
         '8-bit Increment-only Counter FSM',
-        `An 8-bit (unsigned integer) counter that counts up on each cycle and resets on the maximum value (aka "FF", "1111 1111"). Trigger the memory bank clock inputs to increment. Send the maximum signal (aka "F", "1.5v", "1111") to both input wires to reset it. ${fsmSuffix}`,
+        `An 8-bit (unsigned integer) counter that counts up on each cycle and resets on the maximum value (aka "FF", "1111 1111"). Trigger the memory bank clock inputs to increment. Send the maximum signal (aka "F", "1.5v", "1111") to both input wires to reset it.`,
         'FSM',
         ['8'],
         ['8'],
@@ -143,7 +141,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '4-bit Counter FSM With Overflow',
-        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement ${fsmSuffix}`,
+        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement`,
         'FSM',
         ['4, 1, 1'],
         ['4'],
@@ -152,7 +150,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '4-bit Counter FSM Without Overflow',
-        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement ${fsmSuffix}`,
+        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement`,
         'FSM',
         ['4, 1, 1'],
         ['4'],
@@ -161,7 +159,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '6-bit Counter FSM With Overflow',
-        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement ${fsmSuffix}`,
+        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement`,
         'FSM',
         ['6, 1, 1'],
         ['6'],
@@ -170,7 +168,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '6-bit Counter FSM Without Overflow',
-        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement ${fsmSuffix}`,
+        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement`,
         'FSM',
         ['6, 1, 1'],
         ['6'],
@@ -179,7 +177,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.bouncyCounterFsm,
         '6-bit Bouncy Counter FSM',
-        `This counter changes counting direction instead of overflowing ${fsmSuffix}`,
+        `This counter changes counting direction instead of overflowing`,
         'FSM',
         ['6', '1', '1'],
         ['6', '1'],
@@ -187,7 +185,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.shiftRegisterFsm,
         '8-bit Shift Register FSM',
-        `This FSM shifts all bits left two times each cycle, so it acts as a shift register to 2-bit (unsigned integer) words and it can store four of them. ${fsmSuffix}`,
+        `This FSM shifts all bits left two times each cycle, so it acts as a shift register to 2-bit (unsigned integer) words and it can store four of them.`,
         'FSM',
         ['8'],
         ['8'],
@@ -203,7 +201,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.cpuFsm,
         '2-bit CPU FSM',
-        `A CPU inside an FSM which can only deal with 2-bit (unsigned integer) values. It has the instructions: halt, load, subtract, branch if not zero. It is comes with a program to decrement until zero is reached. Given the small instruction set (2-bit gives only four different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo) ${fsmSuffix}`,
+        `A CPU inside an FSM which can only deal with 2-bit (unsigned integer) values. It has the instructions: halt, load, subtract, branch if not zero. It is comes with a program to decrement until zero is reached. Given the small instruction set (2-bit gives only four different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo)`,
         'FSM',
         ['2', '2', '2', '2', '1'],
         ['2', '2', '2', '2', '1'],
