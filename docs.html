@@ -39,6 +39,7 @@
 				<li><a href="#bank-names">Bank Names</a></li>
 				<li><a href="#data">Data</a></li>
 				<li><a href="#circuit">Generated Circuit</a></li>
+				<li><a href="#labels-preset">Bank Preset labels</a></li>
 				<li><a href="#errors">Common Errors</a></li>
 				<li><a href="#file-import">file importing</a></li>
 				<li><a href="#similar">Similar solutions</a></li>
@@ -945,6 +946,8 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 			<h2>Generated Circuit</h2>
 			<p>
 				A circuit is generated alongside the data.
+				Wire labels refer to the overview table shown after generating, <a href="#bank-names">memory bank labels</a> refer to the generated data apart from the labels <a href="#labels-preset">"4-bit Multiplexer" and "8-bit Selector"</a>, these refer to presets with the same name.
+				
 				The image is made up of multiple screenshots from SurvivalCraft stitched together and may cause some
 				slight graphical artifacts as seen below. The circuit part shown in that image may be treated as a
 				single trench with a wire in it.
@@ -953,10 +956,57 @@ output sizes: 4</pre><pre class="code-block-root has-copy-btn"><code class="code
 				alt="graphical artifact of two circuit tile images stitched together">
 		</section>
 		<hr>
+		<section id="labels-preset">
+			<h2>Bank Preset labels</h2>
+			<p>
+				If labels such as "4-bit Multiplexer L0" and "8-bit Selector L0" are shown in your <a href="#circuit">generated circuit</a> then your circuit needs more than two input wires, 
+				the additional wires are then combined using specially programmed memory banks. 
+				The data for these memory banks can be found in the presets section, 
+				the presets have the same names as the labels: "4-bit Multiplexer" and "8-bit Selector".
+				The "L" suffix ("L0", "L1", "L2", etc.) of the label refers to the variant of the generated preset to use, this is its location index.
+				Here is how to get their data.
+				<ol>
+					<li>Open <a href="./index.html#presets" target="_blank" rel="noopener noreferrer">the presets page on a new tab</a></li>
+					<li>Click "4-bit Multiplexer" or if your label said "8-bit Selector" click that instead</li>
+					<li>Scroll down and click generate</li>
+					<li>Scroll down to the "Generated Data" section</li>
+					<li>
+						Copy the data you need, look at the table below to find which bank to use for the given label suffix. Continue the pattern for lables with "L4" or higher.
+						<table border="1">
+							<thead>
+								<tr>
+									<th>Label</th>
+									<th>Bank</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>L0</td>
+									<td>Bank L0-I0-D0</td>
+								</tr>
+								<tr>
+									<td>L1</td>
+									<td>Bank L1-I0-D0</td>
+								</tr>
+								<tr>
+									<td>L2</td>
+									<td>Bank L2-I0-D0</td>
+								</tr>
+								<tr>
+									<td>L3</td>
+									<td>Bank L3-I0-D0</td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+				</ol>				
+			</p>
+		</section>
+		<hr>
 		<section id="errors">
 			<h2>Common Errors</h2>
 			<p>
-				There are few error messages, shown to you. If the code you wrote in the code input field does not work, you could open your browsers web debugger to view if the site throws any errors in the console. Instead you could also replace the code with one of the
+				Unfortunately, there are few error messages available to be shown to you. If the code you wrote in the code input field does not work, you could open your browsers web debugger to view if the site throws any errors in the console. Instead you could also replace the code with one of the
 				<a href="#examples">example programs</a> to figure out which parts of your code work and which do not.
 			</p>
 		</section>
