@@ -123,7 +123,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.multiplexer,
         '4-bit Multiplexer',
-        'Enables a 4-bit (unsigned integer) input when another 4-bit input matches the location index of this memory bank',
+        'Enables a 4-bit (unsigned integer) input when another 4-bit input matches the location index of this memory bank.',
         'Selector ROM',
         ['4', '4'],
         ['4'],
@@ -141,7 +141,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '4-bit Counter FSM With Overflow',
-        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement`,
+        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement.`,
         'FSM',
         ['4, 1, 1'],
         ['4'],
@@ -150,7 +150,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '4-bit Counter FSM Without Overflow',
-        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement`,
+        `This counter can count both up and down with a range between 0 and 15, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement.`,
         'FSM',
         ['4, 1, 1'],
         ['4'],
@@ -159,7 +159,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '6-bit Counter FSM With Overflow',
-        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement`,
+        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded it overflows to the other boundary. Inputs: keep, reset, increment, decrement.`,
         'FSM',
         ['6, 1, 1'],
         ['6'],
@@ -168,7 +168,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.counterFsm,
         '6-bit Counter FSM Without Overflow',
-        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement`,
+        `This counter can count both up and down with a range between 0 and 63, when a range boundary is exceeded the number stops counting (it reached the end). Inputs: keep, reset, increment, decrement.`,
         'FSM',
         ['6, 1, 1'],
         ['6'],
@@ -177,7 +177,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.bouncyCounterFsm,
         '6-bit Bouncy Counter FSM',
-        `This counter changes counting direction instead of overflowing`,
+        `This counter changes counting direction instead of overflowing.`,
         'FSM',
         ['6', '1', '1'],
         ['6', '1'],
@@ -201,7 +201,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.cpuFsm,
         '2-bit CPU FSM',
-        `A CPU inside an FSM which can only deal with 2-bit (unsigned integer) values. It has the instructions: halt, load, subtract, branch if not zero. It is comes with a program to decrement until zero is reached. Given the small instruction set (2-bit gives only four different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo)`,
+        `A CPU inside an FSM which can only deal with 2-bit (unsigned integer) values. It has the instructions: halt, load, subtract, branch if not zero. It comes with a program to decrement until zero is reached. Given the small instruction set (2-bit gives only four different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo).`,
         'FSM',
         ['2', '2', '2', '2', '1'],
         ['2', '2', '2', '2', '1'],
@@ -209,7 +209,7 @@ export const codePresets = [
     new CodePreset(
         standardCode.cpuFsm,
         '3-bit CPU FSM - calculates 3 % 2',
-        `Warning: generating this may crash this page, it will take around 15 seconds to generate otherwise as it generates 128 Banks. A CPU inside an FSM which can only deal with 3-bit (2s-complement-signed integer) values. It has the instructions: halt, load, subtract, branchIfZeroOrPositive, add. It is comes with a program to integer-divide 3-bit 2s-complement-signed numbers. Given the small instruction set (3-bit gives only eight different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo)`,
+        `Warning: generating this may crash this page, it will take around 15 seconds to generate otherwise as it generates 128 Banks. A CPU inside an FSM which can only deal with 3-bit (2s-complement-signed integer) values. It has the instructions: halt, load, subtract, branchIfZeroOrPositive, and add. It comes with a program to integer-divide 3-bit 2s-complement-signed numbers. Given the small instruction set (3-bit gives only eight different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo).`,
         'FSM',
         ['3', 'U_INT_3', '3', '3', '1'],
         ['3', 'U_INT_3', '3', '3', '1'],
