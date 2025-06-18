@@ -206,4 +206,37 @@ export const codePresets = [
         ['2', '2', '2', '2', '1'],
         ['2', '2', '2', '2', '1'],
     ),
+    new CodePreset(
+        standardCode.cpuFsm,
+        '3-bit CPU FSM - calculates 3 % 2',
+        `Warning: generating this may crash this page, it will take around 15 seconds to generate otherwise as it generates 128 Banks. A CPU inside an FSM which can only deal with 3-bit (2s-complement-signed integer) values. It has the instructions: halt, load, subtract, branchIfZeroOrPositive, add. It is comes with a program to integer-divide 3-bit 2s-complement-signed numbers. Given the small instruction set (3-bit gives only eight different instructions) you should adjust this set per program, the following instructions are available to add to your instruction set: halt, load, add, subtract, multiply, divide, and, or, xor, not, bitshiftLeft, bitshiftRight, branchIfNotZero, branchIfZero, branchIfZeroOrPositive, branchIfNegative, and branch. This is inspired by The Little Man Computer (Online Demo)`,
+        'FSM',
+        ['3', 'U_INT_3', '3', '3', '1'],
+        ['3', 'U_INT_3', '3', '3', '1'],
+        [
+            [
+                'halt', 'load', 'subtract', 'branchIfZeroOrPositive', 'add', 'halt', 'halt', 'halt'
+            ],
+            [
+                { instruction: 1, address: 0 }, // 0: load dividend
+                { instruction: 2, address: 1 }, // 1: subtract divisor
+                { instruction: 3, address: 1 }, // 2: if >= 0, repeat subtraction
+                { instruction: 4, address: 1 }, // 3: else add divisor back to fix negative
+                { instruction: 0, address: 0 }, // 4: halt
+                { instruction: 0, address: 0 }, // 5: unused
+                { instruction: 0, address: 0 }, // 6: unused
+                { instruction: 0, address: 0 }  // 7: unused
+            ],
+            [
+                3, // 0: dividend
+                2,  // 1: divisor
+                0,  // 2: unused
+                0,  // 3: unused
+                0,  // 4: unused
+                0,  // 5: unused
+                0,  // 6: unused
+                0   // 7: unused
+            ]
+        ]
+    ),
 ];
