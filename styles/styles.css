@@ -296,3 +296,23 @@ aside a {
     flex: 1;
     padding: 30px;
 }
+
+summary h2 {
+    display: inline;
+    margin: 0 0 0 0.2rem;
+}
+
+summary {
+    transition: background-color 0.2s ease;
+    border-radius: 2px;
+    background-color: #111;
+    padding: 0.8rem 1rem;
+}
+
+summary:hover {
+    background-color: #181818;
+}
+
+summary:active {
+    background-color: #444;
+}
